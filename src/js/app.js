@@ -15,10 +15,7 @@ require({
 			var widget = new Widget(body, "widget/body");
 
 			widget.weave(widget.$element, dfdStart);
-
-			console.log(widget);
 		}).done(function doneStart(widget) {
-			console.log(arguments);
 		});
 	});
 });
