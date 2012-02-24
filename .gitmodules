@@ -10,3 +10,6 @@
 [submodule "lib/rjs"]
 	path = lib/rjs
 	url = git@github.com:troopjs/r.js.git
+[submodule "lib/hasjs"]
+	path = lib/hasjs
+	url = git@github.com:troopjs/has.js.git
