@@ -9,10 +9,10 @@ require({
 	}
 }, [ "jquery", "troopjs/component/widget", "troopjs/pubsub/hub", "troopjs-jquery/weave", "troopjs-jquery/wire" ], function App(jQuery, Widget, hub) {
 	jQuery(document).ready(function ready($) {
-		var element = this.body;
+		var body = this.body;
 
 		$.Deferred(function deferredStart(dfdStart) {
-			var widget = new Widget(element, "widget/body");
+			var widget = new Widget(body, "widget/body");
 
 			widget.weave(widget.$element, dfdStart);
 
