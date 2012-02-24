@@ -13,3 +13,12 @@
 [submodule "src/js/lib/hasjs"]
 	path = src/js/lib/hasjs
 	url = git@github.com:troopjs/has.js.git
+[submodule "src/js/lib/troopjs"]
+	path = src/js/lib/troopjs
+	url = git@github.com:troopjs/troopjs.git
+[submodule "src/js/lib/troopjs-jquery"]
+	path = src/js/lib/troopjs-jquery
+	url = git@github.com:troopjs/troopjs-jquery.git
+[submodule "src/js/lib/troopjs-requirejs"]
+	path = src/js/lib/troopjs-requirejs
+	url = git@github.com:troopjs/troopjs-requirejs.git
