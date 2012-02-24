@@ -1,15 +1,15 @@
-[submodule "lib/jquery"]
-	path = lib/jquery
+[submodule "src/js/lib/jquery"]
+	path = src/js/lib/jquery
 	url = git@github.com:troopjs/jquery.git
-[submodule "lib/composejs"]
-	path = lib/composejs
+[submodule "src/js/lib/composejs"]
+	path = src/js/lib/composejs
 	url = git@github.com:troopjs/compose.git
-[submodule "lib/requirejs"]
-	path = lib/requirejs
+[submodule "src/js/lib/requirejs"]
+	path = src/js/lib/requirejs
 	url = git@github.com:troopjs/requirejs.git
-[submodule "lib/rjs"]
-	path = lib/rjs
+[submodule "src/js/lib/rjs"]
+	path = src/js/lib/rjs
 	url = git@github.com:troopjs/r.js.git
-[submodule "lib/hasjs"]
-	path = lib/hasjs
+[submodule "src/js/lib/hasjs"]
+	path = src/js/lib/hasjs
 	url = git@github.com:troopjs/has.js.git
