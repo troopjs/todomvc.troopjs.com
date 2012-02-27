@@ -22,3 +22,6 @@
 [submodule "src/js/lib/troopjs-requirejs"]
 	path = src/js/lib/troopjs-requirejs
 	url = git@github.com:troopjs/troopjs-requirejs.git
+[submodule "lib/jshint"]
+	path = lib/jshint
+	url = https://github.com/jshint/jshint.git
