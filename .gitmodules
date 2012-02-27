@@ -7,8 +7,8 @@
 [submodule "src/js/lib/requirejs"]
 	path = src/js/lib/requirejs
 	url = git@github.com:troopjs/requirejs.git
-[submodule "src/js/lib/rjs"]
-	path = src/js/lib/rjs
+[submodule "lib/rjs"]
+	path = lib/rjs
 	url = git@github.com:troopjs/r.js.git
 [submodule "src/js/lib/hasjs"]
 	path = src/js/lib/hasjs
