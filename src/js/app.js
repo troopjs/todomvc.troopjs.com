@@ -12,21 +12,17 @@ require({
 	}
 }, [
 	"jquery",
-	"troopjs/component/widget",
-	"troopjs/pubsub/hub",
 	"troopjs-jquery/action",
 	"troopjs-jquery/destroy",
 	"troopjs-jquery/dimensions",
 	"troopjs-jquery/hashchange",
 	"troopjs-jquery/weave",
-	"troopjs-jquery/wire" ], function App(jQuery, Widget, hub) {
+	"troopjs-jquery/wire" ], function App(jQuery) {
 	jQuery(document).ready(function ready($) {
 		var body = this.body;
 
 		$.Deferred(function deferredStart(dfdStart) {
-			var widget = new Widget(body, "widget/body");
-
-			widget.weave(widget.$element, dfdStart);
+			$(body).find("[data-weave]").weave(dfdStart);
 		}).done(function doneStart() {
 		});
 	});
