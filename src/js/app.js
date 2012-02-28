@@ -5,8 +5,8 @@ require({
 		"compose" : "lib/composejs/compose",
 		"deferred" : "lib/troopjs-jquery/src/deferred",
 		"text" : "lib/requirejs/text",
-		"template" : "lib/troopjs-require/src/template",
-		"detect" : "lib/troopjs-require/src/detect",
+		"template" : "lib/troopjs-requirejs/src/template",
+		"detect" : "lib/troopjs-requirejs/src/detect",
 		"troopjs" : "lib/troopjs/src",
 		"troopjs-jquery" : "lib/troopjs-jquery/src"
 	}
