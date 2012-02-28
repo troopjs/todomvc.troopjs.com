@@ -1,0 +1,13 @@
+<ul id="todo-list">
+<% $.each(data, function itemIterator(i, item) { %>
+<li>
+	<div class="todo">
+		<div class="display">
+			<input type="checkbox" class="check" data-action="status(<%= item.id %>)">
+			<span data-type="todo" class="trashcan" data-action="delete(<%= item.id %>)"></span>
+			<span contenteditable="true" class="todo-item" data-action="edit(<%= item.id %>)"><%= item.text %></span>
+		</div>
+	</div>
+</li>
+<% }); %>
+</ul>

@@ -1,9 +1,24 @@
 <!doctype html>
 <html>
 <head>
+<meta charset="UTF-8">
+<title>Troop.js</title>
+<link rel="stylesheet" href="css/app.css" type="text/css" media="screen" charset="utf-8">
 <script type="text/javascript" data-main="js/app.js" src="js/lib/requirejs/require.js"></script>
 </head>
 <body>
-<section data-weave="widget/display/panel"><a href="#" data-action="test(1, 'two', false, test)" data-test='{"some":"object"}'>test</a></section>
+	<div id="todoapp">
+		<div class="title"><h1>Todos</h1></div>
+		<div class="content">
+			<div id="create-todo">
+				<input id="new-todo" placeholder="What needs to be done?" type="text" /> <span class="ui-tooltip-top" style="display: none;">Press Enter to save this task</span>
+			</div>
+
+			<div id="todos" data-weave="widget/list/panel"></div>
+
+			<div id="todo-stats"></div>
+		</div>
+	</div>
+	<div id="credits">This version by <br /> <a href="http://twitter.com/mikaelkaron">Mikael Karon</a> <br /> based on some code by Brandon Aaron</div>
 </body>
 </html>
