@@ -1,4 +1,4 @@
-define( [ "troopjs/component/widget", "jquery", "template!./item.html" ], function TodosListModule(Widget, $, template) {
+define( [ "troopjs/component/widget", "jquery", "template!./item.html" ], function ListModule(Widget, $, template) {
 	var data = [{
 			"completed": false,
 			"text": "Work"
@@ -10,7 +10,7 @@ define( [ "troopjs/component/widget", "jquery", "template!./item.html" ], functi
 			"text": "Sleep"
 		}];
 
-	return Widget.extend(function TodosListWidget(element, name) {
+	return Widget.extend(function ListWidget(element, name) {
 		var self = this;
 
 		$.each(data, function itemIterator(i, item) {
