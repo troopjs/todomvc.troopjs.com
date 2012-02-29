@@ -25,7 +25,7 @@ define( [ "troopjs/component/widget", "jquery", "template!./panel.html" ], funct
 		},
 
 		"dom/action/edit.keyup": function onEditKeyUp(topic, $event, id) {
-			console.log("edit", id);			
+			console.log("edit", id);
 		},
 
 		"dom/action.keyup": function () {}
