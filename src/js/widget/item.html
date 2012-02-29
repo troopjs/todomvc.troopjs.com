@@ -1,0 +1,13 @@
+<%
+var i = data.i;
+var item = data.item;
+%>
+<li>
+	<div class="todo">
+		<div class="display">
+			<input type="checkbox" class="check" data-action="status(<%= i %>)">
+			<span data-type="todo" class="trashcan" data-action="delete(<%= i %>)"></span>
+			<span contenteditable="true" class="todo-item" data-action="edit(<%= i %>)"><%= item.text %></span>
+		</div>
+	</div>
+</li>
