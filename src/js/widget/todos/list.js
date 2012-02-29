@@ -1,4 +1,4 @@
-define( [ "troopjs/component/widget", "jquery", "template!./panel.html" ], function ListPanelModule(Widget, $, template) {
+define( [ "troopjs/component/widget", "jquery", "template!./list.html" ], function ListPanelModule(Widget, $, template) {
 	var data = [{
 			"completed": false,
 			"text": "Work"
