@@ -1,4 +1,4 @@
-define( [ "troopjs/component/widget", "jquery", "template!./list.html" ], function ListPanelModule(Widget, $, template) {
+define( [ "troopjs/component/widget", "jquery", "template!./list.html" ], function TodosListModule(Widget, $, template) {
 	var data = [{
 			"completed": false,
 			"text": "Work"
@@ -10,7 +10,7 @@ define( [ "troopjs/component/widget", "jquery", "template!./list.html" ], functi
 			"text": "Sleep"
 		}];
 
-	return Widget.extend(function ListPanelWidget(element, name) {
+	return Widget.extend(function TodosListWidget(element, name) {
 		this.html(template, data);
 	}, {
 		"dom/action/status": function onStatus(topic, $event, index) {
