@@ -3,9 +3,9 @@
 <li>
 	<div class="todo">
 		<div class="display">
-			<input type="checkbox" class="check" data-action="status(<%= item.id %>)">
-			<span data-type="todo" class="trashcan" data-action="delete(<%= item.id %>)"></span>
-			<span contenteditable="true" class="todo-item" data-action="edit(<%= item.id %>)"><%= item.text %></span>
+			<input type="checkbox" class="check" data-action="status(<%= i %>)">
+			<span data-type="todo" class="trashcan" data-action="delete(<%= i %>)"></span>
+			<span contenteditable="true" class="todo-item" data-action="edit(<%= i %>)"><%= item.text %></span>
 		</div>
 	</div>
 </li>
