@@ -11,10 +11,12 @@
 		<div class="title"><h1>Todos</h1></div>
 		<div class="content">
 			<div id="create-todo">
-				<input id="new-todo" placeholder="What needs to be done?" type="text" /> <span class="ui-tooltip-top" style="display: none;">Press Enter to save this task</span>
+				<input id="new-todo" placeholder="What needs to be done?" type="text" data-weave="widget/create" /> <span class="ui-tooltip-top" style="display: none;">Press Enter to save this task</span>
 			</div>
 
-			<div id="todos" data-weave="widget/todos/list"></div>
+			<div id="todos"">
+				<ul id="todo-list" data-weave="widget/todos/list"></ul>
+			</div>
 
 			<div id="todo-stats"></div>
 		</div>

@@ -1,4 +1,4 @@
-define( [ "troopjs/component/widget", "jquery", "template!./list.html" ], function TodosListModule(Widget, $, template) {
+define( [ "troopjs/component/widget", "jquery", "template!./item.html" ], function TodosListModule(Widget, $, template) {
 	var data = [{
 			"completed": false,
 			"text": "Work"
@@ -11,8 +11,28 @@ define( [ "troopjs/component/widget", "jquery", "template!./list.html" ], functi
 		}];
 
 	return Widget.extend(function TodosListWidget(element, name) {
-		this.html(template, data);
+		var self = this;
+
+		$.each(data, function itemIterator(i, item) {
+			self.append(template, {
+				"i": i,
+				"item": item
+			});
+		});
 	}, {
+		"hub/todos/add": function onAdd(topic, text) {
+			var i = data.length;
+			var item = data[i] = {
+				"i": i,
+				"item": {
+					"completed": false,
+					"text": text
+				}
+			};
+
+			this.append(template, item);
+		},
+
 		"dom/action/status": function onStatus(topic, $event, index) {
 			data[index].checked = $($event.target).prop("checked");
 		},
