@@ -12,6 +12,7 @@ require({
 	}
 }, [
 	"jquery",
+	"troopjs/store/session",
 	"troopjs-jquery/action",
 	"troopjs-jquery/destroy",
 	"troopjs-jquery/dimensions",
