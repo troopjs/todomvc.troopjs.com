@@ -23,8 +23,14 @@ define( [ "troopjs/component/widget", "troopjs/store/session", "jquery", "templa
 			});
 		})
 		.done(function doneInit(items) {
-			// Iterate each item, append to self
+			// Iterate each item
 			$.each(items, function itemIterator(i, item) {
+				// Quick return if there is no item in this position
+				if (item == NULL) {
+					return;
+				}
+
+				// Append to self
 				self.append(template, {
 					"i": i,
 					"item": item
@@ -98,7 +104,7 @@ define( [ "troopjs/component/widget", "troopjs/store/session", "jquery", "templa
 				})
 				.done(function doneGet(items) {
 					// Delete item
-					items.splice(index, 1);
+					delete items[index];
 				})
 				.done(function doneGet(items) {
 					// Set items and resolve set
