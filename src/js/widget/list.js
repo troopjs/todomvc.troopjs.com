@@ -1,24 +1,29 @@
-define( [ "troopjs/component/widget", "jquery", "template!./item.html" ], function ListModule(Widget, $, template) {
+define( [ "troopjs/component/widget", "troopjs/store/session", "jquery", "template!./item.html" ], function ListModule(Widget, store, $, template) {
 	var UNDEFINED = undefined;
 	var ITEMS = "todo-items";
 
 	return Widget.extend(function ListWidget(element, name) {
 		var self = this;
 
+		// Defer init
 		$.Deferred(function deferredInit(dfdInit) {
+			// Defer get
 			$.Deferred(function deferredGet(dfdGet) {
-				self.publish("hub/store/session/get", ITEMS, dfdGet);
+				store.get(ITEMS, dfdGet);
 			})
 			.done(function doneGet(items) {
+				// If we have items resolve the init
 				if (items !== UNDEFINED) {
 					dfdInit.resolve(items);
 				}
+				// Otherwise set items - then resolve init
 				else {
-					self.publish("hub/store/session/set", ITEMS, [], dfdInit);
+					store.set(ITEMS, [], dfdInit);
 				}
 			});
 		})
 		.done(function doneInit(items) {
+			// Iterate each item, append to self
 			$.each(items, function itemIterator(i, item) {
 				self.append(template, {
 					"i": i,
@@ -30,59 +35,94 @@ define( [ "troopjs/component/widget", "jquery", "template!./item.html" ], functi
 		"hub/todos/add": function onAdd(topic, text) {
 			var self = this;
 
-			$.Deferred(function deferredGet(dfdGet) {
-				self.publish("hub/store/session/get", ITEMS, dfdGet);
-			})
-			.done(function doneGet(items) {
-				var i = items.length;
-				var item = items[i] = {
-					"i": i,
-					"item": {
-						"completed": false,
-						"text": text
-					}
-				};
+			// Defer set
+			$.Deferred(function deferredSet(dfdSet) {
+				// Defer get
+				$.Deferred(function deferredGet(dfdGet) {
+					store.get(ITEMS, dfdGet);
+				})
+				.done(function doneGet(items) {
+					// Get the next index
+					var i = items.length;
+					// Create new item, store in items
+					var item = items[i] = {
+						"i": i,
+						"item": {
+							"completed": false,
+							"text": text
+						}
+					};
 
-				self.append(template, item);
+					// Append new item to self
+					self.append(template, item);
+				})
+				.done(function doneGet(items) {
+					// Set items and resolve set
+					store.set(ITEMS, items, dfdSet);
+				});
 			});
 		},
 
 		"dom/action/status": function onStatus(topic, $event, index) {
-			var self = this;
-
-			$.Deferred(function deferredGet(dfdGet) {
-				self.publish("hub/store/session/get", ITEMS, dfdGet);
-			})
-			.done(function doneGet(items) {
-				items[index].checked = $($event.target).prop("checked");
+			// Defer get
+			$.Deferred(function deferredSet(dfdSet) {
+				// Defer set
+				$.Deferred(function deferredGet(dfdGet) {
+					store.get(ITEMS, dfdGet);
+				})
+				.done(function doneGet(items) {
+					// Update checked
+					items[index].checked = $($event.target).prop("checked");
+				})
+				.done(function doneGet(items) {
+					// Set items and resolve set
+					store.set(ITEMS, items, dfdSet);
+				});
 			});
 		},
 
 		"dom/action/delete": function onDelete(topic, $event, index) {
-			var self = this;
-
+			// Update UI
 			$($event.target)
 				.closest("li")
 				.hide("slow", function hidden() {
 					$(this).remove();
-
-					$.Deferred(function deferredGet(dfdGet) {
-						self.publish("hub/store/session/get", ITEMS, dfdGet);
-					})
-					.done(function doneGet(items) {
-						delete items[index];
-					});
 				});
+
+			// Defer set
+			$.Deferred(function deferredSet(dfdSet) {
+				// Defer get
+				$.Deferred(function deferredGet(dfdGet) {
+					// Get the items
+					store.get(ITEMS, dfdGet);
+				})
+				.done(function doneGet(items) {
+					// Delete item
+					delete items[index];
+				})
+				.done(function doneGet(items) {
+					// Set items and resolve set
+					store.set(ITEMS, items, dfdSet);
+				});
+			});
 		},
 
 		"dom/action/edit.keyup": function onEditKeyUp(topic, $event, index) {
-			var self = this;
-
-			$.Deferred(function deferredGet(dfdGet) {
-				self.publish("hub/store/session/get", ITEMS, dfdGet);
-			})
-			.done(function doneGet(items) {
-				items[index].text = $($event.target).text();
+			// Defer set
+			$.Deferred(function deferredSet(dfdSet) {
+				// Defer get
+				$.Deferred(function deferredGet(dfdGet) {
+					// Get items
+					store.get(ITEMS, dfdGet);
+				})
+				.done(function doneGet(items) {
+					// Update text
+					items[index].text = $($event.target).text();
+				})
+				.done(function doneGet(items) {
+					// Set items and resolve set
+					store.set(ITEMS, items, dfdSet);
+				});
 			});
 		},
 
