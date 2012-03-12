@@ -1,5 +1,5 @@
 define( [ "troopjs/component/widget", "troopjs/store/session", "jquery", "template!./item.html" ], function ListModule(Widget, store, $, template) {
-	var UNDEFINED = undefined;
+	var NULL = null;
 	var ITEMS = "todo-items";
 
 	return Widget.extend(function ListWidget(element, name) {
@@ -13,7 +13,7 @@ define( [ "troopjs/component/widget", "troopjs/store/session", "jquery", "templa
 			})
 			.done(function doneGet(items) {
 				// If we have items resolve the init
-				if (items !== UNDEFINED) {
+				if (items !== NULL) {
 					dfdInit.resolve(items);
 				}
 				// Otherwise set items - then resolve init
@@ -46,15 +46,15 @@ define( [ "troopjs/component/widget", "troopjs/store/session", "jquery", "templa
 					var i = items.length;
 					// Create new item, store in items
 					var item = items[i] = {
-						"i": i,
-						"item": {
-							"completed": false,
-							"text": text
-						}
+						"completed": false,
+						"text": text
 					};
 
 					// Append new item to self
-					self.append(template, item);
+					self.append(template, {
+						"i": i,
+						"item": item
+					});
 				})
 				.done(function doneGet(items) {
 					// Set items and resolve set
