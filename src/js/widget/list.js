@@ -98,7 +98,7 @@ define( [ "troopjs/component/widget", "troopjs/store/session", "jquery", "templa
 				})
 				.done(function doneGet(items) {
 					// Delete item
-					delete items[index];
+					items.splice(index, 1);
 				})
 				.done(function doneGet(items) {
 					// Set items and resolve set
