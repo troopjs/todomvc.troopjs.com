@@ -71,8 +71,8 @@ define( [ "troopjs/component/widget", "troopjs/store/session", "jquery", "templa
 					store.get(ITEMS, dfdGet);
 				})
 				.done(function doneGet(items) {
-					// Update checked
-					items[index].checked = $($event.target).prop("checked");
+					// Update completed
+					items[index].completed = $($event.target).prop("checked");
 				})
 				.done(function doneGet(items) {
 					// Set items and resolve set
