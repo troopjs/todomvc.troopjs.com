@@ -1,6 +1,7 @@
 require({
 	"baseUrl" : "js",
 	"paths" : {
+		"json" : "lib/jsonjs/json2",
 		"jquery" : "lib/jquery/dist/jquery",
 		"compose" : "lib/composejs/compose",
 		"deferred" : "lib/troopjs-jquery/src/deferred",
@@ -12,7 +13,7 @@ require({
 	}
 }, [
 	"jquery",
-	"troopjs/store/session",
+	"json",
 	"troopjs-jquery/action",
 	"troopjs-jquery/destroy",
 	"troopjs-jquery/dimensions",
