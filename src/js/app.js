@@ -13,7 +13,6 @@ require({
 	}
 }, [
 	"jquery",
-	"json",
 	"troopjs-jquery/action",
 	"troopjs-jquery/destroy",
 	"troopjs-jquery/dimensions",
