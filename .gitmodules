@@ -25,3 +25,6 @@
 [submodule "lib/jshint"]
 	path = lib/jshint
 	url = https://github.com/jshint/jshint.git
+[submodule "src/js/lib/jsonjs"]
+	path = src/js/lib/jsonjs
+	url = git@github.com:troopjs/JSON-js.git
