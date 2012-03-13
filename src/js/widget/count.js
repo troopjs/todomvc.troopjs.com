@@ -7,8 +7,14 @@ define( [ "troopjs/component/widget" ], function CountModule(Widget) {
 	return Widget.extend({
 		"hub/todos/change": function onChange(topic, items) {
 			var count = $.grep(items, filter, true).length;
+			var $element = this.$element;
 
-			this.$element.text(count > 0 ? count + (count > 1 ? " items left" : " item left") : "no items left");
+			if (count > 0) {
+				$element.text(count + (count > 1 ? " items left" : " item left"));
+			}
+			else {
+				$element.text("No items left");
+			}
 		}
 	});
 });
