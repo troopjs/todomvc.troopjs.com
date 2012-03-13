@@ -14,13 +14,13 @@
 		</header>
 		<!-- this section is hidden by default and you be shown when there are todos and hidden when not -->
 		<section id="main" data-weave="widget/display">
-			<input id="toggle-all" type="checkbox" data-weave="widget/mark" data-action="mark">
+			<input id="toggle-all" type="checkbox" data-weave="widget/mark">
 			<label for="toggle-all">Mark all as complete</label>
 			<ul id="todo-list" data-weave="widget/list"></ul>
 		</section>
 		<!-- this footer needs to be shown with JS when there are todos and hidden when not -->
 		<footer data-weave="widget/display">
-			<a id="clear-completed" data-weave="widget/clear" data-action="clear">Clear completed</a>
+			<a id="clear-completed" data-weave="widget/clear">Clear completed</a>
 			<div id="todo-count" data-weave="widget/count"></div>
 		</footer>
 	</div>

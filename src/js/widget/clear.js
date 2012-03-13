@@ -21,10 +21,8 @@ define( [ "troopjs/component/widget", "jquery" ], function ClearModule(Widget, $
 			}
 		},
 
-		"dom/action/clear" : function onClear(topic, $event) {
+		"dom/click" : function onClear(topic, $event) {
 			this.publish("todos/clear");
-		},
-
-		"dom/action.click" : $.noop
+		}
 	});
 });
