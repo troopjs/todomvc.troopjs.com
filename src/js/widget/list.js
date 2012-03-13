@@ -2,6 +2,10 @@ define( [ "troopjs/component/widget", "troopjs/store/local", "jquery", "template
 	var NULL = null;
 	var ITEMS = "todo-items";
 
+	function compact(item, index) {
+		return item !== NULL;
+	}
+
 	return Widget.extend(function ListWidget(element, name) {
 		var self = this;
 
@@ -12,24 +16,18 @@ define( [ "troopjs/component/widget", "troopjs/store/local", "jquery", "template
 				store.get(ITEMS, dfdGet);
 			})
 			.done(function doneGet(items) {
-				// If we have items resolve the init
-				if (items !== NULL) {
-					dfdInit.resolve(items);
-				}
-				// Otherwise set items - then resolve init
-				else {
-					store.set(ITEMS, [], dfdInit);
-				}
+				// Initialize or compact items
+				items = (items === NULL)
+					? []
+					: $.grep(items, compact);
+
+				// Set items - then resolve init
+				store.set(ITEMS, items, dfdInit);
 			});
 		})
 		.done(function doneInit(items) {
 			// Iterate each item
 			$.each(items, function itemIterator(i, item) {
-				// Quick return if there is no item in this position
-				if (item == NULL) {
-					return;
-				}
-
 				// Append to self
 				self.append(template, {
 					"i": i,
