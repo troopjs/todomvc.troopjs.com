@@ -9,20 +9,15 @@ define( [ "troopjs/component/widget", "troopjs/store/local", "jquery", "template
 	return Widget.extend(function ListWidget(element, name) {
 		var self = this;
 
-		// Defer init
+		// Defer initialization
 		$.Deferred(function deferredInit(dfdInit) {
 			// Defer get
 			$.Deferred(function deferredGet(dfdGet) {
 				store.get(ITEMS, dfdGet);
 			})
 			.done(function doneGet(items) {
-				// Initialize or compact items
-				items = (items === NULL)
-					? []
-					: $.grep(items, compact);
-
-				// Set items - then resolve init
-				store.set(ITEMS, items, dfdInit);
+				// Set items (empty or compacted) - then resolve
+				store.set(ITEMS, items === NULL ? [] : $.grep(items, compact), dfdInit);
 			});
 		})
 		.done(function doneInit(items) {
@@ -34,6 +29,10 @@ define( [ "troopjs/component/widget", "troopjs/store/local", "jquery", "template
 					"item": item
 				});
 			});
+		})
+		.done(function doneInit(items) {
+			// Count
+			self.publish("todos/count", items.length);
 		});
 	}, {
 		"hub/todos/add": function onAdd(topic, text) {
@@ -64,6 +63,10 @@ define( [ "troopjs/component/widget", "troopjs/store/local", "jquery", "template
 					// Set items and resolve set
 					store.set(ITEMS, items, dfdSet);
 				});
+			})
+			.done(function doneSet(items) {
+				// Count
+				self.publish("todos/count", $.grep(items, compact).length);
 			});
 		},
 
@@ -94,10 +97,13 @@ define( [ "troopjs/component/widget", "troopjs/store/local", "jquery", "template
 		},
 
 		"dom/action/delete": function onDelete(topic, $event, index) {
+			var self = this;
+
 			// Update UI
 			$($event.target)
 				.closest("li")
 				.hide("slow", function hidden() {
+					// Remove LI
 					$(this).remove();
 				});
 
@@ -110,12 +116,16 @@ define( [ "troopjs/component/widget", "troopjs/store/local", "jquery", "template
 				})
 				.done(function doneGet(items) {
 					// Delete item
-					delete items[index];
+					items[index] = NULL;
 				})
 				.done(function doneGet(items) {
 					// Set items and resolve set
 					store.set(ITEMS, items, dfdSet);
 				});
+			})
+			.done(function doneSet(items) {
+				// Count
+				self.publish("todos/count", $.grep(items, compact).length);
 			});
 		},
 
