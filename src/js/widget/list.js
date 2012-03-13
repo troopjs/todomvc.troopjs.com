@@ -67,7 +67,7 @@ define( [ "troopjs/component/widget", "troopjs/store/local", "jquery", "template
 			});
 		},
 
-		"dom/action/status": function onStatus(topic, $event, index) {
+		"dom/action/status.change": function onStatus(topic, $event, index) {
 			var self = this;
 			var $target = $($event.target);
 			var completed = $target.prop("checked");
@@ -77,9 +77,9 @@ define( [ "troopjs/component/widget", "troopjs/store/local", "jquery", "template
 				.closest("li")
 				.toggleClass("done", completed);
 
-			// Defer get
+			// Defer set
 			$.Deferred(function deferredSet(dfdSet) {
-				// Defer set
+				// Defer get
 				$.Deferred(function deferredGet(dfdGet) {
 					store.get(ITEMS, dfdGet);
 				})
@@ -130,6 +130,8 @@ define( [ "troopjs/component/widget", "troopjs/store/local", "jquery", "template
 		},
 
 		"dom/action/edit.keyup": function onEditKeyUp(topic, $event, index) {
+			var self = this;
+
 			// Defer set
 			$.Deferred(function deferredSet(dfdSet) {
 				// Defer get
@@ -151,6 +153,6 @@ define( [ "troopjs/component/widget", "troopjs/store/local", "jquery", "template
 			});
 		},
 
-		"dom/action.keyup": function () {}
+		"dom/action.click.keyup.change" : $.noop
 	});
 });
