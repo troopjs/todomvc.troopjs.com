@@ -1,6 +1,6 @@
-define( [ "troopjs/component/widget", "jquery" ], function CreateModule(Widget, $) {
+define( [ "troopjs/component/widget" ], function CreateModule(Widget) {
 	return Widget.extend({
-		"dom/keyup": function onKeyUp(topic, $event) {
+		"dom/keyup" : function onKeyUp(topic, $event) {
 			var self = this;
 			var $element = self.$element;
 
@@ -8,8 +8,7 @@ define( [ "troopjs/component/widget", "jquery" ], function CreateModule(Widget, 
 			case 13:
 				self.publish("todos/add", $element.val());
 
-				$element
-					.val("");
+				$element.val("");
 			}
 		}
 	});

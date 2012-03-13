@@ -33,7 +33,7 @@ define( [ "troopjs/component/widget", "troopjs/store/local", "jquery", "template
 			self.publish("todos/change", items);
 		});
 	}, {
-		"hub/todos/add": function onAdd(topic, text) {
+		"hub/todos/add" : function onAdd(topic, text) {
 			var self = this;
 
 			// Defer set
@@ -75,7 +75,7 @@ define( [ "troopjs/component/widget", "troopjs/store/local", "jquery", "template
 			this.$element.find("li.done a.destroy").click();
 		},
 
-		"dom/action/status.change": function onStatus(topic, $event, index) {
+		"dom/action/status.change" : function onStatus(topic, $event, index) {
 			var self = this;
 			var $target = $($event.target);
 			var completed = $target.prop("checked");
@@ -105,7 +105,7 @@ define( [ "troopjs/component/widget", "troopjs/store/local", "jquery", "template
 			});
 		},
 
-		"dom/action/delete": function onDelete(topic, $event, index) {
+		"dom/action/delete.click" : function onDelete(topic, $event, index) {
 			var self = this;
 
 			// Update UI
@@ -137,7 +137,7 @@ define( [ "troopjs/component/widget", "troopjs/store/local", "jquery", "template
 			});
 		},
 
-		"dom/action/edit.keyup": function onEditKeyUp(topic, $event, index) {
+		"dom/action/edit.keyup" : function onEditKeyUp(topic, $event, index) {
 			var self = this;
 
 			// Defer set

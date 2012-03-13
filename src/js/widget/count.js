@@ -1,11 +1,11 @@
-define( [ "troopjs/component/widget" ], function CountModule(Widget) {
+define( [ "troopjs/component/widget", "jquery" ], function CountModule(Widget, $) {
 
 	function filter(item, index) {
 		return item === null || item.completed;
 	}
 
 	return Widget.extend({
-		"hub/todos/change": function onChange(topic, items) {
+		"hub/todos/change" : function onChange(topic, items) {
 			var count = $.grep(items, filter, true).length;
 			var $element = this.$element;
 
