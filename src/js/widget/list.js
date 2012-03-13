@@ -67,6 +67,10 @@ define( [ "troopjs/component/widget", "troopjs/store/local", "jquery", "template
 			});
 		},
 
+		"hub/todos/clear" : function onClear(topic) {
+			this.$element.find("li.done a.destroy").click();
+		},
+
 		"dom/action/status.change": function onStatus(topic, $event, index) {
 			var self = this;
 			var $target = $($event.target);
