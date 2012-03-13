@@ -9,8 +9,7 @@ define( [ "troopjs/component/widget", "jquery" ], function CreateModule(Widget, 
 				self.publish("todos/add", $element.val());
 
 				$element
-					.val("")
-					.blur();
+					.val("");
 			}
 		}
 	});
