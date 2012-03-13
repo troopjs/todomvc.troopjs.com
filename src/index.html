@@ -1,26 +1,36 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Troop.js</title>
-<link rel="stylesheet" href="css/app.css" type="text/css" media="screen" charset="utf-8">
-<script type="text/javascript" data-main="js/app.js" src="js/lib/requirejs/require.js"></script>
+	<meta charset="utf-8">
+	<title>Troop.js</title>
+	<link rel="stylesheet" href="css/base.css" type="text/css" media="screen" charset="utf-8">
+	<link rel="stylesheet" href="css/app.css" type="text/css" media="screen" charset="utf-8">
 </head>
 <body>
 	<div id="todoapp">
-		<div class="title"><h1>Todos</h1></div>
-		<div class="content">
-			<div id="create-todo">
-				<input id="new-todo" placeholder="What needs to be done?" type="text" data-weave="widget/create" /> <span class="ui-tooltip-top" style="display: none;">Press Enter to save this task</span>
-			</div>
-
-			<div id="todos"">
-				<ul id="todo-list" data-weave="widget/list"></ul>
-			</div>
-
-			<div id="todo-stats"></div>
-		</div>
+		<header>
+			<h1>Todos</h1>
+			<input id="new-todo" type="text" placeholder="What needs to be done?" data-weave="widget/create">
+		</header>
+		<!-- this section is hidden by default and you be shown when there are todos and hidden when not -->
+		<section id="main">
+			<input id="toggle-all" type="checkbox">
+			<label for="toggle-all">Mark all as complete</label>
+			<ul id="todo-list" data-weave="widget/list"></ul>
+		</section>
+		<!-- this footer needs to be shown with JS when there are todos and hidden when not -->
+		<footer>
+			<a id="clear-completed">Clear completed</a>
+			<div id="todo-count"></div>
+		</footer>
 	</div>
-	<div id="credits">This version by <br /> <a href="http://twitter.com/mikaelkaron">Mikael Karon</a> <br /> based on some code by Brandon Aaron</div>
+	<div id="instructions">
+		Click to edit a todo.
+	</div>
+	<div id="credits">
+		Created by <a href="http://troopjs.com/">Mikael Karon</a>.
+	</div>
+	<!-- scripts here -->
+	<script type="text/javascript" data-main="js/app.js" src="js/lib/requirejs/require.js"></script>
 </body>
 </html>

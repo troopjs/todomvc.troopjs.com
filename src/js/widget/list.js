@@ -70,6 +70,14 @@ define( [ "troopjs/component/widget", "troopjs/store/local", "jquery", "template
 		},
 
 		"dom/action/status": function onStatus(topic, $event, index) {
+			var $target = $($event.target);
+			var completed = $target.prop("checked");
+
+			// Update UI
+			$target
+				.closest("li")
+				.toggleClass("done", completed);
+
 			// Defer get
 			$.Deferred(function deferredSet(dfdSet) {
 				// Defer set
@@ -78,7 +86,7 @@ define( [ "troopjs/component/widget", "troopjs/store/local", "jquery", "template
 				})
 				.done(function doneGet(items) {
 					// Update completed
-					items[index].completed = $($event.target).prop("checked");
+					items[index].completed = completed;
 				})
 				.done(function doneGet(items) {
 					// Set items and resolve set

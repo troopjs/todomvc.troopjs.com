@@ -1,13 +1,21 @@
 <%
 var i = data.i;
 var item = data.item;
-%>
-<li>
-	<div class="todo">
-		<div class="display">
-			<input type="checkbox" class="check" data-action="status(<%= i %>)" <%= (item.completed ? "checked" : "") %> />
-			<span data-type="todo" class="trashcan" data-action="delete(<%= i %>)"></span>
-			<span contenteditable="true" class="todo-item" data-action="edit(<%= i %>)"><%= item.text %></span>
-		</div>
+
+if (item.completed) { %>
+<li class="done">
+	<div class="view">
+		<input class="toggle" type="checkbox" data-action="status(<%= i %>)" checked>
+		<label contenteditable="true" data-action="edit(<%= i %>)"><%= item.text %></label>
+		<a class="destroy" data-action="delete(<%= i %>)"></a>
 	</div>
 </li>
+<% } else { %>
+<li>
+	<div class="view">
+		<input class="toggle" type="checkbox" data-action="status(<%= i %>)">
+		<label contenteditable="true" data-action="edit(<%= i %>)"><%= item.text %></label>
+		<a class="destroy" data-action="delete(<%= i %>)"></a>
+	</div>
+</li>
+<% } %>
