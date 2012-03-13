@@ -67,6 +67,10 @@ define( [ "troopjs/component/widget", "troopjs/store/local", "jquery", "template
 			});
 		},
 
+		"hub/todos/mark" : function onMark(topic, value) {
+			this.$element.find(":checkbox").prop("checked", value).change();
+		},
+
 		"hub/todos/clear" : function onClear(topic) {
 			this.$element.find("li.done a.destroy").click();
 		},
