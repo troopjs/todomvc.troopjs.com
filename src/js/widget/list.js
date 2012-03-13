@@ -2,6 +2,12 @@ define( [ "troopjs/component/widget", "troopjs/store/local", "jquery", "template
 	var NULL = null;
 	var ITEMS = "todo-items";
 
+	/**
+	 * Compacts array by removing values that are null
+	 * @param item Array item
+	 * @param index Item index
+	 * @returns {Boolean} FALSE if item === NULL otherwise TRUE
+	 */
 	function compact(item, index) {
 		return item !== NULL;
 	}
