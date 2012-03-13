@@ -1,4 +1,4 @@
-define( [ "troopjs/component/widget", "troopjs/store/session", "jquery", "template!./item.html" ], function ListModule(Widget, store, $, template) {
+define( [ "troopjs/component/widget", "troopjs/store/local", "jquery", "template!./item.html" ], function ListModule(Widget, store, $, template) {
 	var NULL = null;
 	var ITEMS = "todo-items";
 
