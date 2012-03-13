@@ -1,15 +1,8 @@
 define( [ "troopjs/component/widget", "troopjs/store/local", "jquery", "template!./item.html" ], function ListModule(Widget, store, $, template) {
-	var NULL = null;
 	var ITEMS = "todo-items";
 
-	/**
-	 * Compacts array by removing values that are null
-	 * @param item Array item
-	 * @param index Item index
-	 * @returns {Boolean} FALSE if item === NULL otherwise TRUE
-	 */
-	function compact(item, index) {
-		return item !== NULL;
+	function filter(item, index) {
+		return item === null;
 	}
 
 	return Widget.extend(function ListWidget(element, name) {
@@ -23,7 +16,7 @@ define( [ "troopjs/component/widget", "troopjs/store/local", "jquery", "template
 			})
 			.done(function doneGet(items) {
 				// Set items (empty or compacted) - then resolve
-				store.set(ITEMS, items === NULL ? [] : $.grep(items, compact), dfdInit);
+				store.set(ITEMS, items === null ? [] : $.grep(items, filter, true), dfdInit);
 			});
 		})
 		.done(function doneInit(items) {
@@ -37,8 +30,7 @@ define( [ "troopjs/component/widget", "troopjs/store/local", "jquery", "template
 			});
 		})
 		.done(function doneInit(items) {
-			// Count
-			self.publish("todos/count", items.length);
+			self.publish("todos/change", items);
 		});
 	}, {
 		"hub/todos/add": function onAdd(topic, text) {
@@ -71,12 +63,12 @@ define( [ "troopjs/component/widget", "troopjs/store/local", "jquery", "template
 				});
 			})
 			.done(function doneSet(items) {
-				// Count
-				self.publish("todos/count", $.grep(items, compact).length);
+				self.publish("todos/change", items);
 			});
 		},
 
 		"dom/action/status": function onStatus(topic, $event, index) {
+			var self = this;
 			var $target = $($event.target);
 			var completed = $target.prop("checked");
 
@@ -99,6 +91,9 @@ define( [ "troopjs/component/widget", "troopjs/store/local", "jquery", "template
 					// Set items and resolve set
 					store.set(ITEMS, items, dfdSet);
 				});
+			})
+			.done(function doneSet(items) {
+				self.publish("todos/change", items);
 			});
 		},
 
@@ -122,7 +117,7 @@ define( [ "troopjs/component/widget", "troopjs/store/local", "jquery", "template
 				})
 				.done(function doneGet(items) {
 					// Delete item
-					items[index] = NULL;
+					items[index] = null;
 				})
 				.done(function doneGet(items) {
 					// Set items and resolve set
@@ -130,8 +125,7 @@ define( [ "troopjs/component/widget", "troopjs/store/local", "jquery", "template
 				});
 			})
 			.done(function doneSet(items) {
-				// Count
-				self.publish("todos/count", $.grep(items, compact).length);
+				self.publish("todos/change", items);
 			});
 		},
 
@@ -150,6 +144,9 @@ define( [ "troopjs/component/widget", "troopjs/store/local", "jquery", "template
 				.done(function doneGet(items) {
 					// Set items and resolve set
 					store.set(ITEMS, items, dfdSet);
+				})
+				.done(function doneSet(items) {
+					self.publish("todos/change", items);
 				});
 			});
 		},

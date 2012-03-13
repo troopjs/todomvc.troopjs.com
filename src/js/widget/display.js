@@ -1,7 +1,12 @@
-define( [ "troopjs/component/widget" ], function DisplayModule(Widget) {
+define( [ "troopjs/component/widget", "jquery" ], function DisplayModule(Widget, $) {
+
+	function filter(item, index) {
+		return item === null;
+	}
+
 	return Widget.extend({
-		"hub/todos/count": function onCount(topic, count) {
-			this.$element[count > 0 ? "show" : "hide"]("fast");
+		"hub/todos/change": function onChange(topic, items) {
+			this.$element[$.grep(items, filter, true).length > 0 ? "show" : "hide"]("fast");
 		}
 	});
 });
