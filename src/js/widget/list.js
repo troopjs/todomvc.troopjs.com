@@ -75,7 +75,7 @@ define( [ "troopjs/component/widget", "troopjs/store/local", "jquery", "template
 			this.$element.find("li.done a.destroy").click();
 		},
 
-		"dom/action.click.change.keyup" : $.noop,
+		"dom/action.click.change.dblclick.focusout" : $.noop,
 
 		"dom/action/status.change" : function onStatus(topic, $event, index) {
 			var self = this;
@@ -139,8 +139,29 @@ define( [ "troopjs/component/widget", "troopjs/store/local", "jquery", "template
 			});
 		},
 
-		"dom/action/edit.keyup" : function onEditKeyUp(topic, $event, index) {
+		"dom/action/edit.dblclick" : function onEdit(topic, $event) {
+			var $target = $($event.target);
+
+			// Update UI
+			$target
+				.closest("li")
+				.addClass("editing")
+				.find("input")
+				.val($target.text())
+				.focus();
+		},
+
+		"dom/action/update.focusout" : function onUpdate(topic, $event, index) {
 			var self = this;
+			var $target = $($event.target);
+			var text = $target.val();
+
+			// Update UI
+			$target
+				.closest("li")
+				.removeClass("editing")
+				.find("label")
+				.text(text);
 
 			// Defer set
 			$.Deferred(function deferredSet(dfdSet) {
@@ -151,7 +172,7 @@ define( [ "troopjs/component/widget", "troopjs/store/local", "jquery", "template
 				})
 				.done(function doneGet(items) {
 					// Update text
-					items[index].text = $($event.target).text();
+					items[index].text = text;
 				})
 				.done(function doneGet(items) {
 					// Set items and resolve set
