@@ -139,16 +139,29 @@ define( [ "troopjs/component/widget", "troopjs/store/local", "jquery", "template
 			});
 		},
 
-		"dom/action/edit.dblclick" : function onEdit(topic, $event) {
-			var $target = $($event.target);
+		"dom/action/prepare.dblclick" : function onPrepare(topic, $event, index) {
+			var $li = $($event.target).closest("li");
 
 			// Update UI
-			$target
-				.closest("li")
-				.addClass("editing")
-				.find("input")
-				.val($target.text())
-				.focus();
+			$li.addClass("preparing");
+
+				// Defer set
+			$.Deferred(function deferredSet(dfdSet) {
+				// Defer get
+				$.Deferred(function deferredGet(dfdGet) {
+					// Get items
+					store.get(ITEMS, dfdGet);
+				})
+				.done(function doneGet(items) {
+					// Update UI
+					$li
+						.removeClass("preparing")
+						.addClass("editing")
+						.find("input")
+						.val(items[index].text)
+						.focus();
+				});
+			});
 		},
 
 		"dom/action/update.focusout" : function onUpdate(topic, $event, index) {
