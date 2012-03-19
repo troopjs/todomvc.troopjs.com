@@ -1,5 +1,4 @@
 define( [ "troopjs/component/widget", "troopjs/store/local", "jquery", "template!./item.html" ], function ListModule(Widget, store, $, template) {
-	var ITEMS = "todo-items";
 
 	function filter(item, index) {
 		return item === null;
@@ -12,11 +11,11 @@ define( [ "troopjs/component/widget", "troopjs/store/local", "jquery", "template
 		$.Deferred(function deferredInit(dfdInit) {
 			// Defer get
 			$.Deferred(function deferredGet(dfdGet) {
-				store.get(ITEMS, dfdGet);
+				store.get(self.config.store, dfdGet);
 			})
 			.done(function doneGet(items) {
 				// Set items (empty or compacted) - then resolve
-				store.set(ITEMS, items === null ? [] : $.grep(items, filter, true), dfdInit);
+				store.set(self.config.store, items === null ? [] : $.grep(items, filter, true), dfdInit);
 			});
 		})
 		.done(function doneInit(items) {
@@ -40,7 +39,7 @@ define( [ "troopjs/component/widget", "troopjs/store/local", "jquery", "template
 			$.Deferred(function deferredSet(dfdSet) {
 				// Defer get
 				$.Deferred(function deferredGet(dfdGet) {
-					store.get(ITEMS, dfdGet);
+					store.get(self.config.store, dfdGet);
 				})
 				.done(function doneGet(items) {
 					// Get the next index
@@ -59,7 +58,7 @@ define( [ "troopjs/component/widget", "troopjs/store/local", "jquery", "template
 				})
 				.done(function doneGet(items) {
 					// Set items and resolve set
-					store.set(ITEMS, items, dfdSet);
+					store.set(self.config.store, items, dfdSet);
 				});
 			})
 			.done(function doneSet(items) {
@@ -91,7 +90,7 @@ define( [ "troopjs/component/widget", "troopjs/store/local", "jquery", "template
 			$.Deferred(function deferredSet(dfdSet) {
 				// Defer get
 				$.Deferred(function deferredGet(dfdGet) {
-					store.get(ITEMS, dfdGet);
+					store.get(self.config.store, dfdGet);
 				})
 				.done(function doneGet(items) {
 					// Update completed
@@ -99,7 +98,7 @@ define( [ "troopjs/component/widget", "troopjs/store/local", "jquery", "template
 				})
 				.done(function doneGet(items) {
 					// Set items and resolve set
-					store.set(ITEMS, items, dfdSet);
+					store.set(self.config.store, items, dfdSet);
 				});
 			})
 			.done(function doneSet(items) {
@@ -123,7 +122,7 @@ define( [ "troopjs/component/widget", "troopjs/store/local", "jquery", "template
 				// Defer get
 				$.Deferred(function deferredGet(dfdGet) {
 					// Get the items
-					store.get(ITEMS, dfdGet);
+					store.get(self.config.store, dfdGet);
 				})
 				.done(function doneGet(items) {
 					// Delete item
@@ -131,7 +130,7 @@ define( [ "troopjs/component/widget", "troopjs/store/local", "jquery", "template
 				})
 				.done(function doneGet(items) {
 					// Set items and resolve set
-					store.set(ITEMS, items, dfdSet);
+					store.set(self.config.store, items, dfdSet);
 				});
 			})
 			.done(function doneSet(items) {
@@ -140,6 +139,7 @@ define( [ "troopjs/component/widget", "troopjs/store/local", "jquery", "template
 		},
 
 		"dom/action/prepare.click.dblclick" : function onPrepare(topic, $event, index) {
+			var self = this;
 			var $li = $($event.target).closest("li");
 
 			// Update UI
@@ -150,7 +150,7 @@ define( [ "troopjs/component/widget", "troopjs/store/local", "jquery", "template
 				// Defer get
 				$.Deferred(function deferredGet(dfdGet) {
 					// Get items
-					store.get(ITEMS, dfdGet);
+					store.get(self.config.store, dfdGet);
 				})
 				.done(function doneGet(items) {
 					// Update UI
@@ -181,7 +181,7 @@ define( [ "troopjs/component/widget", "troopjs/store/local", "jquery", "template
 				// Defer get
 				$.Deferred(function deferredGet(dfdGet) {
 					// Get items
-					store.get(ITEMS, dfdGet);
+					store.get(self.config.store, dfdGet);
 				})
 				.done(function doneGet(items) {
 					// Update text
@@ -189,7 +189,7 @@ define( [ "troopjs/component/widget", "troopjs/store/local", "jquery", "template
 				})
 				.done(function doneGet(items) {
 					// Set items and resolve set
-					store.set(ITEMS, items, dfdSet);
+					store.set(self.config.store, items, dfdSet);
 				})
 				.done(function doneSet(items) {
 					self.publish("todos/change", items);
