@@ -74,7 +74,7 @@ define( [ "troopjs/component/widget", "troopjs/store/local", "jquery", "template
 			this.$element.find("li.done a.destroy").click();
 		},
 
-		"dom/action.change.click.dblclick.focusout" : $.noop,
+		"dom/action.change.click.dblclick.focusout.keyup" : $.noop,
 
 		"dom/action/status.change" : function onStatus(topic, $event, index) {
 			var self = this;
@@ -164,7 +164,14 @@ define( [ "troopjs/component/widget", "troopjs/store/local", "jquery", "template
 			});
 		},
 
-		"dom/action/update.focusout" : function onUpdate(topic, $event, index) {
+		"dom/action/update.keyup" : function onUpdateKeyUp(topic, $event) {
+			switch($event.originalEvent.keyCode) {
+			case 13:
+				$($event.target).focusout();
+			}
+		},
+
+		"dom/action/update.focusout" : function onUpdateFocusOut(topic, $event, index) {
 			var self = this;
 			var $target = $($event.target);
 			var text = $target.val();
