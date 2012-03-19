@@ -75,7 +75,7 @@ define( [ "troopjs/component/widget", "troopjs/store/local", "jquery", "template
 			this.$element.find("li.done a.destroy").click();
 		},
 
-		"dom/action.click.change.dblclick.focusout" : $.noop,
+		"dom/action.change.click.dblclick.focusout" : $.noop,
 
 		"dom/action/status.change" : function onStatus(topic, $event, index) {
 			var self = this;
@@ -139,7 +139,7 @@ define( [ "troopjs/component/widget", "troopjs/store/local", "jquery", "template
 			});
 		},
 
-		"dom/action/prepare.dblclick" : function onPrepare(topic, $event, index) {
+		"dom/action/prepare.click.dblclick" : function onPrepare(topic, $event, index) {
 			var $li = $($event.target).closest("li");
 
 			// Update UI

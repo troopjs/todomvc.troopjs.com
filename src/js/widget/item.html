@@ -6,9 +6,9 @@ if (item.completed) { %>
 <li class="done">
 	<div class="view">
 		<input class="toggle" type="checkbox" data-action="status(<%= i %>)" checked>
-		<label data-action="prepare(<%= i %>)"><%= item.text %></label>
+		<label data-action="prepare.dblclick(<%= i %>)"><%= item.text %></label>
 		<a class="destroy" data-action="delete(<%= i %>)"></a>
-		<a class="prepare" data-action="prepare(<%= i %>)"></a>
+		<a class="prepare" data-action="prepare.click(<%= i %>)"></a>
 	</div>
 	<input class="edit" type="text" data-action="update(<%= i %>)">
 </li>
@@ -16,9 +16,9 @@ if (item.completed) { %>
 <li>
 	<div class="view">
 		<input class="toggle" type="checkbox" data-action="status(<%= i %>)">
-		<label data-action="prepare(<%= i %>)"><%= item.text %></label>
+		<label data-action="prepare.dblclick(<%= i %>)"><%= item.text %></label>
 		<a class="destroy" data-action="delete(<%= i %>)"></a>
-		<a class="prepare" data-action="prepare(<%= i %>)"></a>
+		<a class="prepare" data-action="prepare.click(<%= i %>)"></a>
 	</div>
 	<input class="edit" type="text" data-action="update(<%= i %>)">
 </li>
