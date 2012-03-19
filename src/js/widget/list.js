@@ -145,7 +145,7 @@ define( [ "troopjs/component/widget", "troopjs/store/local", "jquery", "template
 			// Update UI
 			$li.addClass("preparing");
 
-				// Defer set
+			// Defer set
 			$.Deferred(function deferredSet(dfdSet) {
 				// Defer get
 				$.Deferred(function deferredGet(dfdGet) {
