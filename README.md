@@ -13,9 +13,7 @@ This project serves two purposes:
 
 For one reason or another there are parts of the application that deviates from the [original specifications](https://github.com/addyosmani/todomvc/wiki/Todo-Application-Specification). We've tried to stay as true as possible, but hey - nobody's perfect. The known deviations are:
 
-* Where the original specification says
-> and third-party JavaScript libraries should be kept in js/libs/
-ours is located in `js/lib`. As none of the other folders (`css`, `js` and `img`) were pluralized, we thought that it was silly to do it here.
+*	Where the original specification says
 
 * When editing an item it the specification says _upon hitting enter the task list is returned to its normal display with the new value for the given task_. We do this, but in addition to this we felt it was natural to do the same when the user removes focus from the input box.
 
