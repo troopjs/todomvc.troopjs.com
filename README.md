@@ -21,7 +21,6 @@ For one reason or another there are parts of the application that deviates from 
 
 	We do this, but we felt it was natural to do the same when the user removes focus from the input box.
 
-
 *	> Above the task list there should be a "Mark all as complete" checkbox. When checked this checkbox should toggle the state of all the other tasks to match the state of the mark all checkbox. This means that if the mark all checkbox was checked and is unchecked after the user clicks it, all other tasks should be unchecked (marked as incomplete). When there are no tasks present, this checkbox should be completely hidden.
 
 	Since the specification does not define what this checkbox should do when only _some_ of the tasks are marked as completed, we've added an indeterminate state that covers this usecase.
