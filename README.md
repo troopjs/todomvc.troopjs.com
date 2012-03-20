@@ -15,6 +15,7 @@ For one reason or another there are parts of the application that deviates from 
 
 *	Where the original specification says
 
-* When editing an item it the specification says _upon hitting enter the task list is returned to its normal display with the new value for the given task_. We do this, but in addition to this we felt it was natural to do the same when the user removes focus from the input box.
+	> and third-party JavaScript libraries
+	> should be kept in js/libs/
 
 * In addition to the defined behavior of the 'mark all' checkbox, we've also added an indeterminate state when only some of the task are marked as complete.
