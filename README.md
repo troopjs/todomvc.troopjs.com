@@ -40,6 +40,7 @@ Before we look at any code we'll take you through the (recommended) directory st
 ├── src
 │   ├── css
 │   └── js
+│       └── lib
 └── test
 ```
 
