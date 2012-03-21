@@ -63,7 +63,7 @@ It's also recommended that there's an `index.html` file in here, and that it is 
 
 So let's start with our todo application. The first thing we should do is to copy the [template](https://github.com/addyosmani/todomvc/tree/master/template) resources to the correct locations. Once we're done with this we'll take a look at the index.html
 
-```text/html
+```html
 <!doctype html>
 <html lang="en">
 <head>
