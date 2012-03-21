@@ -58,14 +58,36 @@ As previously noted the application resources are all contained in the `src` fol
 
 ```
 src
-├── js	javascript
-├── css	cascading stylesheets
-└── img	images
+├── js			javascript
+│   ├── lib		libraries
+│   └── widget	widgets
+├── css			cascading stylesheets
+└── img			images
 ```
 
-It's also recommended that there's an `index.html` file in here, and that it is the application landing-page.
+It's also recommended that there's a `src/index.html` (the application landing-page) and `src/js/app.js` (the application entry point).
 
-So let's start with our todo application. The first thing we should do is to copy the [template](https://github.com/addyosmani/todomvc/tree/master/template) resources to the correct locations. Once we're done with this we'll take a look at index.html
+So before we start we'll create a skeleton structure and add the external libraries needed for TroopJS to function.
+
+>	As previously mentioned submodules should be added using git. For instructions on how to do this you can take a look at the [documentation](http://book.git-scm.com/5_submodules.html).
+
+After this is done the directory structure will look something like this
+
+```
+src
+├── css
+└── js
+    ├── lib
+    │   ├── composejs
+    │   ├── jquery
+    │   ├── requirejs
+    │   ├── troopjs
+    │   ├── troopjs-jquery
+    │   └── troopjs-requirejs
+    └── widget
+```
+
+So now we can start with our todo application. The first thing we should do is to copy the [template](https://github.com/addyosmani/todomvc/tree/master/template) resources to the correct locations. Once we're done with this we'll take a look at index.html
 
 ```html
 <!doctype html>
@@ -148,4 +170,4 @@ Let's do this by adding _weave_ instructions in the HTML using `data-weave` attr
 >
 >	* Locate (and if needed async load) the module containing the widget
 >	* Instantiate the widget (if needed, we do support singleton widgets)
->	* Wire the instance (basically reflect on the instance and scan for well known method signatures)
+>	* Wire the instance (basically reflect on the instance and scan for well known method signatures), more on this later
