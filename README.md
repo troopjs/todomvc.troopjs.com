@@ -61,7 +61,7 @@ As previously noted the application resources are all contained in the `src` fol
 
 It's also recommended that there's an `index.html` file in here, and that it is the application landing-page.
 
-So let's start with our todo application. The first thing we should do is to copy the [template](https://github.com/addyosmani/todomvc/tree/master/template) resources to the correct locations. Once we're done with this we'll take a look at the index.html
+So let's start with our todo application. The first thing we should do is to copy the [template](https://github.com/addyosmani/todomvc/tree/master/template) resources to the correct locations. Once we're done with this we'll take a look at index.html
 
 ```html
 <!doctype html>
@@ -121,22 +121,26 @@ So let's start with our todo application. The first thing we should do is to cop
 
 Looking at this (and the specification) we can already deduce natural parts to break out into separate widgets.
 
-*	Task creation at
-
-	````html
-<input id="new-todo" type="text" placeholder="What needs to be done?">
-````
-
-*	Task list at
-
-	```html
-<ul id="todo-list">
-````
+*	Task Creation
+*	Task Editing
 
 >	There are three main classes of modules in TroopJS
->
 >	*	`component`s are the base building block of anything TroopJS.
 >	*	`gadget`s extend `component`s with methods like `publish` and `ajax`.
 >	*	`widget`s extend `gadget`s with UI related methods like `html` and `trigger`.
 
-After adding wire instructions
+Let's do this by adding _weave_ instructions in the HTML using `data-weave` attributes.
+
+*	````html
+<input id="new-todo" type="text" placeholder="What needs to be done?" data-weave="widget/create">
+````
+
+*	```html
+<ul id="todo-list" data-weave="widget/list">
+````
+
+>	_TroopJS _weaves_ widgets to the DOM by traversing it and finding elements that have a `data-weave` attribute.
+>	When weaving an element TroopJS will
+>	* Locate (and if needed async load) the module containing the widget
+>	* Instantiate the widget (if needed, we do support singleton widgets)
+>	* Wire the instance (basically reflect on the instance and scan for well known method signatures)
