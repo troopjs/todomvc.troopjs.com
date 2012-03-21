@@ -48,7 +48,7 @@ As you and see all application sources are contained in a top `src` folder. The 
 
 Inside the `js` and `build` folder there's a folder called `lib`. This is where external libraries should be stored. External libraries should be [AMD](https://github.com/amdjs/amdjs-api/wiki/AMD) compliant.
 
->	TroopJS makes use of git submodules to manage external libraries. Many of these libraries are not AMD compliant and some of them have platform or tool dependent build systems that would make the build of a TroopJS application prohibitively difficult. To solve this we've created clones of these libraries and committed AMD patches and build output to our clones. This way we can submodule our clones while still tracking upstream changes.
+> TroopJS makes use of git submodules to manage external libraries. Many of these libraries are not AMD compliant and some of them have platform or tool dependent build systems that would make the build of a TroopJS application prohibitively difficult. To solve this we've created clones of these libraries and committed AMD patches and build output to our clones. This way we can submodule our clones while still tracking upstream changes.
 
 Any TroopJS application would (at the minimum) need the `troopjs`, `troopjs-requirejs` and `troopjs-jquery` submodules to work.
 
@@ -86,7 +86,7 @@ src
     │   └── troopjs-requirejs
     └── widget
 ```
->	Note that we've omitted the `img` folder as we'll embed all the images in our CSS
+> Note that we've omitted the `img` folder as we'll embed all the images in our CSS
 
 So now we can start with our todo application. The first thing we should do is to copy the [template](https://github.com/addyosmani/todomvc/tree/master/template) resources to the correct locations. Once we're done with this we'll take a look at index.html
 
@@ -161,7 +161,7 @@ And after that we should set up our application entry point
 <script type="text/javascript" data-main="js/app.js" src="js/lib/requirejs/require.js"></script>
 ```
 
->	TroopJS uses [RequireJS](http://requirejs.org/) for its dependency management. The recomented way to bootstrap a RequireJS application is described [here](http://requirejs.org/docs/start.html#add)
+> TroopJS uses [RequireJS](http://requirejs.org/) for its dependency management. The recomented way to bootstrap a RequireJS application is described [here](http://requirejs.org/docs/start.html#add)
 
 Let's add a boilerplate `src/app.js`
 
@@ -225,7 +225,7 @@ Let's do this by adding _weave_ instructions in the HTML using `data-weave` attr
 
 The first widget to deal with is `widget/create.js'
 
->	Widgets are named after where they are located (relative to `baseUrl`) in the source tree. A general rule is to simply add `.js` to the widget name to locate the file, so `widget/create` can be found in `src/js/widget/create.js`
+> Widgets are named after where they are located (relative to `baseUrl`) in the source tree. A general rule is to simply add `.js` to the widget name to locate the file, so `widget/create` can be found in `src/js/widget/create.js`
 
 ```javascript
 define( [ "troopjs/component/widget" ], function CreateModule(Widget) {
