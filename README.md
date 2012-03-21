@@ -58,11 +58,11 @@ As previously noted the application resources are all contained in the `src` fol
 
 ```
 src
-├── js          javascript
-│   ├── lib     libraries
-│   └── widget  widgets
-├── css         cascading stylesheets
-└── img         images
+├── js
+│   ├── lib
+│   └── widget
+├── css
+└── img
 ```
 
 It's also recommended that there's a `src/index.html` (the application landing-page) and `src/js/app.js` (the application entry point).
@@ -86,6 +86,7 @@ src
     │   └── troopjs-requirejs
     └── widget
 ```
+>	Note that we've omited the `img` folder as we'll embed all the images in our CSS
 
 So now we can start with our todo application. The first thing we should do is to copy the [template](https://github.com/addyosmani/todomvc/tree/master/template) resources to the correct locations. Once we're done with this we'll take a look at index.html
 
