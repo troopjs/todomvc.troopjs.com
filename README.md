@@ -262,4 +262,11 @@ define( [ "troopjs/component/widget" ], function CreateModule(Widget) {
 	The result of this module is extending `Widget`
 
 	> Support for `.extend` is provided by [ComposeJS](https://github.com/kriszyp/compose). TroopJS uses ComposeJS for all its object composition
-	
+
+*	```javascript
+"dom/keyup" : function onKeyUp(topic, $event) {
+```
+
+	This is where wireing becomes important. As mentioned above, wireing scans for well know method signatures, and `dom/*` is one of these. In this instance we're indicating that we want to add a handler for the DOM `keyup` event.
+
+	> All wired handlers always get a `topic` as the first argument. The topic contains information what the trigger to this handler was.
