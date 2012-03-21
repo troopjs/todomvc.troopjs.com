@@ -121,9 +121,18 @@ So let's start with our todo application. The first thing we should do is to cop
 
 Looking at this (and the specification) we can already deduce natural parts to break out into separate widgets.
 
+*	Task creation at ````html
+<input id="new-todo" type="text" placeholder="What needs to be done?">
+````
+
+*	Task list at ```html
+<ul id="todo-list">
+````
+
 >	There are three main classes of modules in TroopJS
 >
 >	*	`component`s are the base building block of anything TroopJS.
->	*	`gadget`s extend `component`s with convenience methods like `publish` and `ajax`.
->	*	`widget`s extend `gadget`s with UI related convenience methods like `html` and `trigger`.
+>	*	`gadget`s extend `component`s with methods like `publish` and `ajax`.
+>	*	`widget`s extend `gadget`s with UI related methods like `html` and `trigger`.
 
+After adding wire instructions
