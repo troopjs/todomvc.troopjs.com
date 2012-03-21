@@ -12,7 +12,7 @@
 		"troopjs-jquery" : "lib/troopjs-jquery/src"
 	},
 
-	appDir : "./src/",
+	appDir : "../src/",
 
 	modules : [ {
 		name : "app",
