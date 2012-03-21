@@ -1,6 +1,6 @@
-## TroopJS TODOS
+# TroopJS TODOS
 
-#### An implementation of [TodoMVC](http://addyosmani.github.com/todomvc/) using [ToopJS](http://troopjs.github.com/)
+__An implementation of [TodoMVC](http://addyosmani.github.com/todomvc/) using [ToopJS](http://troopjs.github.com/)__
 
 ## Introduction
 
@@ -13,7 +13,7 @@ This project serves two purposes:
 
 For one reason or another there are parts of the application that deviates from the [original specifications](https://github.com/addyosmani/todomvc/wiki/Todo-Application-Specification). We've tried to stay as true as possible, but hey - nobody's perfect. The known deviations are:
 
-*	> ...There should be a ```css``` folder for styles, ```js``` folder for JavaScript, ```index.html``` for the markup, a ```img``` folder for images, and third-party JavaScript libraries should be kept in ```js/libs/```.
+*	> ... There should be a ```css``` folder for styles, ```js``` folder for JavaScript, ```index.html``` for the markup, a ```img``` folder for images, and third-party JavaScript libraries should be kept in ```js/libs/```.
 
 	Ours is located in `js/lib`. As none of the other folders (`css`, `js` and `img`) were pluralized, we thought that it was silly to do it here.
 
@@ -27,4 +27,20 @@ For one reason or another there are parts of the application that deviates from 
 
 ## Tutorial
 
+This part of the document gives you a step-by-step tutorial on how the todo application was written.
+
+### Introduction
+
 Before we look at any code we'll take you through the (recommended) directory structure for a TroopJS application.
+
+*	`src`
+	*	`js`
+		*	`lib`
+		*	`widget`
+	*	`css`
+	*	`img`
+*	`test`
+*	`build`
+	*	`lib`
+
+As you and see all application sources are contained in a top `src` folder. The reason for this is that we want to keep _application_ resources separated from _test_ and _build_ resource. And in a similar fashion the `test` folder contains test related resources and the `build` folder contains build related resources.
