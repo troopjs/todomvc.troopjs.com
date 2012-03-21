@@ -130,9 +130,9 @@ Looking at this (and the specification) we can already deduce natural parts to b
 
 >	There are three main classes of modules in TroopJS
 >
->	*	`component`s are the base building block of anything TroopJS.
->	*	`gadget`s extend `component`s with methods like `publish` and `ajax`.
->	*	`widget`s extend `gadget`s with UI related methods like `html` and `trigger`.
+>	*	`component`s are the base building block of anything TroopJS
+>	*	`gadget`s extend `component`s with methods like `publish` and `ajax`
+>	*	`widget`s extend `gadget`s with UI related methods like `html` and `trigger`
 
 Let's do this by adding _weave_ instructions in the HTML using `data-weave` attributes.
 
