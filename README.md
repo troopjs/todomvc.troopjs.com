@@ -29,18 +29,92 @@ For one reason or another there are parts of the application that deviates from 
 
 This part of the document gives you a step-by-step tutorial on how the todo application was written.
 
-### Introduction
+### Directory structure
 
 Before we look at any code we'll take you through the (recommended) directory structure for a TroopJS application.
 
 *	`src`
 	*	`js`
 		*	`lib`
-		*	`widget`
 	*	`css`
 	*	`img`
 *	`test`
 *	`build`
 	*	`lib`
 
-As you and see all application sources are contained in a top `src` folder. The reason for this is that we want to keep _application_ resources separated from _test_ and _build_ resource. And in a similar fashion the `test` folder contains test related resources and the `build` folder contains build related resources.
+As you and see all application sources are contained in a top `src` folder. The reason for this is that we want to keep _application_ resources separated from _test_ and _build_ resource. So to that affect the `test` folder contains test related resources and the `build` folder contains build related resources.
+
+Inside the `js` and `build` folder there's a folder called `lib`. This is where external libraries should be stored. External libraries should be [AMD](https://github.com/amdjs/amdjs-api/wiki/AMD) compliant.
+
+> TroopJS makes use of git submodules to manage external libraries. Many of these libraries are not AMD compliant and some of them have platform or tool dependent build systems that would make the build of a TroopJS application prohibitively difficult. To solve this we've created clones of these libraries and committed AMD patches and build output to our clones. This way we can submodule our clones while still tracking upstream changes.
+
+Any TroopJS application would (at the minimum) need the `troopjs`, `troopjs-requirejs` and `troopjs-jquery` submodules to work.
+
+### Application
+
+As previously noted the application resources are all contained in the `src` folder. In this folder there are a couple of _standard_ folders that most applications would need
+
+*	`src`
+	*	`js` for javascript
+	*	`css` for cascading stylesheets
+	*	`img` for images
+
+It's also recommended that there's an `index.html` file in here, and that it is the application landing-page.
+
+So let's start with our todo application. The first thing we should do is to copy the [template](https://github.com/addyosmani/todomvc/tree/master/template) resources to the correct locations. Once we're done with this we'll take a look at the index.html
+
+```
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Template - TodoMVC</title>
+	<link rel="stylesheet" href="../assets/base.css">
+	<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+	<div id="todoapp">
+		<header>
+			<h1>Todos</h1>
+			<input id="new-todo" type="text" placeholder="What needs to be done?">
+		</header>
+		<!-- this section is hidden by default and you be shown when there are todos and hidden when not -->
+		<section id="main">
+			<input id="toggle-all" type="checkbox">
+			<label for="toggle-all">Mark all as complete</label>
+			<ul id="todo-list">
+				<li class="done">
+					<div class="view">
+						<input class="toggle" type="checkbox" checked>
+						<label>Create a TodoMVC template</label>
+						<a class="destroy"></a>
+					</div>
+					<input class="edit" type="text" value="Create a TodoMVC template">
+				</li>
+				<li>
+					<div class="view">
+						<input class="toggle" type="checkbox">
+						<label>Rule the web</label>
+						<a class="destroy"></a>
+					</div>
+					<input class="edit" type="text" value="Rule the web">
+				</li>
+			</ul>
+		</section>
+		<!-- this footer needs to be shown with JS when there are todos and hidden when not -->
+		<footer>
+			<a id="clear-completed">Clear completed</a>
+			<div id="todo-count"></div>
+		</footer>
+	</div>
+	<div id="instructions">
+		Double-click to edit a todo.
+	</div>
+	<div id="credits">
+		Created by <a href="http://addyosmani.github.com/todomvc/">you</a>.
+	</div>
+	<!-- scripts here -->
+	<script src="js/app.js"></script>
+</body>
+</html>
+```
