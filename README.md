@@ -222,3 +222,25 @@ Let's do this by adding _weave_ instructions in the HTML using `data-weave` attr
 >	* Locate (and if needed async load) the module containing the widget
 >	* Instantiate the widget (if needed, we do support singleton widgets)
 >	* Wire the instance (basically reflect on the instance and scan for well known method signatures), more on this later
+
+The first widget to deal with is `widget/create.js'
+
+>	Widgets are named after where they are located (relative to `baseUrl`) in the source tree. A general rule is to simply add `.js` to the widget name to locate the file, so `widget/create` can be found in `src/js/widget/create.js`
+
+```javascript
+define( [ "troopjs/component/widget" ], function CreateModule(Widget) {
+	return Widget.extend({
+		"dom/keyup" : function onKeyUp(topic, $event) {
+			var self = this;
+			var $element = self.$element;
+
+			switch($event.keyCode) {
+			case 13:
+				self.publish("todos/add", $element.val());
+
+				$element.val("");
+			}
+		}
+	});
+});
+```
