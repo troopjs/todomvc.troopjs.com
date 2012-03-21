@@ -34,14 +34,13 @@ This part of the document gives you a step-by-step tutorial on how the todo appl
 Before we look at any code we'll take you through the (recommended) directory structure for a TroopJS application.
 
 ```
-src/
-	js/
-		lib/
-		css/
-		img/
-	test/
-	build/
-		lib/
+.
+├── build
+│   └── lib
+├── src
+│   ├── css
+│   └── js
+└── test
 ```
 
 As you and see all application sources are contained in a top `src` folder. The reason for this is that we want to keep _application_ resources separated from _test_ and _build_ resource. So to that affect the `test` folder contains test related resources and the `build` folder contains build related resources.
@@ -56,10 +55,12 @@ Any TroopJS application would (at the minimum) need the `troopjs`, `troopjs-requ
 
 As previously noted the application resources are all contained in the `src` folder. In this folder there are a couple of _standard_ folders that most applications would need
 
-*	`src`
-	*	`js` for javascript
-	*	`css` for cascading stylesheets
-	*	`img` for images
+```
+src
+├── js	javascript
+├── css	cascading stylesheets
+└── img	images
+```
 
 It's also recommended that there's an `index.html` file in here, and that it is the application landing-page.
 
