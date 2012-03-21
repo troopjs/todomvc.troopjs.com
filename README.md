@@ -52,7 +52,7 @@ Inside the `js` and `build` folder there's a folder called `lib`. This is where 
 
 Any TroopJS application would (at the minimum) need the `troopjs`, `troopjs-requirejs` and `troopjs-jquery` submodules to work.
 
-### Application
+### Bootstrap
 
 As previously noted the application resources are all contained in the `src` folder. In this folder there are a couple of _standard_ folders that most applications would need
 
@@ -146,8 +146,6 @@ So now we can start with our todo application. The first thing we should do is t
 </html>
 ```
 
-#### Includes
-
 First we'll have to adjust the `head` section to run our application in "stand-alone" mode.
 
 ```html
@@ -155,7 +153,7 @@ First we'll have to adjust the `head` section to run our application in "stand-a
 <link rel="stylesheet" href="css/app.css">
 ```
 
->	Since the template did not include the `base.css` we'll copy it the from the [original](https://github.com/addyosmani/todomvc/blob/master/assets/base.css) into our `css` folder.
+>	Since the template did not include the `base.css` we'll copy it the from the [original](https://github.com/addyosmani/todomvc/blob/master/assets/base.css) into our `css` folder. At the same time we should add an empty `css/app.css` so we don't get a 404
 
 And after that we should set up our application entry point
 
@@ -165,9 +163,43 @@ And after that we should set up our application entry point
 
 >	TroopJS uses [RequireJS](http://requirejs.org/) for its dependency management. The recomented way to bootstrap a RequireJS application is described [here](http://requirejs.org/docs/start.html#add)
 
-#### Initial widgets
+Let's add a boilerplate `src/app.js`
 
-Looking at this (and the specification) we can already deduce natural parts to break out into separate widgets
+```javascript
+require({
+	"baseUrl" : "js",
+	"paths" : {
+		"jquery" : "lib/jquery/dist/jquery",
+		"compose" : "lib/composejs/compose",
+		"deferred" : "lib/troopjs-jquery/src/deferred",
+		"text" : "lib/requirejs/text",
+		"template" : "lib/troopjs-requirejs/src/template",
+		"troopjs" : "lib/troopjs/src",
+		"troopjs-jquery" : "lib/troopjs-jquery/src"
+	}
+}, [
+	"jquery",
+	"troopjs-jquery/action",
+	"troopjs-jquery/destroy",
+	"troopjs-jquery/dimensions",
+	"troopjs-jquery/hashchange",
+	"troopjs-jquery/weave",
+	"troopjs-jquery/wire" ], function App(jQuery) {
+	jQuery(document).ready(function ready($) {
+		var body = this.body;
+
+		$.Deferred(function deferredStart(dfdStart) {
+			$(body).find("[data-weave]").weave(dfdStart);
+		}).done(function doneStart() {
+		});
+	});
+});
+```
+Now we've configure our application to use RequireJS and set up the application entry point.
+
+### Adding some widgets
+
+Lets go back and look at `index.html`. We want to try to break out functionality into small (somewhat selfcontained) widgets, and the natural place to start is adding and displaying todo items.
 
 >	There are three main classes of modules in TroopJS
 >
