@@ -58,11 +58,11 @@ As previously noted the application resources are all contained in the `src` fol
 
 ```
 src
-├── js			javascript
-│   ├── lib		libraries
-│   └── widget	widgets
-├── css			cascading stylesheets
-└── img			images
+├── js          javascript
+│   ├── lib     libraries
+│   └── widget  widgets
+├── css         cascading stylesheets
+└── img         images
 ```
 
 It's also recommended that there's a `src/index.html` (the application landing-page) and `src/js/app.js` (the application entry point).
@@ -78,12 +78,12 @@ src
 ├── css
 └── js
     ├── lib
-    │   ├── composejs
-    │   ├── jquery
-    │   ├── requirejs
-    │   ├── troopjs
-    │   ├── troopjs-jquery
-    │   └── troopjs-requirejs
+    │   ├── composejs
+    │   ├── jquery
+    │   ├── requirejs
+    │   ├── troopjs
+    │   ├── troopjs-jquery
+    │   └── troopjs-requirejs
     └── widget
 ```
 
