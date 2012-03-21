@@ -125,6 +125,7 @@ Looking at this (and the specification) we can already deduce natural parts to b
 *	Task Editing
 
 >	There are three main classes of modules in TroopJS
+>
 >	*	`component`s are the base building block of anything TroopJS.
 >	*	`gadget`s extend `component`s with methods like `publish` and `ajax`.
 >	*	`widget`s extend `gadget`s with UI related methods like `html` and `trigger`.
@@ -139,8 +140,8 @@ Let's do this by adding _weave_ instructions in the HTML using `data-weave` attr
 <ul id="todo-list" data-weave="widget/list">
 ````
 
->	_TroopJS _weaves_ widgets to the DOM by traversing it and finding elements that have a `data-weave` attribute.
->	When weaving an element TroopJS will
+>	TroopJS _weaves_ widgets to the DOM by traversing it and finding elements that have a `data-weave` attribute. When weaving an element TroopJS will
+>
 >	* Locate (and if needed async load) the module containing the widget
 >	* Instantiate the widget (if needed, we do support singleton widgets)
 >	* Wire the instance (basically reflect on the instance and scan for well known method signatures)
