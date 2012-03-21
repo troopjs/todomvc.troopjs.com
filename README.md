@@ -46,7 +46,7 @@ As you and see all application sources are contained in a top `src` folder. The 
 
 Inside the `js` and `build` folder there's a folder called `lib`. This is where external libraries should be stored. External libraries should be [AMD](https://github.com/amdjs/amdjs-api/wiki/AMD) compliant.
 
-> TroopJS makes use of git submodules to manage external libraries. Many of these libraries are not AMD compliant and some of them have platform or tool dependent build systems that would make the build of a TroopJS application prohibitively difficult. To solve this we've created clones of these libraries and committed AMD patches and build output to our clones. This way we can submodule our clones while still tracking upstream changes.
+>	TroopJS makes use of git submodules to manage external libraries. Many of these libraries are not AMD compliant and some of them have platform or tool dependent build systems that would make the build of a TroopJS application prohibitively difficult. To solve this we've created clones of these libraries and committed AMD patches and build output to our clones. This way we can submodule our clones while still tracking upstream changes.
 
 Any TroopJS application would (at the minimum) need the `troopjs`, `troopjs-requirejs` and `troopjs-jquery` submodules to work.
 
@@ -118,3 +118,12 @@ So let's start with our todo application. The first thing we should do is to cop
 </body>
 </html>
 ```
+
+Looking at this (and the specification) we can already deduce natural parts to break out into separate widgets.
+
+>	There are three main classes of modules in TroopJS
+>
+>	*	`component`s are the base building block of anything TroopJS.
+>	*	`gadget`s extend `component`s with convenience methods like `publish` and `ajax`.
+>	*	`widget`s extend `gadget`s with UI related convenience methods like `html` and `trigger`.
+
