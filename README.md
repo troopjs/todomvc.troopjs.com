@@ -86,7 +86,7 @@ src
     │   └── troopjs-requirejs
     └── widget
 ```
->	Note that we've omited the `img` folder as we'll embed all the images in our CSS
+>	Note that we've omitted the `img` folder as we'll embed all the images in our CSS
 
 So now we can start with our todo application. The first thing we should do is to copy the [template](https://github.com/addyosmani/todomvc/tree/master/template) resources to the correct locations. Once we're done with this we'll take a look at index.html
 
@@ -146,10 +146,28 @@ So now we can start with our todo application. The first thing we should do is t
 </html>
 ```
 
-Looking at this (and the specification) we can already deduce natural parts to break out into separate widgets.
+#### Includes
 
-*	Task Creation
-*	Task Editing
+First we'll have to adjust the `head` section to run our application in "stand-alone" mode.
+
+```html
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/app.css">
+```
+
+>	Since the template did not include the `base.css` we'll copy it the from the [original](https://github.com/addyosmani/todomvc/blob/master/assets/base.css) into our `css` folder.
+
+And after that we should set up our application entry point
+
+```html
+<script type="text/javascript" data-main="js/app.js" src="js/lib/requirejs/require.js"></script>
+```
+
+>	TroopJS uses [RequireJS](http://requirejs.org/) for its dependency management. The recomented way to bootstrap a RequireJS application is described [here](http://requirejs.org/docs/start.html#add)
+
+#### Initial widgets
+
+Looking at this (and the specification) we can already deduce natural parts to break out into separate widgets
 
 >	There are three main classes of modules in TroopJS
 >
