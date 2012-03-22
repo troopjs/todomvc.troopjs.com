@@ -7,8 +7,8 @@
 [submodule "src/js/lib/requirejs"]
 	path = src/js/lib/requirejs
 	url = git@github.com:troopjs/requirejs.git
-[submodule "lib/rjs"]
-	path = lib/rjs
+[submodule "build/lib/rjs"]
+	path = build/lib/rjs
 	url = git@github.com:troopjs/r.js.git
 [submodule "src/js/lib/hasjs"]
 	path = src/js/lib/hasjs
@@ -22,8 +22,8 @@
 [submodule "src/js/lib/troopjs-requirejs"]
 	path = src/js/lib/troopjs-requirejs
 	url = git@github.com:troopjs/troopjs-requirejs.git
-[submodule "lib/jshint"]
-	path = lib/jshint
+[submodule "build/lib/jshint"]
+	path = build/lib/jshint
 	url = https://github.com/jshint/jshint.git
 [submodule "src/js/lib/jsonjs"]
 	path = src/js/lib/jsonjs
