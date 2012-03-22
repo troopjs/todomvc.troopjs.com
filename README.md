@@ -41,6 +41,7 @@ Before we look at any code we'll take you through the (recommended) directory st
 │   ├── css
 │   └── js
 │       └── lib
+
 └── test
 ```
 
