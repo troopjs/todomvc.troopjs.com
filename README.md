@@ -346,4 +346,21 @@ return Widget.extend({
 
 	This is where wireing becomes important. As mentioned above, wireing scans for well know method signatures, and `dom/*` is one of these. In this instance we're indicating that we want to add a handler for the DOM `keyup` event.
 
-	> All wired handlers always get a `topic` as the first argument. The topic contains information what the trigger to this handler was.
+	> All wired handlers always get a `topic` as the first argument. The topic contains information what the trigger to this handler was. The rest of the arguments vary depending on trigger. For DOM events the second argument is the original jQuery event object.
+
+*	```javascript
+var self = this;
+var $element = self.$element;
+
+switch($event.keyCode) {
+case 13:
+	self.publish("todos/add", $element.val());
+
+	$element.val("");
+}
+```
+
+	*	Store `this` as `self` so it can be used inside closures
+	*	Store the woven element as `$element`
+	*	Switch on the jQuery event `keyCode`
+	*	If the key was 'enter' (`13`) we `publish` on the `todos/add` topic with the value of `$element` and then reset the value of `$element`
