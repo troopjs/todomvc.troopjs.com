@@ -326,7 +326,7 @@ Let's go through this widget line by line
 
 *	```javascript
 define( [ "troopjs/component/widget" ], function CreateModule(Widget) {
-````
+```
 
 	Start the definition of this module and declare its dependencies. The module is (internally) named `CreateModule` and it depends on `troopjs/component/widget` wich will be available inside the module as `Widget`
 
