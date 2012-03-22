@@ -22,9 +22,6 @@
 [submodule "build/lib/jshint"]
 	path = build/lib/jshint
 	url = https://github.com/jshint/jshint.git
-[submodule "src/js/lib/jsonjs"]
-	path = src/js/lib/jsonjs
-	url = git@github.com:troopjs/JSON-js.git
 [submodule "build/lib/rjs"]
 	path = build/lib/rjs
 	url = git@github.com:troopjs/r.js.git
