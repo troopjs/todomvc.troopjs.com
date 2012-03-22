@@ -199,16 +199,16 @@ require({
 Lets review
 
 *	```javascript
-require({
-```
+	require({
+	```
 
 	Start configuring RequireJS
 
 	> RequireJS supports a [configuration object as the first argument](http://requirejs.org/docs/api.html#config) to the `require` function.
 
 *	```javascript
-"baseUrl" : "js",
-```
+	"baseUrl" : "js",
+	```
 
 	Set the `baseUrl` to `js`.
 
@@ -219,39 +219,39 @@ require({
 	> The baseUrl can be a URL on a different domain as the page that will load require.js. RequireJS script loading works across domains. The only restriction is on text content loaded by text! plugins: those paths should be on the same domain as the page, at least during development. The optimization tool will inline text! plugin resources so after using the optimization tool, you can use resources that reference text! plugin resources from another domain.
 
 *	```javascript
-"paths" : {
-	"jquery" : "lib/jquery/dist/jquery",
-	"compose" : "lib/composejs/compose",
-	"deferred" : "lib/troopjs-jquery/src/deferred",
-	"text" : "lib/requirejs/text",
-	"template" : "lib/troopjs-requirejs/src/template",
-	"troopjs" : "lib/troopjs/src",
-	"troopjs-jquery" : "lib/troopjs-jquery/src"
-}
-```
+	"paths" : {
+		"jquery" : "lib/jquery/dist/jquery",
+		"compose" : "lib/composejs/compose",
+		"deferred" : "lib/troopjs-jquery/src/deferred",
+		"text" : "lib/requirejs/text",
+		"template" : "lib/troopjs-requirejs/src/template",
+		"troopjs" : "lib/troopjs/src",
+		"troopjs-jquery" : "lib/troopjs-jquery/src"
+	}
+	```
 
 	Configure application path 'aliases'.
 
 	> __paths__: path mappings for module names not found directly under baseUrl. The path settings are assumed to be relative to baseUrl, unless the paths setting starts with a "/" or has a URL protocol in it ("like http:"). In those cases, the path is determined relative to baseUrl. Using the above sample config, "some/module"'s script tag will be src="/another/path/some/v1.0/module.js". The path that is used for a module name should not include the .js extension, since the path mapping could be for a directory. The path mapping code will automatically add the .js extension when mapping the module name to a path.
 
 *	```javascript
-}, [
-	"jquery",
-	"troopjs-jquery/action",
-	"troopjs-jquery/destroy",
-	"troopjs-jquery/dimensions",
-	"troopjs-jquery/hashchange",
-	"troopjs-jquery/weave",
-	"troopjs-jquery/wire" ], function App(jQuery) {
-```
+	}, [
+		"jquery",
+		"troopjs-jquery/action",
+		"troopjs-jquery/destroy",
+		"troopjs-jquery/dimensions",
+		"troopjs-jquery/hashchange",
+		"troopjs-jquery/weave",
+		"troopjs-jquery/wire" ], function App(jQuery) {
+	```
 
 	The second argument to `require` is an array of dependencies. In here we're boostrapping all the `troopjs-jquery` modules, and because they themselves are just jQuery plugins there really is not logical place to 'depend' on them except in the appstart.
 
 	> Just like `define` the array of dependencies is [passed to the module entry point as arguments](http://requirejs.org/docs/api.html#defdep)
 
 *	```javascript
-jQuery(document).ready(function ready($) {
-```
+	jQuery(document).ready(function ready($) {
+	```
 
 	Add a standard ready handler to the document
 
@@ -262,7 +262,7 @@ jQuery(document).ready(function ready($) {
 		$(body).find("[data-weave]").weave(dfdStart);
 	}).done(function doneStart() {
 	});
-```
+	```
 
 	Find all children of the `body` element that have `data-weave` attributes and weave them. Wrap all of this in a `deferred` so we can get a callback when everything is done.
 
@@ -286,13 +286,13 @@ Lets go back and look at `index.html`. We want to try to break out functionality
 
 Let's do this by adding _weave_ instructions in the HTML using `data-weave` attributes.
 
-*	````html
-<input id="new-todo" type="text" placeholder="What needs to be done?" data-weave="widget/create">
-```
+*	```html
+	<input id="new-todo" type="text" placeholder="What needs to be done?" data-weave="widget/create">
+	```
 
 *	```html
-<ul id="todo-list" data-weave="widget/list">
-```
+	<ul id="todo-list" data-weave="widget/list">
+	```
 
 >	TroopJS _weaves_ widgets to the DOM by traversing it and finding elements that have a `data-weave` attribute. When weaving an element TroopJS will
 >
@@ -325,39 +325,39 @@ define( [ "troopjs/component/widget" ], function CreateModule(Widget) {
 Let's go through this widget line by line
 
 *	```javascript
-define( [ "troopjs/component/widget" ], function CreateModule(Widget) {
-```
+	define( [ "troopjs/component/widget" ], function CreateModule(Widget) {
+	```
 
 	Start the definition of this module and declare its dependencies. The module is (internally) named `CreateModule` and it depends on `troopjs/component/widget` wich will be available inside the module as `Widget`
 
 	> If you look above in `src/js/app.js` you'll find a path definition for `troopjs` that points to `lib/troopjs/src`. This means that `troopjs/...` actually resolves to `lib/troopjs/src/...`
 
 *	```javascript
-return Widget.extend({
-```
+	return Widget.extend({
+	```
 
 	The result of this module is extending `Widget`
 
 	> Support for `.extend` is provided by [ComposeJS](https://github.com/kriszyp/compose). TroopJS uses ComposeJS for all its object composition
 
 *	```javascript
-"dom/keyup" : function onKeyUp(topic, $event) {
-```
+	"dom/keyup" : function onKeyUp(topic, $event) {
+	```
 
 	This is where wireing becomes important. As mentioned above, wireing scans for well know method signatures, and `dom/*` is one of these. In this instance we're indicating that we want to add a handler for the DOM `keyup` event.
 
 	> All wired handlers always get a `topic` as the first argument. The topic contains information what the trigger to this handler was. The rest of the arguments vary depending on the type of trigger. For DOM triggers the second argument is the original jQuery event object.
 
 *	```javascript
-var self = this;
-var $element = self.$element;
-
-switch($event.keyCode) {
-case 13:
-	self.publish("todos/add", $element.val());
-
-	$element.val("");
-}
-```
+	var self = this;
+	var $element = self.$element;
+	
+	switch($event.keyCode) {
+	case 13:
+		self.publish("todos/add", $element.val());
+	
+		$element.val("");
+	}
+	```
 
 some text
