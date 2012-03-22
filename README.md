@@ -325,15 +325,15 @@ define( [ "troopjs/component/widget" ], function CreateModule(Widget) {
 Let's go through this widget line by line
 
 *	```javascript
-var self = this;
-var $element = self.$element;
-
-switch($event.keyCode) {
-case 13:
-	self.publish("todos/add", $element.val());
-
-	$element.val("");
-}
+	var self = this;
+	var $element = self.$element;
+	
+	switch($event.keyCode) {
+	case 13:
+		self.publish("todos/add", $element.val());
+	
+		$element.val("");
+	}
 ```
 
 some text
