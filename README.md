@@ -360,4 +360,6 @@ Let's go through this widget line by line
 	}
 	```
 
-some text
+	*	Save `this` as `self` so we can use it inside of closures
+	*	Save `self.$element` (woven element) as `$element`
+	*	Check if the `keyCode` of the event was enter - if so `publish` the value on `todos/add` and then reset.
