@@ -33,7 +33,7 @@ This part of the document gives you a step-by-step tutorial on how the todo appl
 
 Before we look at any code we'll take you through the (recommended) directory structure for a TroopJS application.
 
-```
+`
 	.
 	├── build
 	│   └── lib
@@ -55,7 +55,7 @@ Any TroopJS application would (at the minimum) need the `troopjs`, `troopjs-requ
 
 As previously noted the application resources are all contained in the `src` folder. In this folder there are a couple of _standard_ folders that most applications would need
 
-```
+`
 	src
 	├── js
 	│   ├── lib
@@ -71,7 +71,7 @@ So before we start we'll create a skeleton structure and add the external librar
 
 After this is done the directory structure will look something like this
 
-```
+`
 	src
 	├── css
 	└── js
@@ -88,7 +88,7 @@ After this is done the directory structure will look something like this
 
 So now we can start with our todo application. The first thing we should do is to copy the [template](https://github.com/addyosmani/todomvc/tree/master/template) resources to the correct locations. Once we're done with this we'll take a look at index.html
 
-```html
+`html
 	<!doctype html>
 	<html lang="en">
 	<head>
