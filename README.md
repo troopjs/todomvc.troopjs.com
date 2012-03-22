@@ -351,7 +351,7 @@ return Widget.extend({
 *	```javascript
 var self = this;
 var $element = self.$element;
-
+ 
 switch($event.keyCode) {
 case 13:
 	self.publish("todos/add", $element.val());
