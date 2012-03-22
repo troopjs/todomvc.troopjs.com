@@ -288,11 +288,11 @@ Let's do this by adding _weave_ instructions in the HTML using `data-weave` attr
 
 *	````html
 <input id="new-todo" type="text" placeholder="What needs to be done?" data-weave="widget/create">
-````
+```
 
 *	```html
 <ul id="todo-list" data-weave="widget/list">
-````
+```
 
 >	TroopJS _weaves_ widgets to the DOM by traversing it and finding elements that have a `data-weave` attribute. When weaving an element TroopJS will
 >
