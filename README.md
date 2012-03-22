@@ -207,7 +207,7 @@ require({
 	> RequireJS supports a [configuration object as the first argument](http://requirejs.org/docs/api.html#config) to the `require` function.
 
 *	```javascript
-	"baseUrl" : "js",
+"baseUrl" : "js",
 ```
 
 	Set the `baseUrl` to `js`.
@@ -217,6 +217,10 @@ require({
 	> If no baseUrl is explicitly set in the configuration, the default value will be the location of the HTML page that loads require.js. If a data-main attribute is used, that path will become the baseUrl.
 	>
 	> The baseUrl can be a URL on a different domain as the page that will load require.js. RequireJS script loading works across domains. The only restriction is on text content loaded by text! plugins: those paths should be on the same domain as the page, at least during development. The optimization tool will inline text! plugin resources so after using the optimization tool, you can use resources that reference text! plugin resources from another domain.
+
+*	```javascript
+"paths" : {
+```
 
 Now we've configure our application to use RequireJS and set up the application entry point.
 
@@ -279,7 +283,7 @@ define( [ "troopjs/component/widget" ], function CreateModule(Widget) {
 	> If you look above in `src/js/app.js` you'll find a path definition for `troopjs` that points to `lib/troopjs/src`. This means that `troopjs/...` actually resolves to `lib/troopjs/src/...`
 
 *	```javascript
-	return Widget.extend({
+return Widget.extend({
 ```
 
 	The result of this module is extending `Widget`
@@ -287,7 +291,7 @@ define( [ "troopjs/component/widget" ], function CreateModule(Widget) {
 	> Support for `.extend` is provided by [ComposeJS](https://github.com/kriszyp/compose). TroopJS uses ComposeJS for all its object composition
 
 *	```javascript
-		"dom/keyup" : function onKeyUp(topic, $event) {
+"dom/keyup" : function onKeyUp(topic, $event) {
 ```
 
 	This is where wireing becomes important. As mentioned above, wireing scans for well know method signatures, and `dom/*` is one of these. In this instance we're indicating that we want to add a handler for the DOM `keyup` event.
