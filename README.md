@@ -325,9 +325,6 @@ define( [ "troopjs/component/widget" ], function CreateModule(Widget) {
 Let's go through this widget line by line
 
 *	```javascript
-define( [ "troopjs/component/widget" ], function CreateModule(Widget) {
-	return Widget.extend({
-		"dom/keyup" : function onKeyUp(topic, $event) {
 			var self = this;
 			var $element = self.$element;
 
@@ -337,9 +334,6 @@ define( [ "troopjs/component/widget" ], function CreateModule(Widget) {
 
 				$element.val("");
 			}
-		}
-	});
-});
 ```
 
 some text
