@@ -333,14 +333,6 @@ define( [ "troopjs/component/widget" ], function CreateModule(Widget) {
 	> If you look above in `src/js/app.js` you'll find a path definition for `troopjs` that points to `lib/troopjs/src`. This means that `troopjs/...` actually resolves to `lib/troopjs/src/...`
 
 *	```javascript
-return Widget.extend({
-```
-
-	The result of this module is extending `Widget`
-
-	> Support for `.extend` is provided by [ComposeJS](https://github.com/kriszyp/compose). TroopJS uses ComposeJS for all its object composition
-
-*	```javascript
 var self = this;
 var $element = self.$element;
 
