@@ -325,15 +325,23 @@ define( [ "troopjs/component/widget" ], function CreateModule(Widget) {
 Let's go through this widget line by line
 
 *	```javascript
-	var self = this;
-	var $element = self.$element;
-	
-	switch($event.keyCode) {
-	case 13:
-		self.publish("todos/add", $element.val());
-	
-		$element.val("");
-	}
+define( [ "troopjs/component/widget" ], function CreateModule(Widget) {
+```
+
+	Start the definition of this module and declare its dependencies. The module is (internally) named `CreateModule` and it depends on `troopjs/component/widget` wich will be available inside the module as `Widget`
+
+	> If you look above in `src/js/app.js` you'll find a path definition for `troopjs` that points to `lib/troopjs/src`. This means that `troopjs/...` actually resolves to `lib/troopjs/src/...`
+
+*	```javascript
+var self = this;
+var $element = self.$element;
+
+switch($event.keyCode) {
+case 13:
+	self.publish("todos/add", $element.val());
+
+	$element.val("");
+}
 ```
 
 some text
