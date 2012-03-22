@@ -300,6 +300,8 @@ Let's do this by adding _weave_ instructions in the HTML using `data-weave` attr
 >	* Instantiate the widget (if needed, we do support singleton widgets)
 >	* Wire the instance (basically reflect on the instance and scan for well known method signatures), more on this later
 
+#### The create widget
+
 The first widget to deal with is `widget/create.js'
 
 > Widgets are named after where they are located (relative to `baseUrl`) in the source tree. A general rule is to simply add `.js` to the widget name to locate the file, so `widget/create` can be found in `src/js/widget/create.js`
