@@ -236,9 +236,41 @@ require({
 
 *	```javascript
 }, [
+	"jquery",
+	"troopjs-jquery/action",
+	"troopjs-jquery/destroy",
+	"troopjs-jquery/dimensions",
+	"troopjs-jquery/hashchange",
+	"troopjs-jquery/weave",
+	"troopjs-jquery/wire" ], function App(jQuery) {
 ```
 
-	Stop configuring, start depending
+	The second argument to `require` is an array of dependencies. In here we're boostrapping all the `troopjs-jquery` modules, and because they themselves are just jQuery plugins there really is not logical place to 'depend' on them except in the appstart.
+
+	> Just like `define` the array of dependencies is [passed to the module entry point as arguments](http://requirejs.org/docs/api.html#defdep)
+
+*	```javascript
+jQuery(document).ready(function ready($) {
+```
+
+	Add a standard ready handler to the document
+
+*	```javascript
+	var body = this.body;
+
+	$.Deferred(function deferredStart(dfdStart) {
+		$(body).find("[data-weave]").weave(dfdStart);
+	}).done(function doneStart() {
+	});
+```
+
+	Find all children of the `body` element that have `data-weave` attributes and weave them. Wrap all of this in a `deferred` so we can get a callback when everything is done.
+
+	> As we're not really doing anything when the deferred is resolved, we could have written the whole code block above in a much shorter way
+	>
+	> ```javascript
+	> $(this.body).find("[data-weave]").weave();
+	> ```
 
 Now we've configure our application to use RequireJS and set up the application entry point.
 
