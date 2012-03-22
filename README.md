@@ -322,7 +322,7 @@ define( [ "troopjs/component/widget" ], function CreateModule(Widget) {
 });
 ```
 
-Let's go through this widget line by line
+Let's go through this widget
 
 *	```javascript
 	define( [ "troopjs/component/widget" ], function CreateModule(Widget) {
