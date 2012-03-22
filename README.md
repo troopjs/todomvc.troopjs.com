@@ -220,7 +220,25 @@ require({
 
 *	```javascript
 "paths" : {
+	"jquery" : "lib/jquery/dist/jquery",
+	"compose" : "lib/composejs/compose",
+	"deferred" : "lib/troopjs-jquery/src/deferred",
+	"text" : "lib/requirejs/text",
+	"template" : "lib/troopjs-requirejs/src/template",
+	"troopjs" : "lib/troopjs/src",
+	"troopjs-jquery" : "lib/troopjs-jquery/src"
+}
 ```
+
+	Configure application path 'aliases'.
+
+	> __paths__: path mappings for module names not found directly under baseUrl. The path settings are assumed to be relative to baseUrl, unless the paths setting starts with a "/" or has a URL protocol in it ("like http:"). In those cases, the path is determined relative to baseUrl. Using the above sample config, "some/module"'s script tag will be src="/another/path/some/v1.0/module.js". The path that is used for a module name should not include the .js extension, since the path mapping could be for a directory. The path mapping code will automatically add the .js extension when mapping the module name to a path.
+
+*	```javascript
+}, [
+```
+
+	Stop configuring, start depending
 
 Now we've configure our application to use RequireJS and set up the application entry point.
 
