@@ -41,7 +41,6 @@ Before we look at any code we'll take you through the (recommended) directory st
 │   ├── css
 │   └── js
 │       └── lib
-
 └── test
 ```
 
@@ -352,14 +351,13 @@ return Widget.extend({
 *	```javascript
 var self = this;
 var $element = self.$element;
+
 switch($event.keyCode) {
 case 13:
 	self.publish("todos/add", $element.val());
+
 	$element.val("");
 }
 ```
 
-	*	Store `this` as `self` so it can be used inside closures
-	*	Store the woven element as `$element`
-	*	Switch on the jQuery event `keyCode`
-	*	If the key was 'enter' (`13`) we `publish` on the `todos/add` topic with the value of `$element` and then reset the value of `$element`
+some text
