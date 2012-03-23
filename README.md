@@ -50,8 +50,6 @@ Inside the `js` and `build` folder there's a folder called `lib`. This is where 
 
 > TroopJS makes use of git submodules to manage external libraries. Many of these libraries are not AMD compliant and some of them have platform or tool dependent build systems that would make the build of a TroopJS application prohibitively difficult. To solve this we've created clones of these libraries and committed AMD patches and build output to our clones. This way we can submodule our clones while still tracking upstream changes.
 
-Any TroopJS application would (at the minimum) need the `troopjs`, `troopjs-requirejs` and `troopjs-jquery` submodules to work.
-
 ### Bootstrap
 
 As previously noted the application resources are all contained in the `src` folder. In this folder there are a couple of _standard_ folders that most applications would need
@@ -78,12 +76,9 @@ src
 ├── css
 └── js
     ├── lib
-    │   ├── composejs
     │   ├── jquery
     │   ├── requirejs
-    │   ├── troopjs
-    │   ├── troopjs-jquery
-    │   └── troopjs-requirejs
+    │   └── troopjs-bundle
     └── widget
 ```
 > Note that we've omitted the `img` folder as we'll embed all the images in our CSS
@@ -170,21 +165,10 @@ require({
 	"baseUrl" : "js",
 	"paths" : {
 		"jquery" : "lib/jquery/dist/jquery",
-		"compose" : "lib/composejs/compose",
-		"deferred" : "lib/troopjs-jquery/src/deferred",
-		"text" : "lib/requirejs/text",
-		"template" : "lib/troopjs-requirejs/src/template",
-		"troopjs" : "lib/troopjs/src",
-		"troopjs-jquery" : "lib/troopjs-jquery/src"
-	}
-}, [
-	"jquery",
-	"troopjs-jquery/action",
-	"troopjs-jquery/destroy",
-	"troopjs-jquery/dimensions",
-	"troopjs-jquery/hashchange",
-	"troopjs-jquery/weave",
-	"troopjs-jquery/wire" ], function App(jQuery) {
+		"troopjs-bundle" : "lib/troopjs-bundle/dist/troopjs-bundle-mini.min"
+	},
+	"deps": [ "troopjs-bundle" ]
+}, [ "jquery" ], function App(jQuery) {
 	jQuery(document).ready(function ready($) {
 		var body = this.body;
 
@@ -221,13 +205,8 @@ Lets review
 *	```javascript
 	"paths" : {
 		"jquery" : "lib/jquery/dist/jquery",
-		"compose" : "lib/composejs/compose",
-		"deferred" : "lib/troopjs-jquery/src/deferred",
-		"text" : "lib/requirejs/text",
-		"template" : "lib/troopjs-requirejs/src/template",
-		"troopjs" : "lib/troopjs/src",
-		"troopjs-jquery" : "lib/troopjs-jquery/src"
-	}
+		"troopjs-bundle" : "lib/troopjs-bundle/dist/troopjs-bundle-mini.min"
+	},
 	```
 
 	Configure application path 'aliases'.
@@ -235,17 +214,18 @@ Lets review
 	> __paths__: path mappings for module names not found directly under baseUrl. The path settings are assumed to be relative to baseUrl, unless the paths setting starts with a "/" or has a URL protocol in it ("like http:"). In those cases, the path is determined relative to baseUrl. Using the above sample config, "some/module"'s script tag will be src="/another/path/some/v1.0/module.js". The path that is used for a module name should not include the .js extension, since the path mapping could be for a directory. The path mapping code will automatically add the .js extension when mapping the module name to a path.
 
 *	```javascript
-	}, [
-		"jquery",
-		"troopjs-jquery/action",
-		"troopjs-jquery/destroy",
-		"troopjs-jquery/dimensions",
-		"troopjs-jquery/hashchange",
-		"troopjs-jquery/weave",
-		"troopjs-jquery/wire" ], function App(jQuery) {
+	"deps": [ "troopjs-bundle" ]
 	```
 
-	The second argument to `require` is an array of dependencies. In here we're boostrapping all the `troopjs-jquery` modules, and because they themselves are just jQuery plugins there really is not logical place to 'depend' on them except in the appstart.
+	Depend on `troopjs-bundle`
+
+	> __deps__: An array of dependencies to load. Useful when require is defined as a config object before require.js is loaded, and you want to specify dependencies to load as soon as require() is defined.
+	
+*	```javascript
+	}, [ "jquery" ], function App(jQuery) {
+	```
+
+	The second argument to `require` is an array of dependencies.
 
 	> Just like `define` the array of dependencies is [passed to the module entry point as arguments](http://requirejs.org/docs/api.html#defdep)
 
