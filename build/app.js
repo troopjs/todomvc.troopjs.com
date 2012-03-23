@@ -13,8 +13,6 @@
 
 	"appDir" : "../src/",
 
-	"optimize" : "none",
-
 	"modules": [{
 		"name" : "app-built",
 		"include" : [
