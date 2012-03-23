@@ -2,7 +2,7 @@ require({
 	"baseUrl" : "js",
 	"paths" : {
 		"jquery" : "lib/jquery/dist/jquery",
-		"troopjs-bundle" : "lib/troopjs-bundle/dist/troopjs-bundle-mini"
+		"troopjs-bundle" : "lib/troopjs-bundle/dist/troopjs-bundle-mini.min"
 	},
 	"deps": [ "troopjs-bundle" ]
 }, [ "jquery" ], function App(jQuery) {

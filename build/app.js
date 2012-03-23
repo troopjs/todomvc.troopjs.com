@@ -5,10 +5,10 @@
 		"troopjs-bundle" : "lib/troopjs-bundle/dist/troopjs-bundle-mini"
 	},
 
-	appDir : "../src/",
+	"appDir" : "../src/",
 
-	name : "app",
-	include : [
+	"name" : "app",
+	"include" : [
 		"widget/clear",
 		"widget/count",
 		"widget/create",
