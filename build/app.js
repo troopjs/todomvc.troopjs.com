@@ -1,11 +1,13 @@
 ({
 	"baseUrl" : "js",
+
 	"paths" : {
 		"jquery" : "lib/jquery/dist/jquery",
+		"troopjs-bundle" : "lib/troopjs-bundle/dist/troopjs-bundle",
 		"template" : "lib/troopjs-bundle/src/lib/troopjs-requirejs/src/template",
-		"text" : "lib/troopjs-bundle/src/lib/requirejs/text",
-		"troopjs-bundle" : "lib/troopjs-bundle/dist/troopjs-bundle-mini"
+		"text" : "lib/troopjs-bundle/src/lib/requirejs/text"
 	},
+
 	"deps": [ "troopjs-bundle" ],
 
 	"appDir" : "../src/",
