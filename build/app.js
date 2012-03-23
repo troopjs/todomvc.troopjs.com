@@ -12,13 +12,18 @@
 
 	"appDir" : "../src/",
 
-	"name" : "app",
-	"include" : [
-		"widget/clear",
-		"widget/count",
-		"widget/create",
-		"widget/display",
-		"widget/list",
-		"widget/mark"
-	]
+	"modules": [{
+		"name" : "troopjs-bundle",
+		"create" : true
+	}, {
+		"name" : "app",
+		"include" : [
+			"widget/clear",
+			"widget/count",
+			"widget/create",
+			"widget/display",
+			"widget/list",
+			"widget/mark"
+		]
+	}]
 })
