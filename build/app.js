@@ -24,6 +24,7 @@
 			"widget/list",
 			"widget/mark"
 		],
+		"excludeShallow": [ "template", "text" ],
 		"create": true
 	}]
 })
