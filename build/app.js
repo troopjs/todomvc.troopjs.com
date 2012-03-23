@@ -9,7 +9,7 @@
 		"almond" : "lib/almond/almond"
 	},
 
-	"deps": [ "almond", "config", "jquery", "troopjs-bundle" ],
+	"deps": [ "almond", "jquery", "config", "troopjs-bundle" ],
 
 	"appDir" : "../src/",
 
