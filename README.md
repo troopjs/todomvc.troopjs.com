@@ -170,12 +170,7 @@ require({
 	"deps": [ "troopjs-bundle" ]
 }, [ "jquery" ], function App(jQuery) {
 	jQuery(document).ready(function ready($) {
-		var body = this.body;
-
-		$.Deferred(function deferredStart(dfdStart) {
-			$(body).find("[data-weave]").weave(dfdStart);
-		}).done(function doneStart() {
-		});
+		$(this.body).find("[data-weave]").weave();
 	});
 });
 ```
@@ -236,21 +231,10 @@ Lets review
 	Add a standard ready handler to the document
 
 *	```javascript
-	var body = this.body;
-
-	$.Deferred(function deferredStart(dfdStart) {
-		$(body).find("[data-weave]").weave(dfdStart);
-	}).done(function doneStart() {
-	});
+	$(body).find("[data-weave]").weave(dfdStart);
 	```
 
 	Find all children of the `body` element that have `data-weave` attributes and weave them. Wrap all of this in a `deferred` so we can get a callback when everything is done.
-
-	> As we're not really doing anything when the deferred is resolved, we could have written the whole code block above in a much shorter way
-	>
-	> ```javascript
-	> $(this.body).find("[data-weave]").weave();
-	> ```
 
 Now we've configure our application to use RequireJS and set up the application entry point.
 
