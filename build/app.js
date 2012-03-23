@@ -5,22 +5,27 @@
 		"jquery" : "lib/jquery/dist/jquery",
 		"troopjs-bundle" : "lib/troopjs-bundle/dist/troopjs-bundle",
 		"template" : "lib/troopjs-bundle/src/lib/troopjs-requirejs/src/template",
-		"text" : "lib/troopjs-bundle/src/lib/requirejs/text"
+		"text" : "lib/troopjs-bundle/src/lib/requirejs/text",
+		"almond" : "lib/almond/almond"
 	},
 
-	"deps": [ "troopjs-bundle" ],
+	"deps": [ "almond", "config", "jquery", "troopjs-bundle" ],
 
 	"appDir" : "../src/",
 
+	"optimize" : "none",
+
 	"modules": [{
-		"name" : "app",
+		"name" : "app-built",
 		"include" : [
+			"app",
 			"widget/clear",
 			"widget/count",
 			"widget/create",
 			"widget/display",
 			"widget/list",
 			"widget/mark"
-		]
+		],
+		"create": true
 	}]
 })

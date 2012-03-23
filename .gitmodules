@@ -13,3 +13,6 @@
 [submodule "build/lib/rjs"]
 	path = build/lib/rjs
 	url = git@github.com:troopjs/r.js.git
+[submodule "src/js/lib/almond"]
+	path = src/js/lib/almond
+	url = git@github.com:troopjs/almond.git
