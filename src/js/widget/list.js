@@ -1,4 +1,4 @@
-define( [ "troopjs/component/widget", "troopjs/store/local", "jquery", "template!./item.html" ], function ListModule(Widget, store, $, template) {
+define( [ "troopjs-core/component/widget", "troopjs-core/store/local", "jquery", "template!./item.html" ], function ListModule(Widget, store, $, template) {
 
 	function filter(item, index) {
 		return item === null;

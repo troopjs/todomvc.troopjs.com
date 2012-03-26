@@ -1,4 +1,4 @@
-define( [ "troopjs/component/widget" ], function MarkModule(Widget) {
+define( [ "troopjs-core/component/widget" ], function MarkModule(Widget) {
 	var INDETERMINATE = "indeterminate";
 	var CHECKED = "checked";
 

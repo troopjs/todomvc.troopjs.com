@@ -1,4 +1,4 @@
-define( [ "troopjs/component/widget" ], function CreateModule(Widget) {
+define( [ "troopjs-core/component/widget" ], function CreateModule(Widget) {
 	return Widget.extend({
 		"dom/keyup" : function onKeyUp(topic, $event) {
 			var self = this;

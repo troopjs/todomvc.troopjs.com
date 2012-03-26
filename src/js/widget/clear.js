@@ -1,4 +1,4 @@
-define( [ "troopjs/component/widget", "jquery" ], function ClearModule(Widget, $) {
+define( [ "troopjs-core/component/widget", "jquery" ], function ClearModule(Widget, $) {
 
 	function filter(item, index) {
 		return item === null || !item.completed;
