@@ -6,10 +6,10 @@
 		"troopjs-bundle" : "lib/troopjs-bundle/dist/troopjs-bundle",
 		"template" : "lib/troopjs-bundle/src/lib/troopjs-requirejs/src/template",
 		"text" : "lib/troopjs-bundle/src/lib/requirejs/text",
-		"almond" : "lib/almond/almond"
+		"requireLib" : "lib/almond/almond"
 	},
 
-	"deps": [ "almond", "jquery", "config", "troopjs-bundle" ],
+	"deps": [ "requireLib", "jquery", "config", "troopjs-bundle" ],
 
 	"appDir" : "../src/",
 
