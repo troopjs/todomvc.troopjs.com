@@ -1,3 +1,5 @@
+@import url("base.css");
+
 /* base.css overrides */
 #todo-list li .prepare {
 	display: none;
