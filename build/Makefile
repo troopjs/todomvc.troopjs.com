@@ -4,16 +4,20 @@ SOURCES := $(wildcard ../src/*)
 all: clean prepare copy css js
 
 clean:
-	rm -rf $(DIST)
+	@@echo "Removing" $(DIST)
+	@@rm -rf $(DIST)
 
 copy: prepare $(DIST) $(SOURCES)
-	cp --recursive --target-directory=$(DIST) $(SOURCES)
+	@@echo "Copying [" $(SOURCES) "] to" $(DIST)
+	@@cp --recursive --target-directory=$(DIST) $(SOURCES)
 
 prepare:
-	mkdir -p $(DIST)
+	@@echo "Creating" $(DIST)
+	@@mkdir -p $(DIST)
 
 js: copy
-	node lib/rjs/dist/r.js -o \
+	@@echo "Compiling JS"
+	@@node lib/rjs/dist/r.js -o \
 		out=$(DIST)/js/app-built.js \
 		baseUrl=../dist/js \
 		paths.jquery=lib/jquery/dist/jquery \
@@ -26,7 +30,8 @@ js: copy
 		excludeShallow=template,text
 
 css: copy
-	node lib/rjs/dist/r.js -o \
+	@@echo "Compiling CSS"
+	@@node lib/rjs/dist/r.js -o \
 		out=$(DIST)/css/app-built.css\
 		cssIn=$(DIST)/css/app.css
 
