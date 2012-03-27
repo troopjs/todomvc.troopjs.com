@@ -1,7 +1,7 @@
 DIST := ../dist
 SOURCES := $(wildcard ../src/*)
 
-all: clean prepare copy css js
+all: prepare copy css js
 
 clean:
 	@@echo "Removing" $(DIST)
@@ -9,7 +9,7 @@ clean:
 
 copy: prepare $(DIST) $(SOURCES)
 	@@echo "Copying [" $(SOURCES) "] to" $(DIST)
-	@@cp --recursive --target-directory=$(DIST) $(SOURCES)
+	@@cp --update --recursive --target-directory=$(DIST) $(SOURCES)
 
 prepare:
 	@@echo "Creating" $(DIST)
@@ -35,4 +35,4 @@ css: copy
 		out=$(DIST)/css/app-built.css\
 		cssIn=$(DIST)/css/app.css
 
-.PHONY: all
+.PHONY: all clean
