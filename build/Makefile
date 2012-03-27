@@ -25,8 +25,7 @@ js: copy
 		paths.template=lib/troopjs-bundle/src/lib/troopjs-requirejs/src/template \
 		paths.text=lib/troopjs-bundle/src/lib/requirejs/text \
 		paths.requireLib=lib/almond/almond \
-		deps=requireLib,jquery,config,troopjs-bundle \
-		include=app,widget/clear,widget/count,widget/create,widget/display,widget/list,widget/mark \
+		include=requireLib,jquery,config,troopjs-bundle,app,widget/clear,widget/count,widget/create,widget/display,widget/list,widget/mark \
 		excludeShallow=template,text
 
 css: copy
