@@ -15,7 +15,7 @@ prepare:
 	@@echo "Creating" $(DIST)
 	@@mkdir -p $(DIST)
 
-js: copy
+js: copy header.txt footer.txt
 	@@echo "Compiling JS"
 	@@node lib/rjs/dist/r.js -o \
 		out=$(DIST)/js/app-built.js \
@@ -26,7 +26,10 @@ js: copy
 		paths.text=lib/troopjs-bundle/src/lib/requirejs/text \
 		paths.requireLib=lib/almond/almond \
 		include=requireLib,jquery,config,troopjs-bundle,app,widget/clear,widget/count,widget/create,widget/display,widget/list,widget/mark \
-		excludeShallow=template,text
+		excludeShallow=template,text \
+		preserveLicenseComments=false \
+		wrap.startFile=header.txt \
+		wrap.endFile=footer.txt
 
 css: copy
 	@@echo "Compiling CSS"
