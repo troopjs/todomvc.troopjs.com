@@ -144,11 +144,10 @@ So now we can start with our todo application. The first thing we should do is t
 First we'll have to adjust the `head` section to run our application in "stand-alone" mode.
 
 ```html
-<link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/app.css">
 ```
 
->	Since the template did not include the `base.css` we'll copy it the from the [original](https://github.com/addyosmani/todomvc/blob/master/assets/base.css) into our `css` folder. At the same time we should add an empty `css/app.css` so we don't get a 404
+>	Since the template did not include the `base.css` we'll copy it the from the [original](https://github.com/addyosmani/todomvc/blob/master/assets/base.css) into our `css` folder. At the same time we should add a `css/app.css` with a `@import url("base.css")`. The reason for using `@import` instead of having two `link` elements is that eventually we'll want to run an optimizer on this project, and the optimizer understands `@import`, but not individual `link`.
 
 And after that we should set up our application entry point
 
