@@ -1,15 +1,41 @@
+SRC=../src
 DIST := ../dist
-SOURCES := $(wildcard ../src/*)
+JS := $(DIST)/js
+CSS := $(DIST)/css
+R := lib/rjs/dist/r.js
 
-all: prepare copy css js
+# All widgets
+WIDGET := $(patsubst $(JS)/%.js,%,$(shell find $(JS)/widget -type f -name "*.js"))
+
+#  All modules
+INCLUDE := jquery \
+	requireLib \
+	config \
+	troopjs-bundle \
+	$(WIDGET) \
+	app
+
+# A literal comma
+comma :=,
+
+# A literal space
+space :=
+space +=
+
+# Joins elements of the list in arg 2 with the given separator
+#   1. Element separator
+#   2. The list
+join-with = $(subst $(space),$1,$(strip $2))
+
+all: prepare copy js css
 
 clean:
 	@@echo "Removing" $(DIST)
 	@@rm -rf $(DIST)
 
-copy: prepare $(DIST) $(SOURCES)
-	@@echo "Copying [" $(SOURCES) "] to" $(DIST)
-	@@cp --update --recursive --target-directory=$(DIST) $(SOURCES)
+copy: prepare $(DIST) $(SRC)
+	@@echo "Copying" $(SRC) "to" $(DIST)
+	@@cp --update --recursive $(SRC)/* $(DIST)
 
 prepare:
 	@@echo "Creating" $(DIST)
@@ -17,15 +43,15 @@ prepare:
 
 js: copy header.txt footer.txt
 	@@echo "Compiling JS"
-	@@node lib/rjs/dist/r.js -o \
-		out=$(DIST)/js/app-built.js \
-		baseUrl=../dist/js \
+	@@node $(R) -o \
+		out=$(JS)/app-built.js \
+		baseUrl=$(JS) \
 		paths.jquery=lib/jquery/dist/jquery \
 		paths.troopjs-bundle=lib/troopjs-bundle/dist/troopjs-bundle \
 		paths.template=lib/troopjs-bundle/src/lib/troopjs-requirejs/src/template \
 		paths.text=lib/troopjs-bundle/src/lib/requirejs/text \
 		paths.requireLib=lib/almond/almond \
-		include=requireLib,jquery,config,troopjs-bundle,app,widget/clear,widget/count,widget/create,widget/display,widget/list,widget/mark \
+		include=$(call join-with,$(comma),$(INCLUDE)) \
 		excludeShallow=template,text \
 		preserveLicenseComments=false \
 		wrap.startFile=header.txt \
@@ -33,8 +59,8 @@ js: copy header.txt footer.txt
 
 css: copy
 	@@echo "Compiling CSS"
-	@@node lib/rjs/dist/r.js -o \
-		out=$(DIST)/css/app-built.css\
-		cssIn=$(DIST)/css/app.css
+	@@node $(R) -o \
+		out=$(CSS)/app-built.css\
+		cssIn=$(CSS)/app.css
 
 .PHONY: all clean
