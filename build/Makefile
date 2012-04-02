@@ -1,11 +1,12 @@
 SRC=../src
+SRC_JS := $(SRC)/js
 DIST := ../dist
-JS := $(DIST)/js
-CSS := $(DIST)/css
+DIST_JS := $(DIST)/js
+DIST_CSS := $(DIST)/css
 R := lib/rjs/dist/r.js
 
 # All widgets
-WIDGET := $(patsubst $(JS)/%.js,%,$(shell find $(JS)/widget -type f -name "*.js"))
+WIDGET := $(patsubst $(SRC_JS)/%.js,%,$(shell find $(SRC_JS)/widget -type f -name "*.js"))
 
 #  All modules
 INCLUDE := jquery \
@@ -44,8 +45,8 @@ prepare:
 js: copy header.txt footer.txt
 	@@echo "Compiling JS"
 	@@node $(R) -o \
-		out=$(JS)/app-built.js \
-		baseUrl=$(JS) \
+		out=$(DIST_JS)/app-built.js \
+		baseUrl=$(DIST_JS) \
 		paths.jquery=lib/jquery/dist/jquery \
 		paths.troopjs-bundle=lib/troopjs-bundle/dist/troopjs-bundle \
 		paths.template=lib/troopjs-bundle/src/lib/troopjs-requirejs/src/template \
@@ -60,7 +61,7 @@ js: copy header.txt footer.txt
 css: copy
 	@@echo "Compiling CSS"
 	@@node $(R) -o \
-		out=$(CSS)/app-built.css\
-		cssIn=$(CSS)/app.css
+		out=$(DIST_CSS)/app-built.css\
+		cssIn=$(DIST_CSS)/app.css
 
 .PHONY: all clean
