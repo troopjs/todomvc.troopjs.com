@@ -309,7 +309,7 @@ Let's go through this widget
 	"dom/keyup" : function onKeyUp(topic, $event) {
 	```
 
-	This is where wireing becomes important. As mentioned above, wireing scans for well know method signatures, and `dom/*` is one of these. In this instance we're indicating that we want to add a handler for the DOM `keyup` event.
+	This is where wiring becomes important. As mentioned above, wireing scans for well know method signatures, and `dom/*` is one of these. In this instance we're indicating that we want to add a handler for the DOM `keyup` event.
 
 	> All wired handlers always get a `topic` as the first argument. The topic contains information what the trigger to this handler was. The rest of the arguments vary depending on the type of trigger. For DOM triggers the second argument is the original jQuery event object.
 
