@@ -44,7 +44,7 @@ Before we look at any code we'll take you through the (recommended) directory st
 └── test
 ```
 
-As you and see all application sources are contained in a top `src` folder. The reason for this is that we want to keep _application_ resources separated from _test_ and _build_ resource. So to that affect the `test` folder contains test related resources and the `build` folder contains build related resources.
+As you and see all application sources are contained in a top `src` folder. The reason for this is that we want to keep _application_ resources separated from _test_ and _build_ resources. So to that effect, the `test` folder contains test related resources and the `build` folder contains build related resources.
 
 Inside the `js` and `build` folder there's a folder called `lib`. This is where external libraries should be stored. External libraries should be [AMD](https://github.com/amdjs/amdjs-api/wiki/AMD) compliant.
 
@@ -155,7 +155,7 @@ And after that we should set up our application entry point
 <script type="text/javascript" data-main="js/app.js" src="js/lib/requirejs/require.js"></script>
 ```
 
-> TroopJS uses [RequireJS](http://requirejs.org/) for its dependency management. The recomented way to bootstrap a RequireJS application is described [here](http://requirejs.org/docs/start.html#add)
+> TroopJS uses [RequireJS](http://requirejs.org/) for its dependency management. The recommended way to bootstrap a RequireJS application is described [here](http://requirejs.org/docs/start.html#add)
 
 Let's add a `src/app.js`
 
@@ -213,7 +213,7 @@ Lets review
 
 	Depend on `troopjs-bundle`
 
-	> __deps__: An array of dependencies to load. Useful when require is defined as a config object before require.js is loaded, and you want to specify dependencies to load as soon as require() is defined.
+	> __deps__: An array of dependencies to load. This is useful when require is defined as a config object before require.js is loaded, and you want to specify dependencies to load as soon as require() is defined.
 	
 *	```javascript
 	}, [ "jquery" ], function App(jQuery) {
@@ -239,7 +239,7 @@ Now we've configure our application to use RequireJS and set up the application 
 
 ### Adding some widgets
 
-Lets go back and look at `index.html`. We want to try to break out functionality into small (somewhat selfcontained) widgets, and the natural place to start is adding and displaying todo items.
+Lets go back and look at `index.html`. We want to try to break out functionality into small (somewhat self-contained) widgets, and the natural place to start is adding and displaying todo items.
 
 >	There are three main classes of modules in TroopJS
 >
@@ -257,11 +257,11 @@ Let's do this by adding _weave_ instructions in the HTML using `data-weave` attr
 	<ul id="todo-list" data-weave="widget/list">
 	```
 
->	TroopJS _weaves_ widgets to the DOM by traversing it and finding elements that have a `data-weave` attribute. When weaving an element TroopJS will
+>	TroopJS _weaves_ widgets to the DOM by traversing it and finding elements that have a `data-weave` attribute. When weaving an element TroopJS will:
 >
 >	* Locate (and if needed async load) the module containing the widget
 >	* Instantiate the widget (if needed, we do support singleton widgets)
->	* Wire the instance (basically reflect on the instance and scan for well known method signatures), more on this later
+>	* Wire the instance (basically reflect on the instance and scan for well-known method signatures), more on this later
 
 #### The create widget
 
@@ -293,7 +293,7 @@ Let's go through this widget
 	define( [ "troopjs/component/widget" ], function CreateModule(Widget) {
 	```
 
-	Start the definition of this module and declare its dependencies. The module is (internally) named `CreateModule` and it depends on `troopjs/component/widget` wich will be available inside the module as `Widget`
+	Start the definition of this module and declare its dependencies. The module is (internally) named `CreateModule` and it depends on `troopjs/component/widget` which will be available inside the module as `Widget`
 
 	> If you look above in `src/js/app.js` you'll find a path definition for `troopjs` that points to `lib/troopjs/src`. This means that `troopjs/...` actually resolves to `lib/troopjs/src/...`
 
@@ -309,9 +309,9 @@ Let's go through this widget
 	"dom/keyup" : function onKeyUp(topic, $event) {
 	```
 
-	This is where wiring becomes important. As mentioned above, wireing scans for well know method signatures, and `dom/*` is one of these. In this instance we're indicating that we want to add a handler for the DOM `keyup` event.
+	This is where wiring becomes important. As mentioned above, wiring scans for well-known method signatures, and `dom/*` is one of these. In this instance, we're indicating that we want to add a handler for the DOM `keyup` event.
 
-	> All wired handlers always get a `topic` as the first argument. The topic contains information what the trigger to this handler was. The rest of the arguments vary depending on the type of trigger. For DOM triggers the second argument is the original jQuery event object.
+	> All wired handlers always get a `topic` as the first argument. The topic contains information on what the trigger to this handler was. The rest of the arguments vary depending on the type of trigger. For DOM triggers, the second argument is the original jQuery event object.
 
 *	```javascript
 	var self = this;
