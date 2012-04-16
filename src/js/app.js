@@ -5,8 +5,8 @@ require({
 		"troopjs-bundle" : "lib/troopjs-bundle/dist/troopjs-bundle"
 	},
 	"priority": [ "jquery", "config", "troopjs-bundle" ]
-}, [ "jquery" ], function App(jQuery) {
+}, [ "jquery", "troopjs-core/widget/application" ], function App(jQuery, Application) {
 	jQuery(document).ready(function ready($) {
-		$(this.body).find("[data-weave]").weave();
+		Application($(this.body), "app/todos").build();
 	});
 });
