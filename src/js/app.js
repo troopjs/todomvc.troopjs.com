@@ -7,6 +7,6 @@ require({
 	"priority": [ "jquery", "config", "troopjs-bundle" ]
 }, [ "jquery", "troopjs-core/widget/application" ], function App(jQuery, Application) {
 	jQuery(document).ready(function ready($) {
-		Application($(this.body), "app/todos").build();
+		Application($(this.body), "app/todos").initialize().start();
 	});
 });
