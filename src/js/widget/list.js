@@ -1,4 +1,7 @@
 define( [ "troopjs-core/component/widget", "troopjs-core/store/local", "jquery", "template!./item.html" ], function ListModule(Widget, store, $, template) {
+	var RE = /^\s+|\s+$/;
+	var EMPTY = "";
+	var DISABLED = "disabled";
 
 	function filter(item, index) {
 		return item === null;
@@ -127,8 +130,7 @@ define( [ "troopjs-core/component/widget", "troopjs-core/store/local", "jquery",
 				.done(function doneGet(items) {
 					// Delete item
 					items[index] = null;
-				})
-				.done(function doneGet(items) {
+
 					// Set items and resolve set
 					store.set(self.config.store, items, dfdSet);
 				});
@@ -155,6 +157,7 @@ define( [ "troopjs-core/component/widget", "troopjs-core/store/local", "jquery",
 						.addClass("editing")
 						.find("input")
 						.val(items[index].text)
+						.removeProp(DISABLED)
 						.select();
 				});
 			});
@@ -170,17 +173,15 @@ define( [ "troopjs-core/component/widget", "troopjs-core/store/local", "jquery",
 		"dom/action/update.focusout" : function onUpdateFocusOut(topic, $event, index) {
 			var self = this;
 			var $target = $($event.target);
-			var text = $target.val();
-
-			// Update UI
-			$target
-				.closest("li")
-				.removeClass("editing")
-				.find("label")
-				.text(text);
+			var text = $target
+				.val()
+				.replace(RE, EMPTY);
 
 			// Defer set
 			$.Deferred(function deferredSet(dfdSet) {
+				// Disable
+				$target.prop(DISABLED, true);
+
 				// Defer get
 				$.Deferred(function deferredGet(dfdGet) {
 					// Get items
@@ -189,14 +190,24 @@ define( [ "troopjs-core/component/widget", "troopjs-core/store/local", "jquery",
 				.done(function doneGet(items) {
 					// Update text
 					items[index].text = text;
-				})
-				.done(function doneGet(items) {
+
 					// Set items and resolve set
 					store.set(self.config.store, items, dfdSet);
-				})
-				.done(function doneSet(items) {
-					self.publish("todos/change", items);
 				});
+			})
+			.done(function doneSet(items) {
+				// Update UI
+				$target
+					.closest("li")
+					.removeClass("editing")
+					.find("label")
+					.text(text);
+
+				self.publish("todos/change", items);
+			})
+			.always(function alwaysSet() {
+				// Enable
+				$target.removeProp(DISABLED);
 			});
 		}
 	});
