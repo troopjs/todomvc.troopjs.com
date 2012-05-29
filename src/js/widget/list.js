@@ -71,7 +71,7 @@ define( [ "troopjs-core/component/widget", "troopjs-core/store/local", "jquery",
 		},
 
 		"hub/todos/clear" : function onClear(topic) {
-			this.$element.find("li.done a.destroy").click();
+			this.$element.find("li.completed .destroy").click();
 		},
 
 		"dom/action.change.click.dblclick.focusout.keyup" : $.noop,
@@ -84,7 +84,7 @@ define( [ "troopjs-core/component/widget", "troopjs-core/store/local", "jquery",
 			// Update UI
 			$target
 				.closest("li")
-				.toggleClass("done", completed);
+				.toggleClass("completed", completed);
 
 			// Defer set
 			$.Deferred(function deferredSet(dfdSet) {
