@@ -74,7 +74,7 @@ define( [ "troopjs-core/component/widget", "troopjs-core/store/local", "jquery",
 		},
 
 		"hub/todos/clear" : function onClear(topic) {
-			this.$element.find("li.completed .destroy").click();
+			this.$element.find(".completed .destroy").click();
 		},
 
 		"dom/action.change.click.dblclick.focusout.keyup" : $.noop,
@@ -98,8 +98,7 @@ define( [ "troopjs-core/component/widget", "troopjs-core/store/local", "jquery",
 				.done(function doneGet(items) {
 					// Update completed
 					items[index].completed = completed;
-				})
-				.done(function doneGet(items) {
+
 					// Set items and resolve set
 					store.set(self.config.store, items, dfdSet);
 				});
