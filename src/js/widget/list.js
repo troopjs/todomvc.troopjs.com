@@ -142,24 +142,31 @@ define( [ "troopjs-core/component/widget", "troopjs-core/store/local", "jquery",
 
 		"dom/action/prepare.dblclick" : function onPrepare(topic, $event, index) {
 			var self = this;
-			var $li = $($event.target).closest("li");
 
-			// Defer set
-			$.Deferred(function deferredSet(dfdSet) {
-				// Defer get
-				$.Deferred(function deferredGet(dfdGet) {
-					// Get items
-					store.get(self.config.store, dfdGet);
-				})
-				.done(function doneGet(items) {
-					// Update UI
-					$li
-						.addClass("editing")
-						.find("input")
-						.val(items[index].text)
-						.removeProp(DISABLED)
-						.select();
-				});
+			// Get LI and update
+			var $li = $($event.target)
+				.closest("li")
+				.addClass("editing");
+
+			// Get INPUT and disable
+			var $input = $li
+				.find("input")
+				.prop(DISABLED, true);
+
+			// Defer get
+			$.Deferred(function deferredGet(dfdGet) {
+				// Get items
+				store.get(self.config.store, dfdGet);
+			})
+			.done(function doneGet(items) {
+				// Update input value, enable and select
+				$input
+					.val(items[index].text)
+					.removeProp(DISABLED)
+					.select();
+			})
+			.fail(function failGet() {
+				$li.removeClass("editing");
 			});
 		},
 
