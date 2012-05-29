@@ -47,6 +47,7 @@ define( [ "troopjs-core/component/widget", "troopjs-core/store/local", "jquery",
 				.done(function doneGet(items) {
 					// Get the next index
 					var i = items.length;
+
 					// Create new item, store in items
 					var item = items[i] = {
 						"completed": false,
@@ -58,8 +59,7 @@ define( [ "troopjs-core/component/widget", "troopjs-core/store/local", "jquery",
 						"i": i,
 						"item": item
 					});
-				})
-				.done(function doneGet(items) {
+
 					// Set items and resolve set
 					store.set(self.config.store, items, dfdSet);
 				});
@@ -169,14 +169,14 @@ define( [ "troopjs-core/component/widget", "troopjs-core/store/local", "jquery",
 			});
 		},
 
-		"dom/action/update.keyup" : function onUpdateKeyUp(topic, $event) {
+		"dom/action/commit.keyup" : function onCommitKeyUp(topic, $event) {
 			switch($event.originalEvent.keyCode) {
 			case 13:
 				$($event.target).focusout();
 			}
 		},
 
-		"dom/action/update.focusout" : function onUpdateFocusOut(topic, $event, index) {
+		"dom/action/commit.focusout" : function onCommitFocusOut(topic, $event, index) {
 			var self = this;
 			var $target = $($event.target);
 			var text = $target

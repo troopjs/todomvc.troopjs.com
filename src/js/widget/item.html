@@ -6,18 +6,18 @@ if (item.completed) { %>
 <li class="completed">
 	<div class="view">
 		<input class="toggle" type="checkbox" data-action="status(<%= i %>)" checked>
-		<label data-action="prepare.dblclick(<%= i %>)"><%= item.text %></label>
+		<label data-action="prepare(<%= i %>)"><%= item.text %></label>
 		<button class="destroy" data-action="delete(<%= i %>)"></button>
 	</div>
-	<input class="edit" data-action="update(<%= i %>)">
+	<input class="edit" data-action="commit(<%= i %>)">
 </li>
 <% } else { %>
 <li>
 	<div class="view">
 		<input class="toggle" type="checkbox" data-action="status(<%= i %>)">
-		<label data-action="prepare.dblclick(<%= i %>)"><%= item.text %></label>
+		<label data-action="prepare(<%= i %>)"><%= item.text %></label>
 		<button class="destroy" data-action="delete(<%= i %>)"></button>
 	</div>
-	<input class="edit" data-action="update(<%= i %>)">
+	<input class="edit" data-action="commit(<%= i %>)">
 </li>
 <% } %>
