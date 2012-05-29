@@ -112,7 +112,7 @@ define( [ "troopjs-core/component/widget", "troopjs-core/store/local", "jquery",
 			// Update UI
 			$($event.target)
 				.closest("li")
-				.hide("slow", function hidden() {
+				.slideUp("slow", function hidden() {
 					// Remove LI
 					$(this).remove();
 				});
