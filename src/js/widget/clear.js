@@ -5,7 +5,7 @@ define( [ "troopjs-core/component/widget", "jquery" ], function ClearModule(Widg
 	}
 
 	return Widget.extend({
-		"hub/todos/change" : function onChange(topic, items) {
+		"hub:memory/todos/change" : function onChange(topic, items) {
 			var count = $.grep(items, filter, true).length;
 
 			this.$element.text("Clear completed (" + count + ")")[count > 0 ? "show" : "hide"]();

@@ -3,7 +3,7 @@ define( [ "troopjs-core/component/widget" ], function MarkModule(Widget) {
 	var CHECKED = "checked";
 
 	return Widget.extend({
-		"hub/todos/change" : function onChange(topic, items) {
+		"hub:memory/todos/change" : function onChange(topic, items) {
 			var total = 0;
 			var count = 0;
 			var $element = this.$element;
