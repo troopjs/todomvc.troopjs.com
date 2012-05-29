@@ -183,38 +183,47 @@ define( [ "troopjs-core/component/widget", "troopjs-core/store/local", "jquery",
 				.val()
 				.replace(RE, EMPTY);
 
-			// Defer set
-			$.Deferred(function deferredSet(dfdSet) {
-				// Disable
-				$target.prop(DISABLED, true);
-
-				// Defer get
-				$.Deferred(function deferredGet(dfdGet) {
-					// Get items
-					store.get(self.config.store, dfdGet);
-				})
-				.done(function doneGet(items) {
-					// Update text
-					items[index].text = text;
-
-					// Set items and resolve set
-					store.set(self.config.store, items, dfdSet);
-				});
-			})
-			.done(function doneSet(items) {
-				// Update UI
+			if (text === EMPTY) {
 				$target
 					.closest("li")
 					.removeClass("editing")
-					.find("label")
-					.text(text);
+					.find(".destroy")
+					.click();
+			}
+			else {
+				// Defer set
+				$.Deferred(function deferredSet(dfdSet) {
+					// Disable
+					$target.prop(DISABLED, true);
 
-				self.publish("todos/change", items);
-			})
-			.always(function alwaysSet() {
-				// Enable
-				$target.removeProp(DISABLED);
-			});
+					// Defer get
+					$.Deferred(function deferredGet(dfdGet) {
+						// Get items
+						store.get(self.config.store, dfdGet);
+					})
+					.done(function doneGet(items) {
+						// Update text
+						items[index].text = text;
+
+						// Set items and resolve set
+						store.set(self.config.store, items, dfdSet);
+					});
+				})
+				.done(function doneSet(items) {
+					// Update UI
+					$target
+						.closest("li")
+						.removeClass("editing")
+						.find("label")
+						.text(text);
+
+					self.publish("todos/change", items);
+				})
+				.always(function alwaysSet() {
+					// Enable
+					$target.removeProp(DISABLED);
+				});
+			}
 		}
 	});
 });
