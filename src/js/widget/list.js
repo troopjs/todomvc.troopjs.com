@@ -138,12 +138,9 @@ define( [ "troopjs-core/component/widget", "troopjs-core/store/local", "jquery",
 			});
 		},
 
-		"dom/action/prepare.click.dblclick" : function onPrepare(topic, $event, index) {
+		"dom/action/prepare.dblclick" : function onPrepare(topic, $event, index) {
 			var self = this;
 			var $li = $($event.target).closest("li");
-
-			// Update UI
-			$li.addClass("preparing");
 
 			// Defer set
 			$.Deferred(function deferredSet(dfdSet) {
@@ -155,11 +152,10 @@ define( [ "troopjs-core/component/widget", "troopjs-core/store/local", "jquery",
 				.done(function doneGet(items) {
 					// Update UI
 					$li
-						.removeClass("preparing")
 						.addClass("editing")
 						.find("input")
 						.val(items[index].text)
-						.focus();
+						.select();
 				});
 			});
 		},
