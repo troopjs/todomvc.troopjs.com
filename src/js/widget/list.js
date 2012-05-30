@@ -3,6 +3,7 @@ define( [ "troopjs-core/component/widget", "troopjs-core/store/local", "jquery",
 	var ENTER = 13;
 	var EMPTY = "";
 	var DISABLED = "disabled";
+	var CHECKED = "checked";
 
 	function filter(item, index) {
 		return item === null;
@@ -71,7 +72,7 @@ define( [ "troopjs-core/component/widget", "troopjs-core/store/local", "jquery",
 		},
 
 		"hub/todos/mark" : function onMark(topic, value) {
-			this.$element.find(":checkbox").prop("checked", value).change();
+			this.$element.find(":checkbox").prop(CHECKED, value).change();
 		},
 
 		"hub/todos/clear" : function onClear(topic) {
@@ -83,7 +84,7 @@ define( [ "troopjs-core/component/widget", "troopjs-core/store/local", "jquery",
 		"dom/action/status.change" : function onStatus(topic, $event, index) {
 			var self = this;
 			var $target = $($event.target);
-			var completed = $target.prop("checked");
+			var completed = $target.prop(CHECKED);
 
 			// Update UI
 			$target
