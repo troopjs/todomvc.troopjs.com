@@ -4,18 +4,18 @@ var item = data.item;
 
 if (item.completed) { %>
 <li class="completed">
-	<div class="view">
+	<div class="view" data-action="prepare(<%= i %>)">
 		<input class="toggle" type="checkbox" data-action="status(<%= i %>)" checked>
-		<label data-action="prepare(<%= i %>)"><%= item.text %></label>
+		<label><%= item.text %></label>
 		<button class="destroy" data-action="delete(<%= i %>)"></button>
 	</div>
 	<input class="edit" data-action="commit(<%= i %>)">
 </li>
 <% } else { %>
 <li>
-	<div class="view">
+	<div class="view" data-action="prepare(<%= i %>)">
 		<input class="toggle" type="checkbox" data-action="status(<%= i %>)">
-		<label data-action="prepare(<%= i %>)"><%= item.text %></label>
+		<label><%= item.text %></label>
 		<button class="destroy" data-action="delete(<%= i %>)"></button>
 	</div>
 	<input class="edit" data-action="commit(<%= i %>)">
