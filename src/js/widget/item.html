@@ -1,9 +1,8 @@
 <%
 var i = data.i;
 var item = data.item;
-
-if (item.completed) { %>
-<li class="completed">
+%>
+<li class="<%= (item.completed ? 'completed' : '') %>">
 	<div class="view" data-action="prepare(<%= i %>)">
 		<input class="toggle" type="checkbox" data-action="status(<%= i %>)" checked>
 		<label><%= item.text %></label>
@@ -11,13 +10,3 @@ if (item.completed) { %>
 	</div>
 	<input class="edit" data-action="commit(<%= i %>)">
 </li>
-<% } else { %>
-<li>
-	<div class="view" data-action="prepare(<%= i %>)">
-		<input class="toggle" type="checkbox" data-action="status(<%= i %>)">
-		<label><%= item.text %></label>
-		<button class="destroy" data-action="delete(<%= i %>)"></button>
-	</div>
-	<input class="edit" data-action="commit(<%= i %>)">
-</li>
-<% } %>
