@@ -1,5 +1,6 @@
 define( [ "troopjs-core/component/widget" ], function CreateModule(Widget) {
 	var RE = /^\s+|\s+$/;
+	var ENTER = 13;
 	var EMPTY = "";
 
 	return Widget.extend({
@@ -9,7 +10,7 @@ define( [ "troopjs-core/component/widget" ], function CreateModule(Widget) {
 			var value;
 
 			switch($event.keyCode) {
-			case 13:
+			case ENTER:
 				value = $element.val().replace(RE, EMPTY);
 
 				if (value !== EMPTY) {

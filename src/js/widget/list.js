@@ -1,5 +1,6 @@
 define( [ "troopjs-core/component/widget", "troopjs-core/store/local", "jquery", "template!./item.html" ], function ListModule(Widget, store, $, template) {
 	var RE = /^\s+|\s+$/;
+	var ENTER = 13;
 	var EMPTY = "";
 	var DISABLED = "disabled";
 
@@ -171,7 +172,7 @@ define( [ "troopjs-core/component/widget", "troopjs-core/store/local", "jquery",
 
 		"dom/action/commit.keyup" : function onCommitKeyUp(topic, $event) {
 			switch($event.originalEvent.keyCode) {
-			case 13:
+			case ENTER:
 				$($event.target).focusout();
 			}
 		},
