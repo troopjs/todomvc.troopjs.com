@@ -28,7 +28,7 @@ define( [ "troopjs-core/component/widget", "troopjs-core/store/local", "jquery",
 			$.each(items, function itemIterator(i, item) {
 				// Append to self
 				self.append(template, {
-					"i": i,
+					"id": i,
 					"item": item
 				});
 			});
@@ -58,7 +58,7 @@ define( [ "troopjs-core/component/widget", "troopjs-core/store/local", "jquery",
 
 					// Append new item to self
 					self.append(template, {
-						"i": i,
+						"id": i,
 						"item": item
 					});
 

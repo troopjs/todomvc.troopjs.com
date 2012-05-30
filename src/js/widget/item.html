@@ -1,13 +1,13 @@
 <%
-var i = data.i;
+var id = data.id;
 var item = data.item;
 var completed = item.completed;
 %>
 <li class="<%= (completed ? 'completed' : '') %>">
-	<div class="view" data-action="prepare(<%= i %>)">
-		<input class="toggle" type="checkbox" <%= (completed ? 'checked' : '') %> data-action="status(<%= i %>)">
+	<div class="view" data-action="prepare(<%= id %>)">
+		<input class="toggle" type="checkbox" <%= (completed ? 'checked' : '') %> data-action="status(<%= id %>)">
 		<label><%= item.text %></label>
-		<button class="destroy" data-action="delete(<%= i %>)"></button>
+		<button class="destroy" data-action="delete(<%= id %>)"></button>
 	</div>
-	<input class="edit" data-action="commit(<%= i %>)">
+	<input class="edit" data-action="commit(<%= id %>)">
 </li>
