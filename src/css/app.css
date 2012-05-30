@@ -8,3 +8,8 @@ body {
 #footer, #main {
 	display: none;
 }
+
+.filter-active .completed,
+.filter-completed .active {
+	display: none;
+}

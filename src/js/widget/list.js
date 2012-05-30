@@ -4,6 +4,8 @@ define( [ "troopjs-core/component/widget", "troopjs-core/store/local", "jquery",
 	var EMPTY = "";
 	var DISABLED = "disabled";
 	var CHECKED = "checked";
+	var FILTER_ACTIVE = "filter-active";
+	var FILTER_COMPLETED = "filter-completed";
 
 	function filter(item, index) {
 		return item === null;
@@ -80,6 +82,24 @@ define( [ "troopjs-core/component/widget", "troopjs-core/store/local", "jquery",
 		},
 
 		"hub:memory/todos/filter" : function onFilter(topic, filter) {
+			var $element = this.$element;
+
+			switch (filter) {
+			case "/completed":
+				$element
+					.removeClass(FILTER_ACTIVE)
+					.addClass(FILTER_COMPLETED);
+				break;
+
+			case "/active":
+				$element
+					.removeClass(FILTER_COMPLETED)
+					.addClass(FILTER_ACTIVE);
+				break;
+
+			default:
+				$element.removeClass([FILTER_ACTIVE, FILTER_COMPLETED].join(" "));
+			}
 		},
 
 		"dom/action.change.click.dblclick.focusout.keyup" : $.noop,
@@ -92,7 +112,8 @@ define( [ "troopjs-core/component/widget", "troopjs-core/store/local", "jquery",
 			// Update UI
 			$target
 				.closest("li")
-				.toggleClass("completed", completed);
+				.toggleClass("completed", completed)
+				.toggleClass("active", !completed);
 
 			// Defer set
 			$.Deferred(function deferredSet(dfdSet) {
