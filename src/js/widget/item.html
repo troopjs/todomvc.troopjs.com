@@ -1,10 +1,11 @@
 <%
 var i = data.i;
 var item = data.item;
+var completed = item.completed;
 %>
-<li class="<%= (item.completed ? 'completed' : '') %>">
+<li class="<%= (completed ? 'completed' : '') %>">
 	<div class="view" data-action="prepare(<%= i %>)">
-		<input class="toggle" type="checkbox" data-action="status(<%= i %>)" checked>
+		<input class="toggle" type="checkbox" <%= (completed ? 'checked' : '') %> data-action="status(<%= i %>)">
 		<label><%= item.text %></label>
 		<button class="destroy" data-action="delete(<%= i %>)"></button>
 	</div>
