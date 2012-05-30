@@ -37,7 +37,7 @@ define( [ "troopjs-core/component/widget", "troopjs-core/store/local", "jquery",
 			self.publish("todos/change", items);
 		});
 	}, {
-		"hub/todos/add" : function onAdd(topic, text) {
+		"hub/todos/add" : function onAdd(topic, title) {
 			var self = this;
 
 			// Defer set
@@ -53,7 +53,7 @@ define( [ "troopjs-core/component/widget", "troopjs-core/store/local", "jquery",
 					// Create new item, store in items
 					var item = items[i] = {
 						"completed": false,
-						"text": text
+						"title": title
 					};
 
 					// Append new item to self
@@ -165,7 +165,7 @@ define( [ "troopjs-core/component/widget", "troopjs-core/store/local", "jquery",
 			.done(function doneGet(items) {
 				// Update input value, enable and select
 				$input
-					.val(items[index].text)
+					.val(items[index].title)
 					.removeProp(DISABLED)
 					.select();
 			})
@@ -184,11 +184,11 @@ define( [ "troopjs-core/component/widget", "troopjs-core/store/local", "jquery",
 		"dom/action/commit.focusout" : function onCommitFocusOut(topic, $event, index) {
 			var self = this;
 			var $target = $($event.target);
-			var text = $target
+			var title = $target
 				.val()
 				.replace(RE, EMPTY);
 
-			if (text === EMPTY) {
+			if (title === EMPTY) {
 				$target
 					.closest("li")
 					.removeClass("editing")
@@ -208,7 +208,7 @@ define( [ "troopjs-core/component/widget", "troopjs-core/store/local", "jquery",
 					})
 					.done(function doneGet(items) {
 						// Update text
-						items[index].text = text;
+						items[index].title = title;
 
 						// Set items and resolve set
 						store.set(self.config.store, items, dfdSet);
@@ -220,7 +220,7 @@ define( [ "troopjs-core/component/widget", "troopjs-core/store/local", "jquery",
 						.closest("li")
 						.removeClass("editing")
 						.find("label")
-						.text(text);
+						.text(title);
 
 					self.publish("todos/change", items);
 				})

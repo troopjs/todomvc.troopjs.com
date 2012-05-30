@@ -6,7 +6,7 @@ var completed = item.completed;
 <li class="<%= (completed ? 'completed' : '') %>">
 	<div class="view" data-action="prepare(<%= id %>)">
 		<input class="toggle" type="checkbox" <%= (completed ? 'checked' : '') %> data-action="status(<%= id %>)">
-		<label><%= item.text %></label>
+		<label><%= item.title %></label>
 		<button class="destroy" data-action="delete(<%= id %>)"></button>
 	</div>
 	<input class="edit" data-action="commit(<%= id %>)">
