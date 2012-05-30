@@ -79,6 +79,9 @@ define( [ "troopjs-core/component/widget", "troopjs-core/store/local", "jquery",
 			this.$element.find(".completed .destroy").click();
 		},
 
+		"hub:memory/todos/filter" : function onFilter(topic, filter) {
+		},
+
 		"dom/action.change.click.dblclick.focusout.keyup" : $.noop,
 
 		"dom/action/status.change" : function onStatus(topic, $event, index) {
