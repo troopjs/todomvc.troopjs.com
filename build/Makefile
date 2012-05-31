@@ -50,10 +50,9 @@ js: copy header.txt footer.txt
 		paths.jquery=lib/jquery/dist/jquery \
 		paths.troopjs-bundle=lib/troopjs-bundle/dist/troopjs-bundle \
 		paths.template=lib/troopjs-bundle/src/lib/troopjs-requirejs/src/template \
-		paths.text=lib/troopjs-bundle/src/lib/requirejs/text \
 		paths.requireLib=lib/almond/almond \
 		include=$(call join-with,$(comma),$(INCLUDE)) \
-		excludeShallow=template,text \
+		excludeShallow=template \
 		preserveLicenseComments=false \
 		wrap.startFile=header.txt \
 		wrap.endFile=footer.txt
