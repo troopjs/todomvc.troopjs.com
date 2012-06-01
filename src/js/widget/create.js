@@ -1,7 +1,5 @@
 define( [ "troopjs-core/component/widget" ], function CreateModule(Widget) {
-	var RE = /^\s+|\s+$/;
-	var ENTER = 13;
-	var EMPTY = "";
+	var ENTER_KEY = 13;
 
 	return Widget.extend({
 		"dom/keyup" : function onKeyUp(topic, $event) {
@@ -10,13 +8,13 @@ define( [ "troopjs-core/component/widget" ], function CreateModule(Widget) {
 			var value;
 
 			switch($event.keyCode) {
-			case ENTER:
-				value = $element.val().replace(RE, EMPTY);
+			case ENTER_KEY:
+				value = $element.val().trim();
 
-				if (value !== EMPTY) {
+				if (value !== "") {
 					self.publish("todos/add", value);
 
-					$element.val(EMPTY);
+					$element.val("");
 				}
 			}
 		}

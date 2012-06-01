@@ -1,9 +1,5 @@
 define( [ "troopjs-core/component/widget", "troopjs-core/store/local", "jquery", "template!./item.html" ], function ListModule(Widget, store, $, template) {
-	var RE = /^\s+|\s+$/;
-	var ENTER = 13;
-	var EMPTY = "";
-	var DISABLED = "disabled";
-	var CHECKED = "checked";
+	var ENTER_KEY = 13;
 	var FILTER_ACTIVE = "filter-active";
 	var FILTER_COMPLETED = "filter-completed";
 
@@ -15,14 +11,14 @@ define( [ "troopjs-core/component/widget", "troopjs-core/store/local", "jquery",
 		var self = this;
 
 		// Defer initialization
-		$.Deferred(function deferredInit(dfdInit) {
+		$.Deferred(function deferredInit(deferInit) {
 			// Defer get
-			$.Deferred(function deferredGet(dfdGet) {
-				store.get(self.config.store, dfdGet);
+			$.Deferred(function deferredGet(deferGet) {
+				store.get(self.config.store, deferGet);
 			})
 			.done(function doneGet(items) {
 				// Set items (empty or compacted) - then resolve
-				store.set(self.config.store, items === null ? [] : $.grep(items, filter, true), dfdInit);
+				store.set(self.config.store, items === null ? [] : $.grep(items, filter, true), deferInit);
 			});
 		})
 		.done(function doneInit(items) {
@@ -43,10 +39,10 @@ define( [ "troopjs-core/component/widget", "troopjs-core/store/local", "jquery",
 			var self = this;
 
 			// Defer set
-			$.Deferred(function deferredSet(dfdSet) {
+			$.Deferred(function deferredSet(deferSet) {
 				// Defer get
-				$.Deferred(function deferredGet(dfdGet) {
-					store.get(self.config.store, dfdGet);
+				$.Deferred(function deferredGet(deferGet) {
+					store.get(self.config.store, deferGet);
 				})
 				.done(function doneGet(items) {
 					// Get the next index
@@ -65,7 +61,7 @@ define( [ "troopjs-core/component/widget", "troopjs-core/store/local", "jquery",
 					});
 
 					// Set items and resolve set
-					store.set(self.config.store, items, dfdSet);
+					store.set(self.config.store, items, deferSet);
 				});
 			})
 			.done(function doneSet(items) {
@@ -74,7 +70,7 @@ define( [ "troopjs-core/component/widget", "troopjs-core/store/local", "jquery",
 		},
 
 		"hub/todos/mark" : function onMark(topic, value) {
-			this.$element.find(":checkbox").prop(CHECKED, value).change();
+			this.$element.find(":checkbox").prop("checked", value).change();
 		},
 
 		"hub/todos/clear" : function onClear(topic) {
@@ -107,7 +103,7 @@ define( [ "troopjs-core/component/widget", "troopjs-core/store/local", "jquery",
 		"dom/action/status.change" : function onStatus(topic, $event, index) {
 			var self = this;
 			var $target = $($event.target);
-			var completed = $target.prop(CHECKED);
+			var completed = $target.prop("checked");
 
 			// Update UI
 			$target
@@ -116,17 +112,17 @@ define( [ "troopjs-core/component/widget", "troopjs-core/store/local", "jquery",
 				.toggleClass("active", !completed);
 
 			// Defer set
-			$.Deferred(function deferredSet(dfdSet) {
+			$.Deferred(function deferredSet(deferSet) {
 				// Defer get
-				$.Deferred(function deferredGet(dfdGet) {
-					store.get(self.config.store, dfdGet);
+				$.Deferred(function deferredGet(deferGet) {
+					store.get(self.config.store, deferGet);
 				})
 				.done(function doneGet(items) {
 					// Update completed
 					items[index].completed = completed;
 
 					// Set items and resolve set
-					store.set(self.config.store, items, dfdSet);
+					store.set(self.config.store, items, deferSet);
 				});
 			})
 			.done(function doneSet(items) {
@@ -140,24 +136,21 @@ define( [ "troopjs-core/component/widget", "troopjs-core/store/local", "jquery",
 			// Update UI
 			$($event.target)
 				.closest("li")
-				.slideUp("slow", function hidden() {
-					// Remove LI
-					$(this).remove();
-				});
+				.remove();
 
 			// Defer set
-			$.Deferred(function deferredSet(dfdSet) {
+			$.Deferred(function deferredSet(deferSet) {
 				// Defer get
-				$.Deferred(function deferredGet(dfdGet) {
+				$.Deferred(function deferredGet(deferGet) {
 					// Get the items
-					store.get(self.config.store, dfdGet);
+					store.get(self.config.store, deferGet);
 				})
 				.done(function doneGet(items) {
 					// Delete item
 					items[index] = null;
 
 					// Set items and resolve set
-					store.set(self.config.store, items, dfdSet);
+					store.set(self.config.store, items, deferSet);
 				});
 			})
 			.done(function doneSet(items) {
@@ -176,18 +169,18 @@ define( [ "troopjs-core/component/widget", "troopjs-core/store/local", "jquery",
 			// Get INPUT and disable
 			var $input = $li
 				.find("input")
-				.prop(DISABLED, true);
+				.prop("disabled", true);
 
 			// Defer get
-			$.Deferred(function deferredGet(dfdGet) {
+			$.Deferred(function deferredGet(deferGet) {
 				// Get items
-				store.get(self.config.store, dfdGet);
+				store.get(self.config.store, deferGet);
 			})
 			.done(function doneGet(items) {
 				// Update input value, enable and select
 				$input
 					.val(items[index].title)
-					.removeProp(DISABLED)
+					.removeProp("disabled")
 					.select();
 			})
 			.fail(function failGet() {
@@ -197,7 +190,7 @@ define( [ "troopjs-core/component/widget", "troopjs-core/store/local", "jquery",
 
 		"dom/action/commit.keyup" : function onCommitKeyUp(topic, $event) {
 			switch($event.originalEvent.keyCode) {
-			case ENTER:
+			case ENTER_KEY:
 				$($event.target).focusout();
 			}
 		},
@@ -205,34 +198,32 @@ define( [ "troopjs-core/component/widget", "troopjs-core/store/local", "jquery",
 		"dom/action/commit.focusout" : function onCommitFocusOut(topic, $event, index) {
 			var self = this;
 			var $target = $($event.target);
-			var title = $target
-				.val()
-				.replace(RE, EMPTY);
+			var title = $target.val().trim();
 
-			if (title === EMPTY) {
+			if (title === "") {
 				$target
-					.closest("li")
+					.closest("li.editing")
 					.removeClass("editing")
 					.find(".destroy")
 					.click();
 			}
 			else {
 				// Defer set
-				$.Deferred(function deferredSet(dfdSet) {
+				$.Deferred(function deferredSet(deferSet) {
 					// Disable
-					$target.prop(DISABLED, true);
+					$target.prop("disabled", true);
 
 					// Defer get
-					$.Deferred(function deferredGet(dfdGet) {
+					$.Deferred(function deferredGet(deferGet) {
 						// Get items
-						store.get(self.config.store, dfdGet);
+						store.get(self.config.store, deferGet);
 					})
 					.done(function doneGet(items) {
 						// Update text
 						items[index].title = title;
 
 						// Set items and resolve set
-						store.set(self.config.store, items, dfdSet);
+						store.set(self.config.store, items, deferSet);
 					});
 				})
 				.done(function doneSet(items) {
@@ -247,7 +238,7 @@ define( [ "troopjs-core/component/widget", "troopjs-core/store/local", "jquery",
 				})
 				.always(function alwaysSet() {
 					// Enable
-					$target.removeProp(DISABLED);
+					$target.removeProp("disabled");
 				});
 			}
 		}
