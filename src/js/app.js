@@ -1,22 +1,21 @@
 require({
-	"baseUrl" : "js",
 	"paths" : {
 		"jquery" : "lib/jquery/dist/jquery",
 		"troopjs-bundle" : "lib/troopjs-bundle/dist/troopjs-bundle"
 	},
-	"deps": [ "troopjs-bundle" ]
-}, [ "require", "jquery", "widget/application" ], function App(parentRequire, jQuery, Application) {
+}, [ "require", "jquery", "troopjs-bundle" ], function Deps(parentRequire, jQuery) {
 
-	// Load jQuery modules
+	// Application and plug-ins
 	parentRequire([
+		"widget/application",
 		"troopjs-jquery/weave",
 		"troopjs-jquery/destroy",
 		"troopjs-jquery/hashchange",
-		"troopjs-jquery/action"
-	]);
+		"troopjs-jquery/action" ], function App(Application) {
 
-	// Hook ready
-	jQuery(document).ready(function ready($) {
-		Application($(this.body), "app/todos").start();
+		// Hook ready
+		jQuery(document).ready(function ready($) {
+			Application($(this.body), "app/todos").start();
+		});
 	});
 });

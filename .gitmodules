@@ -10,6 +10,9 @@
 [submodule "build/lib/rjs"]
 	path = build/lib/rjs
 	url = git@github.com:troopjs/r.js.git
-[submodule "src/js/lib/almond"]
-	path = src/js/lib/almond
+[submodule "build/lib/troopjs-requirejs"]
+	path = build/lib/troopjs-requirejs
+	url = git@github.com:troopjs/troopjs-requirejs.git
+[submodule "build/lib/almond"]
+	path = build/lib/almond
 	url = git@github.com:troopjs/almond.git

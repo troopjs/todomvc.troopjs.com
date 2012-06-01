@@ -46,13 +46,11 @@ js: copy header.txt footer.txt
 	@@echo "Compiling JS"
 	@@node $(R) -o \
 		out=$(DIST_JS)/app-built.js \
-		baseUrl=$(DIST_JS) \
-		paths.jquery=lib/jquery/dist/jquery \
-		paths.troopjs-bundle=lib/troopjs-bundle/dist/troopjs-bundle \
-		paths.template=lib/troopjs-bundle/src/lib/troopjs-requirejs/src/template \
+		mainConfigFile=$(DIST_JS)/app.js \
 		paths.requireLib=lib/almond/almond \
+		paths.template=lib/troopjs-requirejs/src/template \
 		include=$(call join-with,$(comma),$(INCLUDE)) \
-		excludeShallow=template \
+		exclude=template \
 		preserveLicenseComments=false \
 		wrap.startFile=header.txt \
 		wrap.endFile=footer.txt
