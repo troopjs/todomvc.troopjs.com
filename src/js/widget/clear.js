@@ -1,17 +1,17 @@
-define( [ "troopjs-core/component/widget", "jquery" ], function ClearModule(Widget, $) {
+define( [ "troopjs-browser/component/widget", "jquery" ], function ClearModule(Widget, $) {
 
-	function filter(item, index) {
+	function filter(item) {
 		return item === null || !item.completed;
 	}
 
 	return Widget.extend({
-		"hub:memory/todos/change" : function onChange(topic, items) {
+		"hub:memory/todos/change" : function onChange(items) {
 			var count = $.grep(items, filter, true).length;
 
 			this.$element.text("Clear completed (" + count + ")")[count > 0 ? "show" : "hide"]();
 		},
 
-		"dom/click" : function onClear(topic, $event) {
+		"dom/click" : function onClear() {
 			this.publish("todos/clear");
 		}
 	});

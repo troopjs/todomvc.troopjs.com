@@ -1,11 +1,11 @@
-define( [ "troopjs-core/component/widget", "jquery" ], function FiltersModule(Widget, $) {
+define( [ "troopjs-browser/component/widget", "jquery" ], function FiltersModule(Widget, $) {
 
 	return Widget.extend({
-		"hub:memory/route" : function onRoute(topic, uri) {
+		"hub:memory/route" : function onRoute(uri) {
 			this.publish("todos/filter", uri.source);
 		},
 
-		"hub:memory/todos/filter" : function onFilter(topic, filter) {
+		"hub:memory/todos/filter" : function onFilter(filter) {
 			filter = filter || "/";
 
 			// Update UI

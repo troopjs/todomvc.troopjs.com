@@ -1,55 +1,53 @@
-define( [ "troopjs-core/component/widget", "troopjs-core/store/local", "jquery", "template!./item.html" ], function ListModule(Widget, store, $, template) {
+define( [ "troopjs-browser/component/widget", "troopjs-browser/store/local", "when", "jquery", "template!./item.html" ], function ListModule(Widget, store, when, $, template) {
+	var ARRAY_SLICE = Array.prototype.slice;
 	var ENTER_KEY = 13;
 	var FILTER_ACTIVE = "filter-active";
 	var FILTER_COMPLETED = "filter-completed";
+	var STORE = "todos-troopjs";
+	var LOCK = "lock";
 
-	function filter(item, index) {
+	function filter(item) {
 		return item === null;
 	}
 
-	return Widget.extend(function ListWidget(element, name) {
-		var self = this;
-
-		// Defer initialization
-		$.Deferred(function deferredInit(deferInit) {
-			// Defer get
-			$.Deferred(function deferredGet(deferGet) {
-				store.get(self.config.store, deferGet);
-			})
-			.done(function doneGet(items) {
-				// Set items (empty or compacted) - then resolve
-				store.set(self.config.store, items === null ? [] : $.grep(items, filter, true), deferInit);
-			});
-		})
-		.done(function doneInit(items) {
-			// Iterate each item
-			$.each(items, function itemIterator(i, item) {
-				// Append to self
-				self.append(template, {
-					"i": i,
-					"item": item
-				});
-			});
-		})
-		.done(function doneInit(items) {
-			self.publish("todos/change", items);
-		});
-	}, {
-		"hub/todos/add" : function onAdd(topic, title) {
+	return Widget.extend({
+		"sig/start" : function () {
 			var self = this;
 
-			// Defer set
-			$.Deferred(function deferredSet(deferSet) {
-				// Defer get
-				$.Deferred(function deferredGet(deferGet) {
-					store.get(self.config.store, deferGet);
-				})
-				.done(function doneGet(items) {
-					// Get the next index
-					var i = items.length;
+			// Wait for and update store LOCK
+			return store[LOCK] = when(store[LOCK], function () {
+				// Get STORE
+				return store.get(STORE).then(function (getItems) {
+					// Set STORE
+					return store.set(STORE, getItems === null ? [] : $.grep(getItems, filter, true)).then(function (setItems) {
+						// Iterate each item
+						$.each(setItems, function itemIterator(i, item) {
+							// Append to self
+							self.append(template, {
+								"i": i,
+								"item": item
+							});
+						});
 
-					// Create new item, store in items
-					var item = items[i] = {
+						// Publish
+						self.publish("todos/change", setItems);
+					});
+				});
+			});
+		},
+
+		"hub/todos/add" : function onAdd(title) {
+			var self = this;
+
+			// Wait for and update store LOCK
+			return store[LOCK] = when(store[LOCK], function () {
+				// Get STORE
+				return store.get(STORE).then(function (getItems) {
+					// Get the next index
+					var i = getItems.length;
+
+					// Create new item, store in getItems
+					var item = getItems[i] = {
 						"completed": false,
 						"title": title
 					};
@@ -60,24 +58,25 @@ define( [ "troopjs-core/component/widget", "troopjs-core/store/local", "jquery",
 						"item": item
 					});
 
-					// Set items and resolve set
-					store.set(self.config.store, items, deferSet);
+					// Set STORE
+					return store.set(STORE, getItems).then(function (setItems) {
+						self.publish("todos/change", setItems);
+					});
 				});
 			})
-			.done(function doneSet(items) {
-				self.publish("todos/change", items);
-			});
+			// Yield with original arguments
+			.yield(ARRAY_SLICE.call(arguments));
 		},
 
-		"hub/todos/mark" : function onMark(topic, value) {
+		"hub/todos/mark" : function onMark(value) {
 			this.$element.find(":checkbox").prop("checked", value).change();
 		},
 
-		"hub/todos/clear" : function onClear(topic) {
+		"hub/todos/clear" : function onClear() {
 			this.$element.find(".completed .destroy").click();
 		},
 
-		"hub:memory/todos/filter" : function onFilter(topic, filter) {
+		"hub:memory/todos/filter" : function onFilter(filter) {
 			var $element = this.$element;
 
 			switch (filter) {
@@ -98,147 +97,129 @@ define( [ "troopjs-core/component/widget", "troopjs-core/store/local", "jquery",
 			}
 		},
 
-		"dom/action.change.click.dblclick.focusout.keyup" : $.noop,
-
-		"dom/action/status.change" : function onStatus(topic, $event, index) {
+		"dom:.toggle/change" : function onToggleChange($event) {
 			var self = this;
-			var $target = $($event.target);
+			var $target = $($event.currentTarget);
 			var completed = $target.prop("checked");
+			var $li = $target.closest("li");
+			var index = $li.data("index");
 
 			// Update UI
-			$target
-				.closest("li")
+			$li
 				.toggleClass("completed", completed)
 				.toggleClass("active", !completed);
 
-			// Defer set
-			$.Deferred(function deferredSet(deferSet) {
-				// Defer get
-				$.Deferred(function deferredGet(deferGet) {
-					store.get(self.config.store, deferGet);
-				})
-				.done(function doneGet(items) {
+			// Wait for and update store LOCK
+			store[LOCK] = when(store[LOCK], function () {
+				// Get STORE
+				return store.get(STORE).then(function (getItems) {
 					// Update completed
-					items[index].completed = completed;
+					getItems[index].completed = completed;
 
-					// Set items and resolve set
-					store.set(self.config.store, items, deferSet);
+					// Set STORE
+					return store.set(STORE, getItems).then(function (setItems) {
+						self.publish("todos/change", setItems);
+					});
 				});
-			})
-			.done(function doneSet(items) {
-				self.publish("todos/change", items);
 			});
 		},
 
-		"dom/action/delete.click" : function onDelete(topic, $event, index) {
+		"dom:.destroy/click" : function onDestroyClick($event) {
 			var self = this;
+			var $li = $($event.currentTarget).closest("li");
+			var index = $li.data("index");
 
 			// Update UI
-			$($event.target)
-				.closest("li")
-				.remove();
+			$li.remove();
 
-			// Defer set
-			$.Deferred(function deferredSet(deferSet) {
-				// Defer get
-				$.Deferred(function deferredGet(deferGet) {
-					// Get the items
-					store.get(self.config.store, deferGet);
-				})
-				.done(function doneGet(items) {
+			// Wait for and update store LOCK
+			store[LOCK] = when(store[LOCK], function () {
+				// Get STORE
+				return store.get(STORE).then(function (getItems) {
 					// Delete item
-					items[index] = null;
+					getItems[index] = null;
 
-					// Set items and resolve set
-					store.set(self.config.store, items, deferSet);
+					// Set STORE
+					return store.set(STORE, getItems).then(function (setItems) {
+						self.publish("todos/change", setItems);
+					});
 				});
-			})
-			.done(function doneSet(items) {
-				self.publish("todos/change", items);
 			});
 		},
 
-		"dom/action/prepare.dblclick" : function onPrepare(topic, $event, index) {
-			var self = this;
+		"dom:.view/dblclick" : function onViewDblClick($event) {
+			var $li = $($event.currentTarget).closest("li");
+			var index = $li.data("index");
+			var $input = $li.find("input");
 
-			// Get LI and update
-			var $li = $($event.target)
-				.closest("li")
-				.addClass("editing");
+			// Update UI
+			$li.addClass("editing");
 
-			// Get INPUT and disable
-			var $input = $li
-				.find("input")
-				.prop("disabled", true);
+			// Disable
+			$input.prop("disabled", true);
 
-			// Defer get
-			$.Deferred(function deferredGet(deferGet) {
-				// Get items
-				store.get(self.config.store, deferGet);
-			})
-			.done(function doneGet(items) {
-				// Update input value, enable and select
-				$input
-					.val(items[index].title)
-					.removeProp("disabled")
-					.select();
-			})
-			.fail(function failGet() {
-				$li.removeClass("editing");
+			// Wait for store LOCK
+			when(store[LOCK], function () {
+				// Get STORE
+				store.get(STORE).then(function (items) {
+					// Update input value, enable and select
+					$input
+						.val(items[index].title)
+						.removeProp("disabled")
+						.select();
+				}, function () {
+					$li.removeClass("editing");
+				});
 			});
 		},
 
-		"dom/action/commit.keyup" : function onCommitKeyUp(topic, $event) {
+		"dom:.edit/keyup" : function onEditKeyUp($event) {
 			switch($event.originalEvent.keyCode) {
 			case ENTER_KEY:
-				$($event.target).focusout();
+				$($event.currentTarget).focusout();
 			}
 		},
 
-		"dom/action/commit.focusout" : function onCommitFocusOut(topic, $event, index) {
+		"dom:.edit/focusout" : function onEditFocusOut($event) {
 			var self = this;
-			var $target = $($event.target);
+			var $target = $($event.currentTarget);
 			var title = $target.val().trim();
+			var $li = $target.closest("li");
+			var index = $li.data("index");
 
 			if (title === "") {
-				$target
-					.closest("li.editing")
+				$li
 					.removeClass("editing")
 					.find(".destroy")
 					.click();
 			}
 			else {
-				// Defer set
-				$.Deferred(function deferredSet(deferSet) {
-					// Disable
-					$target.prop("disabled", true);
+				// Disable
+				$target.prop("disabled", true);
 
-					// Defer get
-					$.Deferred(function deferredGet(deferGet) {
-						// Get items
-						store.get(self.config.store, deferGet);
-					})
-					.done(function doneGet(items) {
-						// Update text
-						items[index].title = title;
+				// Wait for and update store LOCK
+				store[LOCK] = when(store[LOCK], function () {
+					// Get STORE
+					return store.get(STORE)
+						.then(function (getItems) {
+							// Update text
+							getItems[index].title = title;
 
-						// Set items and resolve set
-						store.set(self.config.store, items, deferSet);
-					});
-				})
-				.done(function doneSet(items) {
-					// Update UI
-					$target
-						.closest("li")
-						.removeClass("editing")
-						.find("label")
-						.text(title);
+							// Set STORE
+							return store.set(STORE, getItems).then(function (setItems) {
+								// Update UI
+								$li
+									.removeClass("editing")
+									.find("label")
+									.text(title);
 
-					self.publish("todos/change", items);
-				})
-				.always(function alwaysSet() {
-					// Enable
-					$target.removeProp("disabled");
+								self.publish("todos/change", setItems);
+							});
+						})
+						.ensure(function () {
+							// Enable
+							$target.removeProp("disabled");
+						});
 				});
 			}
 		}

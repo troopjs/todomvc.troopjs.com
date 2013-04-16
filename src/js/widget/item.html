@@ -3,11 +3,11 @@ var i = data.i;
 var item = data.item;
 var completed = item.completed;
 %>
-<li class="<%= (completed ? 'completed' : 'active') %>">
-	<div class="view" data-action="prepare(<%= i %>)">
-		<input class="toggle" type="checkbox" <%= (completed ? 'checked' : '') %> data-action="status(<%= i %>)">
+<li class="<%= (completed ? 'completed' : 'active') %>" data-index="<%= i %>">
+	<div class="view">
+		<input class="toggle" type="checkbox" <%= (completed ? 'checked' : '') %>>
 		<label><%= item.title %></label>
-		<button class="destroy" data-action="delete(<%= i %>)"></button>
+		<button class="destroy"></button>
 	</div>
-	<input class="edit" data-action="commit(<%= i %>)">
+	<input class="edit">
 </li>

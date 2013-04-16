@@ -1,7 +1,7 @@
-define( [ "troopjs-core/component/widget" ], function MarkModule(Widget) {
+define( [ "troopjs-browser/component/widget" ], function MarkModule(Widget) {
 
 	return Widget.extend({
-		"hub:memory/todos/change" : function onChange(topic, items) {
+		"hub:memory/todos/change" : function onChange(items) {
 			var total = 0;
 			var count = 0;
 			var $element = this.$element;
@@ -35,7 +35,7 @@ define( [ "troopjs-core/component/widget" ], function MarkModule(Widget) {
 			}
 		},
 
-		"dom/change" : function onMark(topic, $event) {
+		"dom/change" : function onMark($event) {
 			this.publish("todos/mark", $($event.target).prop("checked"));
 		}
 	});

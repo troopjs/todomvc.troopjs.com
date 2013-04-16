@@ -1,18 +1,12 @@
-[submodule "src/js/lib/jquery"]
-	path = src/js/lib/jquery
-	url = git@github.com:troopjs/jquery.git
-[submodule "src/js/lib/requirejs"]
-	path = src/js/lib/requirejs
-	url = git@github.com:troopjs/requirejs.git
 [submodule "src/js/lib/troopjs-bundle"]
 	path = src/js/lib/troopjs-bundle
-	url = git@github.com:troopjs/troopjs-bundle.git
-[submodule "build/lib/rjs"]
-	path = build/lib/rjs
-	url = git@github.com:troopjs/r.js.git
-[submodule "build/lib/troopjs-requirejs"]
-	path = build/lib/troopjs-requirejs
-	url = git@github.com:troopjs/troopjs-requirejs.git
-[submodule "build/lib/almond"]
-	path = build/lib/almond
-	url = git@github.com:troopjs/almond.git
+	url = https://github.com/troopjs/troopjs-bundle.git
+[submodule "src/js/lib/jquery"]
+	path = src/js/lib/jquery
+	url = https://github.com/jquery/jquery.git
+[submodule "src/js/lib/requirejs"]
+	path = src/js/lib/requirejs
+	url = https://github.com/jrburke/requirejs.git
+[submodule "resources/troopjs-requirejs"]
+	path = resources/troopjs-requirejs
+	url = https://github.com/troopjs/troopjs-requirejs.git

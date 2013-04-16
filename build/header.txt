@@ -1,9 +1,0 @@
-/*!
- * TroopJS-todos application
- *
- * This is the optimized build that have license headers removed
- * to save some bandwidth.
- *
- * Full description and individual module sources and licenses are
- * available at https://github.com/troopjs/troopjs-todos.
- /*
