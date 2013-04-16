@@ -459,3 +459,40 @@ Let's go through this widget
 	*	Save `self.$element` (woven element) as `$element`
 	*	Store the trimmed value of the element as `value`
 	*	Check if the `keyCode` of the event was enter - if so `publish` `value` on `todos/add` and once all handlers are completed, reset `$element`.
+
+#### The count widget
+
+Next we'll take a look at `widget/count.js`. This widget shows a counter that informs the user of how many active items are in the list.
+
+```javascript
+define( [ "troopjs-browser/component/widget", "jquery" ], function CountModule(Widget, $) {
+
+	function filter(item) {
+		return item === null || item.completed;
+	}
+
+	return Widget.extend({
+		"hub:memory/todos/change" : function onChange(items) {
+			var count = $.grep(items, filter, true).length;
+
+			this.$element.html("<strong>" + count + "</strong> " + (count === 1 ? "item" : "items") + " left");
+		}
+	});
+});
+```
+
+Let's look at what new things we can find.
+
+*	```javascript
+	"hub:memory/todos/change" : function onChange(items) {
+	```
+
+	Again with the well-known signatures. This signature tells TroopJS that we want to add a subscription to the `todos/change` topic, _and_ that if a previous value was published on this topic _before_ we added our subscription, we'd like to get a callback with that value (this is what `:memory` adds to the mix).
+
+*	```javascript
+	var count = $.grep(items, filter, true).length;
+
+	this.$element.html("<strong>" + count + "</strong> " + (count === 1 ? "item" : "items") + " left");
+	```
+
+	Determine how many items _dont_ have the `.completed` property using the static `filter` function and update the `$element` HTML with a pluralized (if needed) text.
