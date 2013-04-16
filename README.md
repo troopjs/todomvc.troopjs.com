@@ -154,7 +154,7 @@ So now we can start with our todo application. The first thing we should do is t
 
 > TroopJS uses [RequireJS](http://requirejs.org/) for its dependency management. The recommended way to bootstrap a RequireJS application is described [here](http://requirejs.org/docs/start.html#add), but we're using an alternative way to configure RequireJS described [here](http://requirejs.org/docs/api.html#config) whereby we define the config as the global variable `require` __before__ `require.js` is loaded.
 
-Let's add the configuration
+Let's add the configuration (inside a `script` tag right before the script that includeds `js/app`)
 
 ```javascript
 "use strict";
@@ -209,9 +209,9 @@ var require = {
 
 	"deps" : [ "require" ],
 
-	"callback" : function Boot(parentRequire) {
-		parentRequire([ "jquery", "troopjs-browser/application/widget", "troopjs-browser/route/widget" ], function Strap(jQuery, Application, RouteWidget) {
-			jQuery(function ready($) {
+	"callback" : function Boot (contextRequire) {
+		contextRequire([ "jquery", "troopjs-browser/application/widget", "troopjs-browser/route/widget" ], function Strap (jQuery, Application, RouteWidget) {
+			jQuery(function ($) {
 				Application($("html"), "bootstrap", RouteWidget($(window), "route")).start();
 			});
 		});
@@ -310,21 +310,21 @@ Lets review
 	> __deps__: An array of dependencies to load. This is useful when require is defined as a config object before require.js is loaded, and you want to specify dependencies to load as soon as require() is defined.
 	
 *	```javascript
-	"callback" : function Boot(parentRequire) {
+	"callback" : function Boot (contextRequire) {
 	```
 
-	The callback that will be called after __deps__ have been resolved.
+	The callback that will be called after __deps__ have been resolved (in this case called `Boot`).
 
 	> A function to execute after __deps__ have been loaded. Useful when require is defined as a config object before require.js is loaded, and you want to specify a function to require after the configuration's __deps__ array has been loaded.
 
 *	```javascript
-	parentRequire([ "jquery", "troopjs-browser/application/widget", "troopjs-browser/route/widget" ], function Strap(jQuery, Application, RouteWidget) {
+	contextRequire([ "jquery", "troopjs-browser/application/widget", "troopjs-browser/route/widget" ], function Strap(jQuery, Application, RouteWidget) {
 	```
 
 	Use the context require to load `jquery`, `troopjs-browser/application/widget` and `troopjs-browser/route/widget`, and once that is completed call the `Strap` function.
 
 *	```javascript
-	jQuery(document).ready(function ready($) {
+	jQuery(document).ready(function ($) {
 	```
 
 	Add a standard ready handler to the document
@@ -333,7 +333,7 @@ Lets review
 	Application($("html"), "bootstrap", RouteWidget($(window), "route")).start();
 	```
 
-	Create and attach the `bootstrap` application to `$("html")` and add a `RouteWidget` attached to `$(window)` as a child. Then start the application.
+	Create and attach the `bootstrap` application to `$("html")` and add a `RouteWidget` attached to `$(window)` as a child. Then `start` the application.
 
 Now we've configure our application to use RequireJS and set up the application entry point.
 
@@ -360,7 +360,7 @@ Let's do this by adding _weave_ instructions in the HTML using `data-weave` attr
 >	TroopJS _weaves_ widgets to the DOM by traversing it and finding elements that have a `data-weave` attribute. When weaving an element TroopJS will:
 >
 >	* Locate (and if needed async load) the module containing the widget
->	* Instantiate the widget
+>	* Instantiate the widget and attach the jQuery wrapped DOM element to the created instance
 >	* Wire the instance (basically reflect on the instance and scan for well-known method signatures), more on this later
 
 #### The create widget
@@ -457,5 +457,5 @@ Let's go through this widget
 
 	*	Save `this` as `self` so we can use it inside of closures
 	*	Save `self.$element` (woven element) as `$element`
-	*	Store a `.trim()`-ed version as `value`
-	*	Check if the `keyCode` of the event was enter - if so `publish` `value` on `todos/add` and once all handlers are done processing, reset `$element`.
+	*	Store the trimmed value of the element as `value`
+	*	Check if the `keyCode` of the event was enter - if so `publish` `value` on `todos/add` and once all handlers are completed, reset `$element`.
