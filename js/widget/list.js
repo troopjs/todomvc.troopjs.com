@@ -1,4 +1,4 @@
-define( [ "troopjs-browser/component/widget", "troopjs-browser/store/local", "when", "jquery", "template!./item.html" ], function ListModule(Widget, store, when, $, template) {
+define([ "troopjs-browser/component/widget", "troopjs-browser/store/local", "when", "jquery", "template!./item.html" ], function ListModule(Widget, store, when, $, template) {
 	var ARRAY_SLICE = Array.prototype.slice;
 	var ENTER_KEY = 13;
 	var FILTER_ACTIVE = "filter-active";

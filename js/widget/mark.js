@@ -1,4 +1,4 @@
-define( [ "troopjs-browser/component/widget" ], function MarkModule(Widget) {
+define([ "troopjs-browser/component/widget" ], function MarkModule(Widget) {
 
 	return Widget.extend({
 		"hub:memory/todos/change" : function onChange(items) {

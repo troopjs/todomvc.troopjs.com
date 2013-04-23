@@ -465,7 +465,7 @@ Let's go through this widget
 Next we'll take a look at the count widget. This widget shows a counter that informs the user of how many active items are in the list.
 
 ```javascript
-define( [ "troopjs-browser/component/widget", "jquery" ], function CountModule(Widget, $) {
+define([ "troopjs-browser/component/widget", "jquery" ], function CountModule(Widget, $) {
 
 	function filter(item) {
 		return item === null || item.completed;

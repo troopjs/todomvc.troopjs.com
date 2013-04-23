@@ -1,4 +1,4 @@
-define( [ "troopjs-browser/component/widget", "jquery" ], function DisplayModule(Widget, $) {
+define([ "troopjs-browser/component/widget", "jquery" ], function DisplayModule(Widget, $) {
 
 	function filter(item) {
 		return item === null;

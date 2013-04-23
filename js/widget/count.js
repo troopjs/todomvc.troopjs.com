@@ -1,4 +1,4 @@
-define( [ "troopjs-browser/component/widget", "jquery" ], function CountModule(Widget, $) {
+define([ "troopjs-browser/component/widget", "jquery" ], function CountModule(Widget, $) {
 
 	function filter(item) {
 		return item === null || item.completed;

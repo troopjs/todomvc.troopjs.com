@@ -1,4 +1,4 @@
-define( [ "troopjs-browser/component/widget", "jquery" ], function FiltersModule(Widget, $) {
+define([ "troopjs-browser/component/widget", "jquery" ], function FiltersModule(Widget, $) {
 
 	return Widget.extend({
 		"hub:memory/route" : function onRoute(uri) {
