@@ -363,9 +363,9 @@ Let's do this by adding _weave_ instructions in the HTML using `data-weave` attr
 >	* Instantiate the widget and attach the jQuery wrapped DOM element to the created instance
 >	* Wire the instance (basically reflect on the instance and scan for well-known method signatures), more on this later
 
-#### The create widget
+#### Create widget [`widget/create.js`]
 
-The first widget to deal with is `widget/create.js'
+The first widget to deal with is the create widget
 
 > Widgets are named after where they are located (relative to `baseUrl`) in the source tree. A general rule is to simply add `.js` to the widget name to locate the file, so `widget/create` can be found in `src/js/widget/create.js`
 
@@ -460,9 +460,9 @@ Let's go through this widget
 	*	Store the trimmed value of the element as `value`
 	*	Check if the `keyCode` of the event was enter - if so `publish` `value` on `todos/add` and once all handlers are completed, reset `$element`.
 
-#### The count widget
+#### Count widget [`widget/count.js`]
 
-Next we'll take a look at `widget/count.js`. This widget shows a counter that informs the user of how many active items are in the list.
+Next we'll take a look at the count widget. This widget shows a counter that informs the user of how many active items are in the list.
 
 ```javascript
 define( [ "troopjs-browser/component/widget", "jquery" ], function CountModule(Widget, $) {
@@ -496,3 +496,17 @@ Let's look at what new things we can find.
 	```
 
 	Determine how many items _dont_ have the `.completed` property using the static `filter` function and update the `$element` HTML with a pluralized (if needed) text.
+
+#### Clear widget [`widget/clear.js`]
+
+The clear widget is quite similar to the count widget, but the opposite. Instead of counting the number of active items in the list, it counts the number of completed items in the list.
+
+In addition to this the clear widget also contains a click handler that looks like this
+
+```javascript
+"dom/click" : function onClear() {
+	this.publish("todos/clear");
+}
+```
+
+This will publish `todos/clear` on the pubsub every time the clear button is clicked (that's where the `data-weave` attribute weaving the clear widget is present).
