@@ -7,7 +7,7 @@ define([ "troopjs-browser/component/widget", "troopjs-browser/store/local", "whe
 	var LOCK = "lock";
 
 	function filter(item) {
-		return item === null;
+		return item !== null;
 	}
 
 	return Widget.extend({
@@ -19,7 +19,7 @@ define([ "troopjs-browser/component/widget", "troopjs-browser/store/local", "whe
 				// Get STORE
 				return store.get(STORE).then(function (getItems) {
 					// Set STORE
-					return store.set(STORE, getItems === null ? [] : $.grep(getItems, filter, true)).then(function (setItems) {
+					return store.set(STORE, getItems === null ? [] : $.grep(getItems, filter)).then(function (setItems) {
 						// Iterate each item
 						$.each(setItems, function itemIterator(i, item) {
 							// Append to self
