@@ -741,3 +741,8 @@ define([ "troopjs-browser/component/widget", "jquery" ], function DisplayModule(
 ```
 
 Quite simply it registers a handler for `todos/change` that will either `show` or `hide` depending on the `count` of the filtered array returned from `$.grep`.
+
+#### List widget [`widget/list.js`]
+
+The list widget is where all the magic happens. It is by far the largest widget and it contains all the logic that deals with the list.
+
