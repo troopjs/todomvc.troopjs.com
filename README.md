@@ -662,7 +662,7 @@ Let's start with the first item, showing an aggregate status
 
 	Update the `$element` `indeterminate` and `checked` properties to reflect the result.
 
-And then the second item, batch interaction
+And then the second item - batch interaction:
 
 *	```javascript
 	"dom/change" : function onMark($event) {
@@ -671,3 +671,52 @@ And then the second item, batch interaction
 	```
 
 	Register a change handler that will publish `todos/mark` on the pubsub with the current `checked` status of the checkbox as an argument.
+
+#### Filters widget [`widget/filters.js`]
+
+The filters widget reflects the current filter status and allows the user to apply filters to the list.
+
+```javascript
+define([ "troopjs-browser/component/widget", "jquery" ], function FiltersModule(Widget, $) {
+
+	return Widget.extend({
+		"hub:memory/route" : function onRoute(uri) {
+			this.publish("todos/filter", uri.source);
+		},
+
+		"hub:memory/todos/filter" : function onFilter(filter) {
+			filter = filter || "/";
+
+			// Update UI
+			$("a[href^='#']")
+				.removeClass("selected")
+				.filter("[href='#" + filter + "']")
+				.addClass("selected");
+		}
+	});
+});
+```
+
+Let's take a closer look
+
+*	```javascript
+	"hub:memory/route" : function onRoute(uri) {
+		this.publish("todos/filter", uri.source);
+	},
+	```
+
+	This will register a handler for the `route` topic that will republish `uri.source` on `todos/filter`. The `route` topic is published on each time the route (anything after `#` in the url) changes. The `uri` object is a parsed version of the route. Also note the `:memory` part that ensures we always get the latest value published on this topic.
+
+*	```javascript
+	"hub:memory/todos/filter" : function onFilter(filter) {
+		filter = filter || "/";
+
+		// Update UI
+		$("a[href^='#']")
+			.removeClass("selected")
+			.filter("[href='#" + filter + "']")
+			.addClass("selected");
+	}
+	```
+
+	Registers a handler for the `todos/filter` topic (that we publish above). Sets the default filter (if none is provided) to `/` then finds all child elements matching the css selector `a[href^='#']` (an anchor element where the `href` attribute starts with `#`) then either add or remove the `selected` css class (depending on if the filter matches).
