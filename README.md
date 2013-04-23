@@ -468,12 +468,12 @@ Next we'll take a look at the count widget. This widget shows a counter that inf
 define([ "troopjs-browser/component/widget", "jquery" ], function CountModule(Widget, $) {
 
 	function filter(item) {
-		return item === null || item.completed;
+		return item !== null && !item.completed;
 	}
 
 	return Widget.extend({
 		"hub:memory/todos/change" : function onChange(items) {
-			var count = $.grep(items, filter, true).length;
+			var count = $.grep(items, filter).length;
 
 			this.$element.html("<strong>" + count + "</strong> " + (count === 1 ? "item" : "items") + " left");
 		}
@@ -484,29 +484,80 @@ define([ "troopjs-browser/component/widget", "jquery" ], function CountModule(Wi
 Let's look at what new things we can find.
 
 *	```javascript
+	function filter(item) {
+		return item !== null && !item.completed;
+	}
+	```
+
+	A static filter later used by `$.grep` to count active items.
+
+*	```javascript
 	"hub:memory/todos/change" : function onChange(items) {
 	```
 
 	Again with the well-known signatures. This signature tells TroopJS that we want to add a subscription to the `todos/change` topic, _and_ that if a previous value was published on this topic _before_ we added our subscription, we'd like to get a callback with that value (this is what `:memory` adds to the mix).
 
 *	```javascript
-	var count = $.grep(items, filter, true).length;
+	var count = $.grep(items, filter).length;
+	```
 
+	This filters the list to only contain active items. After that we count the number of items in the array and store as `count`.
+
+*	```javascript
 	this.$element.html("<strong>" + count + "</strong> " + (count === 1 ? "item" : "items") + " left");
 	```
 
-	Determine how many items _dont_ have the `.completed` property using the static `filter` function and update the `$element` HTML with a pluralized (if needed) text.
+	Update the `$element` HTML with a pluralized (if needed) text indicating what the current `count` is.
 
 #### Clear widget [`widget/clear.js`]
 
 The clear widget is quite similar to the count widget, but the opposite. Instead of counting the number of active items in the list, it counts the number of completed items in the list.
 
-In addition to this the clear widget also contains a click handler that looks like this
-
 ```javascript
-"dom/click" : function onClear() {
-	this.publish("todos/clear");
-}
+define([ "troopjs-browser/component/widget", "jquery" ], function ClearModule(Widget, $) {
+
+	function filter(item) {
+		return item !== null && item.completed;
+	}
+
+	return Widget.extend({
+		"hub:memory/todos/change" : function onChange(items) {
+			var count = $.grep(items, filter).length;
+
+			this.$element.text("Clear completed (" + count + ")")[count > 0 ? "show" : "hide"]();
+		},
+
+		"dom/click" : function onClear() {
+			this.publish("todos/clear");
+		}
+	});
+});
 ```
 
-This will publish `todos/clear` on the pubsub every time the clear button is clicked (that's where the `data-weave` attribute weaving the clear widget is present).
+What looks different here?
+
+*	```javascript
+	function filter(item) {
+		return item !== null && item.completed;
+	}
+	```
+
+	Almost the same filter as before, but this time for completed items.
+
+*	```javascript
+	this.$element.text("Clear completed (" + count + ")")[count > 0 ? "show" : "hide"]();
+	```
+
+	Update the `$element` HTML with a pluralized (if needed) text indicating what the current `count` is and if the count is not greater than `0` then `hide`.
+
+*	```javascript
+	"dom/click" : function onClear() {
+	```
+
+	Register a click handler.
+
+*	```javascript
+	this.publish("todos/clear");
+	```
+
+	Publishes `todos/clear` on the pubsub every time the click handler is invoked.
