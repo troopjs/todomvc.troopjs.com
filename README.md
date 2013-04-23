@@ -557,3 +557,117 @@ What looks different here?
 	```
 
 	Register a click handler that will publish `todos/clear` on the pubsub every time it is invoked.
+
+#### Mark widget [`widget/mark.js`]
+
+The mark widget can do two things
+
+* It allows the user to mark all the items as either completed or active with one click
+* It shows the aggregate status of all the items in the list
+  * __Unchecked__ if _no_ items are completed
+  * __Checked__ if _all_ items are completed
+  * __Indedeterminate__ if _some_ items are completed
+
+```javascript
+define([ "troopjs-browser/component/widget" ], function MarkModule(Widget) {
+
+	return Widget.extend({
+		"hub:memory/todos/change" : function onChange(items) {
+			var total = 0;
+			var completed = 0;
+			var $element = this.$element;
+
+			$.each(items, function iterator(i, item) {
+				if (item === null) {
+					return;
+				}
+
+				if (item.completed) {
+					completed++;
+				}
+
+				total++;
+			});
+
+			if (completed === 0) {
+				$element
+					.prop("indeterminate", false)
+					.prop("checked", false);
+			}
+			else if (completed === total) {
+				$element
+					.prop("indeterminate", false)
+					.prop("checked", true);
+			}
+			else {
+				$element
+					.prop("indeterminate", true)
+					.prop("checked", false);
+			}
+		},
+
+		"dom/change" : function onMark($event) {
+			this.publish("todos/mark", $($event.target).prop("checked"));
+		}
+	});
+});
+
+```
+
+Let's start with the first item, showing an aggregate status
+
+*	```javascript
+	"hub:memory/todos/change" : function onChange(items) {
+	```
+
+	First register a handler for `todos/change`. You should recognize this by now as any widget interesting in changes of the list have handlers registered for this topic.
+
+*	```javascript
+	var total = 0;
+	var completed = 0;
+	var $element = this.$element;
+
+	$.each(items, function iterator(i, item) {
+		if (item === null) {
+			return;
+		}
+
+		if (item.completed) {
+			completed++;
+		}
+
+		total++;
+	});
+	```
+
+	Iterate `items` to determine how many non `null` items are there in `total` and how many of them are `completed`.
+
+*	```javascript
+	if (completed === 0) {
+		$element
+			.prop("indeterminate", false)
+			.prop("checked", false);
+	}
+	else if (completed === total) {
+		$element
+			.prop("indeterminate", false)
+			.prop("checked", true);
+	}
+	else {
+		$element
+			.prop("indeterminate", true)
+			.prop("checked", false);
+	}
+	```
+
+	Update the `$element` `indeterminate` and `checked` properties to reflect the result.
+
+And then the second item, batch interaction
+
+*	```javascript
+	"dom/change" : function onMark($event) {
+		this.publish("todos/mark", $($event.target).prop("checked"));
+	}
+	```
+
+	Register a change handler that will publish `todos/mark` on the pubsub with the current `checked` status of the checkbox as an argument.

@@ -3,7 +3,7 @@ define([ "troopjs-browser/component/widget" ], function MarkModule(Widget) {
 	return Widget.extend({
 		"hub:memory/todos/change" : function onChange(items) {
 			var total = 0;
-			var count = 0;
+			var completed = 0;
 			var $element = this.$element;
 
 			$.each(items, function iterator(i, item) {
@@ -12,18 +12,18 @@ define([ "troopjs-browser/component/widget" ], function MarkModule(Widget) {
 				}
 
 				if (item.completed) {
-					count++;
+					completed++;
 				}
 
 				total++;
 			});
 
-			if (count === 0) {
+			if (completed === 0) {
 				$element
 					.prop("indeterminate", false)
 					.prop("checked", false);
 			}
-			else if (count === total) {
+			else if (completed === total) {
 				$element
 					.prop("indeterminate", false)
 					.prop("checked", true);
