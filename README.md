@@ -720,3 +720,24 @@ Let's take a closer look
 	```
 
 	Registers a handler for the `todos/filter` topic (that we publish above). Sets the default filter (if none is provided) to `/` then finds all child elements matching the css selector `a[href^='#']` (an anchor element where the `href` attribute starts with `#`) then either add or remove the `selected` css class (depending on if the filter matches).
+
+#### Display widget [`widget/display.js`]
+
+The display widget shows or hides its contents depending on the status of the list
+
+```javascript
+define([ "troopjs-browser/component/widget", "jquery" ], function DisplayModule(Widget, $) {
+
+	function filter(item) {
+		return item !== null;
+	}
+
+	return Widget.extend({
+		"hub:memory/todos/change": function onChange(items) {
+			this.$element[$.grep(items, filter).length > 0 ? "show" : "hide"]();
+		}
+	});
+});
+```
+
+Quite simply it registers a handler for `todos/change` that will either `show` or `hide` depending on the `count` of the filtered array returned from `$.grep`.
