@@ -552,12 +552,8 @@ What looks different here?
 
 *	```javascript
 	"dom/click" : function onClear() {
+		this.publish("todos/clear");
+	}
 	```
 
-	Register a click handler.
-
-*	```javascript
-	this.publish("todos/clear");
-	```
-
-	Publishes `todos/clear` on the pubsub every time the click handler is invoked.
+	Register a click handler that will publish `todos/clear` on the pubsub every time it is invoked.
