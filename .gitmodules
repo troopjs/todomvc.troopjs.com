@@ -1,12 +1,9 @@
-[submodule "src/js/lib/troopjs-bundle"]
-	path = src/js/lib/troopjs-bundle
+[submodule "js/lib/troopjs-bundle"]
+	path = js/lib/troopjs-bundle
 	url = https://github.com/troopjs/troopjs-bundle.git
-[submodule "src/js/lib/jquery"]
-	path = src/js/lib/jquery
+[submodule "js/lib/jquery"]
+	path = js/lib/jquery
 	url = https://github.com/jquery/jquery.git
-[submodule "src/js/lib/requirejs"]
-	path = src/js/lib/requirejs
+[submodule "js/lib/requirejs"]
+	path = js/lib/requirejs
 	url = https://github.com/jrburke/requirejs.git
-[submodule "resources/troopjs-requirejs"]
-	path = resources/troopjs-requirejs
-	url = https://github.com/troopjs/troopjs-requirejs.git
