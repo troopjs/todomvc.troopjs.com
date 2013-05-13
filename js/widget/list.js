@@ -173,7 +173,7 @@ define([ "troopjs-browser/component/widget", "troopjs-data/store/component", "tr
 					// Update input value, enable and select
 					$input
 						.val(items[index].title)
-						.removeProp("disabled")
+						.prop("disabled", false)
 						.select();
 				}, function () {
 					$li.removeClass("editing");
@@ -226,7 +226,7 @@ define([ "troopjs-browser/component/widget", "troopjs-data/store/component", "tr
 						})
 						.ensure(function () {
 							// Enable
-							$target.removeProp("disabled");
+							$target.prop("disabled", false);
 						});
 				});
 			}
