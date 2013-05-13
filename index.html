@@ -102,10 +102,10 @@
 					}
 				},
 
-				"deps" : [ "require", "troopjs-bundle" ],
+				"deps" : [ "require", "jquery", "troopjs-bundle" ],
 
-				"callback" : function Boot (contextRequire) {
-					contextRequire([ "jquery", "troopjs-browser/application/widget", "troopjs-browser/route/widget" ], function Strap (jQuery, Application, RouteWidget) {
+				"callback" : function Boot (contextRequire, jQuery) {
+					contextRequire([ "troopjs-browser/application/widget", "troopjs-browser/route/widget" ], function Strap (Application, RouteWidget) {
 						jQuery(function ($) {
 							Application($("html"), "bootstrap", RouteWidget($(window), "route")).start();
 						});
