@@ -59,37 +59,37 @@
 				"packages" : [{
 					"name" : "jquery",
 					"location" : "lib/jquery",
-					"main" : "dist/jquery"
+					"main" : "dist/jquery.min"
 				}, {
 					"name" : "poly",
-					"location" : "lib/troopjs-bundle/src/lib/poly",
+					"location" : "lib/troopjs-bundle/lib/poly",
 					"main" : "poly"
 				}, {
 					"name" : "when",
-					"location" : "lib/troopjs-bundle/src/lib/when",
+					"location" : "lib/troopjs-bundle/lib/when",
 					"main" : "when"
 				}, {
 					"name" : "troopjs-core",
-					"location" : "lib/troopjs-bundle/src/lib/troopjs-core/src"
+					"location" : "lib/troopjs-bundle/lib/troopjs-core"
 				}, {
 					"name" : "troopjs-browser",
-					"location" : "lib/troopjs-bundle/src/lib/troopjs-browser/src"
+					"location" : "lib/troopjs-bundle/lib/troopjs-browser"
 				}, {
 					"name" : "troopjs-data",
-					"location" : "lib/troopjs-bundle/src/lib/troopjs-data/src"
+					"location" : "lib/troopjs-bundle/lib/troopjs-data"
 				}, {
 					"name" : "troopjs-jquery",
-					"location" : "lib/troopjs-bundle/src/lib/troopjs-jquery/src"
+					"location" : "lib/troopjs-bundle/lib/troopjs-jquery"
 				}, {
 					"name" : "troopjs-requirejs",
-					"location" : "lib/troopjs-bundle/src/lib/troopjs-requirejs/src"
+					"location" : "lib/troopjs-bundle/lib/troopjs-requirejs"
 				}, {
 					"name" : "troopjs-utils",
-					"location" : "lib/troopjs-bundle/src/lib/troopjs-utils/src"
+					"location" : "lib/troopjs-bundle/lib/troopjs-utils"
 				}, {
 					"name" : "troopjs-bundle",
 					"location" : "lib/troopjs-bundle",
-					"main" : "build/maxi"
+					"main" : "dist/maxi.min"
 				}, {
 					"name" : "troopjs-todos",
 					"location" : ".",
@@ -102,7 +102,7 @@
 					}
 				},
 
-				"deps" : [ "require" ],
+				"deps" : [ "require", "troopjs-bundle" ],
 
 				"callback" : function Boot (contextRequire) {
 					contextRequire([ "jquery", "troopjs-browser/application/widget", "troopjs-browser/route/widget" ], function Strap (jQuery, Application, RouteWidget) {
