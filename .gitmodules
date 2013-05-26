@@ -7,6 +7,6 @@
 [submodule "js/lib/requirejs"]
 	path = js/lib/requirejs
 	url = https://github.com/jrburke/requirejs.git
-[submodule "bower_components/todomvc-common"]
-	path = bower_components/todomvc-common
+[submodule "components/todomvc-common"]
+	path = components/todomvc-common
 	url = https://github.com/tastejs/todomvc-common.git
