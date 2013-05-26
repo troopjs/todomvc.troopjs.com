@@ -1,4 +1,5 @@
 define([ "troopjs-browser/component/widget", "jquery" ], function FiltersModule(Widget, $) {
+	'use strict';
 
 	return Widget.extend({
 		"hub:memory/route" : function onRoute(uri) {

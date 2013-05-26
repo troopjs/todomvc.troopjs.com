@@ -1,4 +1,5 @@
 define([ "troopjs-browser/component/widget", "jquery" ], function DisplayModule(Widget, $) {
+	'use strict';
 
 	function filter(item) {
 		return item !== null;
