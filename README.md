@@ -1,6 +1,6 @@
 # TroopJS TodoMVC Example
 
-__An implementation of [TodoMVC](http://addyosmani.github.com/todomvc/) using [ToopJS](http://troopjs.com/)__
+__An implementation of [TodoMVC](https://github.com/tastejs/todomvc/) using [ToopJS](http://troopjs.com/)__
 
 ## Introduction
 
@@ -11,7 +11,19 @@ This project serves two purposes:
 
 ## TodoMVC deviations from the specifications
 
-For one reason or another there are parts of the application that deviates from the [original specifications](https://github.com/addyosmani/todomvc/wiki/Todo-Application-Specification). We've tried to stay as true as possible, but hey - nobody's perfect. The known deviations are:
+For one reason or another there are parts of the application that deviates from the [original specifications](https://github.com/tastejs/todomvc/wiki/App-Specification). We've tried to stay as true as possible, but hey - nobody's perfect. The known deviations are:
+
+*	> Use double-quotes in HTML and single-quotes in JS and CSS.
+
+	We've opted to follow the guidelines of TroopJS rather than the ones from TodoMVC for exatly the same reasons they have it posted in their [code style](https://github.com/addyosmani/todomvc/blob/gh-pages/contributing.md#code-style)
+
+	> We think it's best for the project if the code you write looks like the code the last developer wrote.
+
+	We believe that's a great idea, but we want our project to look like any other _TroopJS_ project, so we've stuck with our code style for this application.
+
+*	> Unless it conflicts with the project's best practices, your example should use bower for package management.
+
+	For this example we're using git submodules for simple dependency management. There's a separate branch where we track the version of this application that we've submitted to TodoMVC and _that_ branch uses [bower](http://twitter.github.com/bower/) for dependency management.
 
 *	> This checkbox toggles all the todos to the same state as itself. Make sure to clear the checked state after the the "Clear completed" button is clicked. The "Mark all as complete" checkbox should also be updated when single todo items are checked/unchecked. Eg. When all the todos are checked it should also get checked.
 
@@ -27,25 +39,24 @@ Before we look at any code we'll take you through the (recommended) directory st
 
 ```
 .
-├── src
-│   ├── css
-│   └── js
-│       └── lib
+├── dist
+├── css
+├── js
+│   └── lib
 └── test
 ```
 
-As you and see all application sources are contained in a top `src` folder. The reason for this is that we want to keep _application_ resources separated from _test_ and _build_ resources. So to that effect, the `test` folder contains test related resources and the `build` folder contains build output.
+As you and see all application sources are contained in a top `js` folder. In the `test` you'll find test, and the `dist` folder we'll get the build output (note that the `dist` folder should be created by a build tool and ignored from source control).
 
-Inside the `js` folder there's a folder called `lib`. This is where external libraries should be stored. External libraries should be [AMD](https://github.com/amdjs/amdjs-api/wiki/AMD) compliant.
+Inside the `js` folder there's a folder called `lib`. This is where external _application_ libraries should be stored. External libraries should be [AMD](https://github.com/amdjs/amdjs-api/wiki/AMD) compliant.
 
-> TroopJS makes use of git submodules to manage external libraries. Many of these libraries are not AMD compliant and some of them have platform or tool dependent build systems that would make the build of a TroopJS application prohibitively difficult. To solve this we've created clones of these libraries and committed AMD patches and build output to our clones. This way we can submodule our clones while still tracking upstream changes.
+> TroopJS makes use of git submodules to manage external libraries. For instructions on how submodules work you can take a look at the [documentation](http://book.git-scm.com/5_submodules.html).
 
 ### Bootstrap
 
-As previously noted the application resources are all contained in the `src` folder. In this folder there are a couple of _standard_ folders that most applications would need
+As previously noted the application resources are all contained in the `js` folder. In this folder there are a couple of _standard_ folders that most applications would need
 
 ```
-src
 ├── js
 │   ├── lib
 │   └── widget
@@ -53,27 +64,25 @@ src
 └── img
 ```
 
-It's also recommended that there's a `src/index.html` (the application landing-page).
+It's also recommended that there's a `index.html` (the application landing-page).
 
 So before we start we'll create a skeleton structure and add the external libraries needed for TroopJS to function.
 
->	As previously mentioned submodules should be added using git. For instructions on how to do this you can take a look at the [documentation](http://book.git-scm.com/5_submodules.html).
-
-After this is done the directory structure will look something like this
+After this is done the directory structure will look something like this (folders marked with `*` are git sub-modules)
 
 ```
-src
+├── bower_components       (*)
 ├── css
 ├── js
 │   ├── lib
-│   │   ├── jquery
-│   │   ├── requirejs
-│   │   └── troopjs-bundle
+│   │   ├── jquery         (*)
+│   │   ├── requirejs      (*)
+│   │   └── troopjs-bundle (*)
 │   └── widget
 └── img
 ```
 
-So now we can start with our todo application. The first thing we should do is to copy the [template](https://github.com/addyosmani/todomvc/tree/gh-pages/template) resources to the correct locations. Once we're done with this we'll take a look at index.html
+So now we can start with our todo application. The first thing we should do is to copy the [template](https://github.com/tastejs/todomvc/tree/gh-pages/template) resources to the correct locations. Once we're done with this we'll take a look at index.html
 
 ```html
 <!doctype html>
@@ -82,7 +91,7 @@ So now we can start with our todo application. The first thing we should do is t
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<title>Template • TodoMVC</title>
-		<link rel="stylesheet" href="components/todomvc-common/base.css">
+		<link rel="stylesheet" href="bower_components/todomvc-common/base.css">
 		<!-- CSS overrides - remove if you don't need it -->
 		<link rel="stylesheet" href="css/app.css">
 	</head>
@@ -146,7 +155,7 @@ So now we can start with our todo application. The first thing we should do is t
 			<p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
 		</footer>
 		<!-- Scripts here. Don't remove this ↓ -->
-		<script src="components/todomvc-common/base.js"></script>
+		<script src="bower_components/todomvc-common/base.js"></script>
 		<script src="js/app.js"></script>
 	</body>
 </html>
@@ -207,10 +216,10 @@ var require = {
 		}
 	},
 
-	"deps" : [ "require" ],
+	"deps" : [ "require", "jquery" ],
 
-	"callback" : function Boot (contextRequire) {
-		contextRequire([ "jquery", "troopjs-browser/application/widget", "troopjs-browser/route/widget" ], function Strap (jQuery, Application, RouteWidget) {
+	"callback" : function Boot (contextRequire, jQuery) {
+		contextRequire([ "troopjs-browser/application/widget", "troopjs-browser/route/widget" ], function Strap (Application, RouteWidget) {
 			jQuery(function ($) {
 				Application($("html"), "bootstrap", RouteWidget($(window), "route")).start();
 			});
@@ -302,15 +311,15 @@ Lets review
 	> There's further information available in the RequireJS documentation about [Loading Modules from Packages](http://requirejs.org/docs/api.html#packages).
 
 *	```javascript
-	"deps": [ "require" ]
+	"deps": [ "require", "jquery" ]
 	```
 
-	Depend on `require`
+	Depend on `require` and `jquery`
 
 	> __deps__: An array of dependencies to load. This is useful when require is defined as a config object before require.js is loaded, and you want to specify dependencies to load as soon as require() is defined.
 	
 *	```javascript
-	"callback" : function Boot (contextRequire) {
+	"callback" : function Boot (contextRequire, jQuery) {
 	```
 
 	The callback that will be called after __deps__ have been resolved (in this case called `Boot`).
@@ -318,10 +327,10 @@ Lets review
 	> A function to execute after __deps__ have been loaded. Useful when require is defined as a config object before require.js is loaded, and you want to specify a function to require after the configuration's __deps__ array has been loaded.
 
 *	```javascript
-	contextRequire([ "jquery", "troopjs-browser/application/widget", "troopjs-browser/route/widget" ], function Strap(jQuery, Application, RouteWidget) {
+	contextRequire([ "troopjs-browser/application/widget", "troopjs-browser/route/widget" ], function Strap(Application, RouteWidget) {
 	```
 
-	Use the context require to load `jquery`, `troopjs-browser/application/widget` and `troopjs-browser/route/widget`, and once that is completed call the `Strap` function.
+	Use the context require to load `troopjs-browser/application/widget` and `troopjs-browser/route/widget`, and once that is completed call the `Strap` function.
 
 *	```javascript
 	jQuery(document).ready(function ($) {
@@ -371,6 +380,8 @@ The first widget to deal with is the create widget
 
 ```javascript
 define([ "troopjs-browser/component/widget" ], function CreateModule(Widget) {
+	"use strict";
+
 	var ENTER_KEY = 13;
 
 	return Widget.extend({
@@ -412,16 +423,22 @@ Let's go through this widget
 	> If you look above in `index.html` you'll find a package definition for `troopjs-browser` that points to `lib/troopjs-bundle/src/lib/troopjs-browser/src`. This means that `troopjs-browser/...` actually resolves to `lib/troopjs-bundle/src/lib/troopjs-browser/src/...`
 
 *	```javascript
-	return Widget.extend({
+	"use strict";
 	```
 
-	The result of this module is extending `Widget`
+	Be strict.
 
 *	```javascript
 	var ENTER_KEY = 13;
 	```
 
 	Declare a constant for `ENTER_KEY` corresponding to the `keyCode` of enter.
+
+*	```javascript
+	return Widget.extend({
+	```
+
+	The result of this module is extending `Widget`
 
 *	```javascript
 	"dom/keyup" : function onKeyUp($event) {
@@ -466,6 +483,7 @@ Next we'll take a look at the count widget. This widget shows a counter that inf
 
 ```javascript
 define([ "troopjs-browser/component/widget", "jquery" ], function CountModule(Widget, $) {
+	use "strict";
 
 	function filter(item) {
 		return item !== null && !item.completed;
@@ -515,6 +533,7 @@ The clear widget is quite similar to the count widget, but the opposite. Instead
 
 ```javascript
 define([ "troopjs-browser/component/widget", "jquery" ], function ClearModule(Widget, $) {
+	use "strict";
 
 	function filter(item) {
 		return item !== null && item.completed;
@@ -570,6 +589,7 @@ The mark widget can do two things
 
 ```javascript
 define([ "troopjs-browser/component/widget" ], function MarkModule(Widget) {
+	use "strict";
 
 	return Widget.extend({
 		"hub:memory/todos/change" : function onChange(items) {
@@ -678,6 +698,7 @@ The filters widget reflects the current filter status and allows the user to app
 
 ```javascript
 define([ "troopjs-browser/component/widget", "jquery" ], function FiltersModule(Widget, $) {
+	use "strict";
 
 	return Widget.extend({
 		"hub:memory/route" : function onRoute(uri) {
@@ -727,6 +748,7 @@ The display widget shows or hides its contents depending on the status of the li
 
 ```javascript
 define([ "troopjs-browser/component/widget", "jquery" ], function DisplayModule(Widget, $) {
+	use "strict";
 
 	function filter(item) {
 		return item !== null;
