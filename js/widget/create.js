@@ -3,8 +3,8 @@ define([ "troopjs-browser/component/widget" ], function CreateModule(Widget) {
 
 	return Widget.extend({
 		"dom/keyup": function onKeyUp($event) {
-			var self = this;
-			var $element = self.$element;
+			var me = this;
+			var $element = me.$element;
 			var value;
 
 			switch ($event.keyCode) {
@@ -15,7 +15,7 @@ define([ "troopjs-browser/component/widget" ], function CreateModule(Widget) {
 					// Check that the value is not empty
 					if (value !== "") {
 						// Publish todos/add
-						self.publish("todos/add", value)
+						me.publish("todos/add", value)
 							// When all handlers are done
 							.then(function () {
 								// Reset val

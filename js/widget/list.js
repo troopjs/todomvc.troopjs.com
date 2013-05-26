@@ -14,8 +14,8 @@ define([ "troopjs-browser/component/widget", "troopjs-data/store/component", "tr
 		this[STORE] = Store(Adapter());
 	}, {
 		"sig/start" : function () {
-			var self = this;
-			var store = self[STORE];
+			var me = this;
+			var store = me[STORE];
 
 			// Wait for store ready
 			return store.ready(function () {
@@ -25,23 +25,23 @@ define([ "troopjs-browser/component/widget", "troopjs-data/store/component", "tr
 					return store.set(KEY, getItems === null ? [] : $.grep(getItems, filter), function (setItems) {
 						// Iterate each item
 						$.each(setItems, function itemIterator(i, item) {
-							// Append to self
-							self.append(template, {
+							// Append to me
+							me.append(template, {
 								"i": i,
 								"item": item
 							});
 						});
 
 						// Publish
-						self.publish("todos/change", setItems);
+						me.publish("todos/change", setItems);
 					});
 				});
 			});
 		},
 
 		"hub/todos/add" : function onAdd(title) {
-			var self = this;
-			var store = self[STORE];
+			var me = this;
+			var store = me[STORE];
 
 			// Wait for store ready
 			return store.ready(function () {
@@ -56,15 +56,15 @@ define([ "troopjs-browser/component/widget", "troopjs-data/store/component", "tr
 						"title": title
 					};
 
-					// Append new item to self
-					self.append(template, {
+					// Append new item to me
+					me.append(template, {
 						"i": i,
 						"item": item
 					});
 
 					// Set KEY
 					return store.set(KEY, getItems, function (setItems) {
-						self.publish("todos/change", setItems);
+						me.publish("todos/change", setItems);
 					});
 				});
 			})
@@ -102,8 +102,8 @@ define([ "troopjs-browser/component/widget", "troopjs-data/store/component", "tr
 		},
 
 		"dom:.toggle/change" : function onToggleChange($event) {
-			var self = this;
-			var store = self[STORE];
+			var me = this;
+			var store = me[STORE];
 			var $target = $($event.currentTarget);
 			var completed = $target.prop("checked");
 			var $li = $target.closest("li");
@@ -123,15 +123,15 @@ define([ "troopjs-browser/component/widget", "troopjs-data/store/component", "tr
 
 					// Set KEY
 					return store.set(KEY, getItems, function (setItems) {
-						self.publish("todos/change", setItems);
+						me.publish("todos/change", setItems);
 					});
 				});
 			});
 		},
 
 		"dom:.destroy/click" : function onDestroyClick($event) {
-			var self = this;
-			var store = self[STORE];
+			var me = this;
+			var store = me[STORE];
 			var $li = $($event.currentTarget).closest("li");
 			var index = $li.data("index");
 
@@ -147,15 +147,15 @@ define([ "troopjs-browser/component/widget", "troopjs-data/store/component", "tr
 
 					// Set KEY
 					return store.set(KEY, getItems, function (setItems) {
-						self.publish("todos/change", setItems);
+						me.publish("todos/change", setItems);
 					});
 				});
 			});
 		},
 
 		"dom:.view/dblclick" : function onViewDblClick($event) {
-			var self = this;
-			var store = self[STORE];
+			var me = this;
+			var store = me[STORE];
 			var $li = $($event.currentTarget).closest("li");
 			var index = $li.data("index");
 			var $input = $li.find("input");
@@ -189,8 +189,8 @@ define([ "troopjs-browser/component/widget", "troopjs-data/store/component", "tr
 		},
 
 		"dom:.edit/focusout" : function onEditFocusOut($event) {
-			var self = this;
-			var store = self[STORE];
+			var me = this;
+			var store = me[STORE];
 			var $target = $($event.currentTarget);
 			var title = $target.val().trim();
 			var $li = $target.closest("li");
@@ -221,7 +221,7 @@ define([ "troopjs-browser/component/widget", "troopjs-data/store/component", "tr
 									.find("label")
 									.text(title);
 
-								self.publish("todos/change", setItems);
+								me.publish("todos/change", setItems);
 							});
 						})
 						.ensure(function () {
