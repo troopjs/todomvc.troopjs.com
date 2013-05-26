@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en" data-framework="troopjs">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>Template • TodoMVC</title>
+	<link rel="stylesheet" href="components/todomvc-common/base.css">
+	<!-- CSS overrides - remove if you don't need it -->
+	<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<section id="todoapp">
+	<header id="header">
+		<h1>todos</h1>
+		<input id="new-todo" placeholder="What needs to be done?" autofocus data-weave="troopjs-todos/widget/create">
+	</header>
+	<!-- This section should be hidden by default and shown when there are todos -->
+	<section id="main" data-weave="troopjs-todos/widget/display">
+		<input id="toggle-all" type="checkbox" data-weave="troopjs-todos/widget/mark">
+		<label for="toggle-all">Mark all as complete</label>
+		<ul id="todo-list" data-weave="troopjs-todos/widget/list"></ul>
+	</section>
+	<!-- This footer should hidden by default and shown when there are todos -->
+	<footer id="footer" data-weave="troopjs-todos/widget/display">
+		<!-- This should be `0 items left` by default -->
+		<span id="todo-count" data-weave="troopjs-todos/widget/count"><strong>1</strong> item left</span>
+		<!-- Remove this if you don't implement routing -->
+		<ul id="filters" data-weave="troopjs-todos/widget/filters">
+			<li>
+				<a class="selected" href="#/">All</a>
+			</li>
+			<li>
+				<a href="#/active">Active</a>
+			</li>
+			<li>
+				<a href="#/completed">Completed</a>
+			</li>
+		</ul>
+		<!-- Hidden if no completed items are left ↓ -->
+		<button id="clear-completed" data-weave="troopjs-todos/widget/clear">Clear completed (1)</button>
+	</footer>
+</section>
+<footer id="info">
+	<p>Double-click to edit a todo</p>
+	<!-- Change this out with your name and url ↓ -->
+	<p>Created by <a href="https://github.com/mikaelkaron">Mikael Karon</a></p>
+	<p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
+</footer>
+<!-- Scripts here. Don't remove this ↓ -->
+<script src="components/todomvc-common/base.js"></script>
+<script type="text/javascript">
+	"use strict";
+	var require = {
+		"baseUrl" : ".",
+
+		"packages" : [{
+			"name" : "jquery",
+			"location" : "components/jquery",
+			"main" : "jquery.min"
+		}, {
+			"name" : "poly",
+			"location" : "components/troopjs-bundle/lib/poly",
+			"main" : "poly"
+		}, {
+			"name" : "when",
+			"location" : "components/troopjs-bundle/lib/when",
+			"main" : "when"
+		}, {
+			"name" : "troopjs-bundle",
+			"location" : "components/troopjs-bundle",
+			"main" : "maxi.min"
+		}, {
+			"name" : "troopjs-todos",
+			"location" : "js"
+		}],
+
+		"map" : {
+			"*" : {
+				"template" : "troopjs-requirejs/template"
+			}
+		},
+
+		"deps" : [ "require", "jquery", "troopjs-bundle" ],
+
+		"callback" : function Boot (contextRequire, jQuery) {
+			contextRequire([ "troopjs-browser/application/widget", "troopjs-browser/route/widget" ], function Strap (Application, RouteWidget) {
+				jQuery(function ($) {
+					Application($("html"), "bootstrap", RouteWidget($(window), "route")).start();
+				});
+			});
+		}
+	};
+</script>
+<script type="text/javascript" async="async" src="components/requirejs/require.js"></script>
+</body>
+</html>

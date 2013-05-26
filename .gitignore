@@ -1,0 +1,7 @@
+#IDE
+.idea
+.project
+.settings
+.externalToolBuilders
+#Components
+components
