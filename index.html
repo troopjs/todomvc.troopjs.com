@@ -1,121 +1,115 @@
 <!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-		<title>Template • TodoMVC</title>
-		<link rel="stylesheet" href="components/todomvc-common/base.css">
-		<!-- CSS overrides - remove if you don't need it -->
-		<link rel="stylesheet" href="css/app.css">
-	</head>
-	<body>
-		<section id="todoapp">
-			<header id="header">
-				<h1>todos</h1>
-				<input id="new-todo" placeholder="What needs to be done?" autofocus data-weave="widget/create">
-			</header>
-			<!-- This section should be hidden by default and shown when there are todos -->
-			<section id="main" data-weave="widget/display">
-				<input id="toggle-all" type="checkbox" data-weave="widget/mark">
-				<label for="toggle-all">Mark all as complete</label>
-				<ul id="todo-list" data-weave="widget/list">
-					<!-- These are here just to show the structure of the list items -->
-					<!-- List items should get the class `editing` when editing and `completed` when marked as completed -->
-				</ul>
-			</section>
-			<!-- This footer should hidden by default and shown when there are todos -->
-			<footer id="footer" data-weave="widget/display">
-				<!-- This should be `0 items left` by default -->
-				<span id="todo-count" data-weave="widget/count"><strong>1</strong> item left</span>
-				<!-- Remove this if you don't implement routing -->
-				<ul id="filters" data-weave="widget/filters">
-					<li>
-						<a class="selected" href="#/">All</a>
-					</li>
-					<li>
-						<a href="#/active">Active</a>
-					</li>
-					<li>
-						<a href="#/completed">Completed</a>
-					</li>
-				</ul>
-				<!-- Hidden if no completed items are left ↓ -->
-				<button id="clear-completed" data-weave="widget/clear">Clear completed (1)</button>
-			</footer>
-		</section>
-		<footer id="info">
-			<p>Double-click to edit a todo</p>
-			<!-- Change this out with your name and url ↓ -->
-			<p>Created by <a href="https://github.com/mikaelkaron">Mikael Karon</a></p>
-			<p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
-		</footer>
-		<!-- Scripts here. Don't remove this ↓ -->
-		<script src="components/todomvc-common/base.js"></script>
-		<script type="text/javascript">
-			"use strict";
-			var require = {
-				"baseUrl" : "js",
+<html lang="en" data-framework="troopjs">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>Template • TodoMVC</title>
+	<link rel="stylesheet" href="bower_components/todomvc-common/base.css">
+	<!-- CSS overrides - remove if you don't need it -->
+	<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<section id="todoapp">
+	<header id="header">
+		<h1>todos</h1>
+		<input id="new-todo" placeholder="What needs to be done?" autofocus data-weave="widget/create">
+	</header>
+	<!-- This section should be hidden by default and shown when there are todos -->
+	<section id="main" data-weave="widget/display">
+		<input id="toggle-all" type="checkbox" data-weave="widget/mark">
+		<label for="toggle-all">Mark all as complete</label>
+		<ul id="todo-list" data-weave="widget/list"></ul>
+	</section>
+	<!-- This footer should hidden by default and shown when there are todos -->
+	<footer id="footer" data-weave="widget/display">
+		<!-- This should be `0 items left` by default -->
+		<span id="todo-count" data-weave="widget/count"><strong>1</strong> item left</span>
+		<!-- Remove this if you don't implement routing -->
+		<ul id="filters" data-weave="widget/filters">
+			<li>
+				<a class="selected" href="#/">All</a>
+			</li>
+			<li>
+				<a href="#/active">Active</a>
+			</li>
+			<li>
+				<a href="#/completed">Completed</a>
+			</li>
+		</ul>
+		<!-- Hidden if no completed items are left ↓ -->
+		<button id="clear-completed" data-weave="widget/clear">Clear completed (1)</button>
+	</footer>
+</section>
+<footer id="info">
+	<p>Double-click to edit a todo</p>
+	<!-- Change this out with your name and url ↓ -->
+	<p>Created by <a href="https://github.com/mikaelkaron">Mikael Karon</a></p>
+	<p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
+</footer>
+<!-- Scripts here. Don't remove this ↓ -->
+<script src="bower_components/todomvc-common/base.js"></script>
+<script type="text/javascript">
+	"use strict";
+	var require = {
+		"baseUrl" : "js",
 
-				"packages" : [{
-					"name" : "jquery",
-					"location" : "lib/jquery",
-					"main" : "dist/jquery"
-				}, {
-					"name" : "poly",
-					"location" : "lib/troopjs-bundle/src/lib/poly",
-					"main" : "poly"
-				}, {
-					"name" : "when",
-					"location" : "lib/troopjs-bundle/src/lib/when",
-					"main" : "when"
-				}, {
-					"name" : "troopjs-core",
-					"location" : "lib/troopjs-bundle/src/lib/troopjs-core/src"
-				}, {
-					"name" : "troopjs-browser",
-					"location" : "lib/troopjs-bundle/src/lib/troopjs-browser/src"
-				}, {
-					"name" : "troopjs-data",
-					"location" : "lib/troopjs-bundle/src/lib/troopjs-data/src"
-				}, {
-					"name" : "troopjs-jquery",
-					"location" : "lib/troopjs-bundle/src/lib/troopjs-jquery/src"
-				}, {
-					"name" : "troopjs-requirejs",
-					"location" : "lib/troopjs-bundle/src/lib/troopjs-requirejs/src"
-				}, {
-					"name" : "troopjs-utils",
-					"location" : "lib/troopjs-bundle/src/lib/troopjs-utils/src"
-				}, {
-					"name" : "troopjs-bundle",
-					"location" : "lib/troopjs-bundle",
-					"main" : "build/maxi"
-				}, {
-					"name" : "troopjs-todos",
-					"location" : ".",
-					"main" : "application.min"
-				}],
+		"packages" : [{
+			"name" : "jquery",
+			"location" : "lib/jquery",
+			"main" : "dist/jquery.min"
+		}, {
+			"name" : "poly",
+			"location" : "lib/troopjs-bundle/lib/poly",
+			"main" : "poly"
+		}, {
+			"name" : "when",
+			"location" : "lib/troopjs-bundle/lib/when",
+			"main" : "when"
+		}, {
+			"name" : "troopjs-core",
+			"location" : "lib/troopjs-bundle/lib/troopjs-core"
+		}, {
+			"name" : "troopjs-browser",
+			"location" : "lib/troopjs-bundle/lib/troopjs-browser"
+		}, {
+			"name" : "troopjs-data",
+			"location" : "lib/troopjs-bundle/lib/troopjs-data"
+		}, {
+			"name" : "troopjs-jquery",
+			"location" : "lib/troopjs-bundle/lib/troopjs-jquery"
+		}, {
+			"name" : "troopjs-requirejs",
+			"location" : "lib/troopjs-bundle/lib/troopjs-requirejs"
+		}, {
+			"name" : "troopjs-utils",
+			"location" : "lib/troopjs-bundle/lib/troopjs-utils"
+		}, {
+			"name" : "troopjs-bundle",
+			"location" : "lib/troopjs-bundle",
+			"main" : "dist/maxi.min"
+		}, {
+			"name" : "troopjs-todos",
+			"location" : ".",
+			"main" : "application.min"
+		}],
 
-				"map" : {
-					"*" : {
-						"template" : "troopjs-requirejs/template"
-					}
-				},
+		"map" : {
+			"*" : {
+				"template" : "troopjs-requirejs/template"
+			}
+		},
 
-				"deps" : [ "require" ],
+		"deps" : [ "require", "jquery", "troopjs-bundle" ],
 
-				"callback" : function Boot(parentRequire) {
-					parentRequire([ "jquery", "troopjs-browser/application/widget", "troopjs-browser/route/widget" ], function Strap(jQuery, Application, RouteWidget) {
-						jQuery(function ready($) {
-							var $WINDOW = $(window);
-							var $HTML = $("html");
-
-							Application($HTML, "bootstrap", RouteWidget($WINDOW, "route")).start();
-						});
-					});
-				}
-			};
-		</script>
-		<script src="js/lib/requirejs/require.js"></script>
-	</body>
+		"callback" : function Boot (contextRequire, jQuery) {
+			contextRequire([ "troopjs-browser/application/widget", "troopjs-browser/route/widget" ], function Strap (Application, RouteWidget) {
+				jQuery(function ($) {
+					Application($("html"), "bootstrap", RouteWidget($(window), "route")).start();
+				});
+			});
+		}
+	};
+</script>
+<script type="text/javascript" async="async" src="js/lib/requirejs/require.js"></script>
+</body>
 </html>

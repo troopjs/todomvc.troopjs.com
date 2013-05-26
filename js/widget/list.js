@@ -1,48 +1,54 @@
-define( [ "troopjs-browser/component/widget", "troopjs-browser/store/local", "when", "jquery", "template!./item.html" ], function ListModule(Widget, store, when, $, template) {
+define([ "troopjs-browser/component/widget", "troopjs-data/store/component", "troopjs-browser/store/adapter/local", "jquery", "template!./item.html" ], function ListModule(Widget, Store, Adapter, $, template) {
+	"use strict";
+
 	var ARRAY_SLICE = Array.prototype.slice;
 	var ENTER_KEY = 13;
 	var FILTER_ACTIVE = "filter-active";
 	var FILTER_COMPLETED = "filter-completed";
-	var STORE = "todos-troopjs";
-	var LOCK = "lock";
+	var KEY = "todos-troopjs";
+	var STORE = "store";
 
 	function filter(item) {
-		return item === null;
+		return item !== null;
 	}
 
-	return Widget.extend({
+	return Widget.extend(function ListWidget() {
+		this[STORE] = Store(Adapter());
+	}, {
 		"sig/start" : function () {
-			var self = this;
+			var me = this;
+			var store = me[STORE];
 
-			// Wait for and update store LOCK
-			return store[LOCK] = when(store[LOCK], function () {
-				// Get STORE
-				return store.get(STORE).then(function (getItems) {
-					// Set STORE
-					return store.set(STORE, getItems === null ? [] : $.grep(getItems, filter, true)).then(function (setItems) {
+			// Wait for store ready
+			return store.ready(function () {
+				// Get KEY
+				return store.get(KEY, function (getItems) {
+					// Set KEY
+					return store.set(KEY, getItems === null ? [] : $.grep(getItems, filter), function (setItems) {
 						// Iterate each item
 						$.each(setItems, function itemIterator(i, item) {
-							// Append to self
-							self.append(template, {
+							// Append to me
+							me.append(template, {
 								"i": i,
 								"item": item
 							});
 						});
 
 						// Publish
-						self.publish("todos/change", setItems);
+						me.publish("todos/change", setItems);
 					});
 				});
 			});
 		},
 
 		"hub/todos/add" : function onAdd(title) {
-			var self = this;
+			var me = this;
+			var store = me[STORE];
 
-			// Wait for and update store LOCK
-			return store[LOCK] = when(store[LOCK], function () {
-				// Get STORE
-				return store.get(STORE).then(function (getItems) {
+			// Wait for store ready
+			return store.ready(function () {
+				// Get KEY
+				return store.get(KEY, function (getItems) {
 					// Get the next index
 					var i = getItems.length;
 
@@ -52,15 +58,15 @@ define( [ "troopjs-browser/component/widget", "troopjs-browser/store/local", "wh
 						"title": title
 					};
 
-					// Append new item to self
-					self.append(template, {
+					// Append new item to me
+					me.append(template, {
 						"i": i,
 						"item": item
 					});
 
-					// Set STORE
-					return store.set(STORE, getItems).then(function (setItems) {
-						self.publish("todos/change", setItems);
+					// Set KEY
+					return store.set(KEY, getItems, function (setItems) {
+						me.publish("todos/change", setItems);
 					});
 				});
 			})
@@ -98,7 +104,8 @@ define( [ "troopjs-browser/component/widget", "troopjs-browser/store/local", "wh
 		},
 
 		"dom:.toggle/change" : function onToggleChange($event) {
-			var self = this;
+			var me = this;
+			var store = me[STORE];
 			var $target = $($event.currentTarget);
 			var completed = $target.prop("checked");
 			var $li = $target.closest("li");
@@ -109,45 +116,48 @@ define( [ "troopjs-browser/component/widget", "troopjs-browser/store/local", "wh
 				.toggleClass("completed", completed)
 				.toggleClass("active", !completed);
 
-			// Wait for and update store LOCK
-			store[LOCK] = when(store[LOCK], function () {
-				// Get STORE
-				return store.get(STORE).then(function (getItems) {
+			// Wait for store ready
+			store.ready(function () {
+				// Get KEY
+				return store.get(KEY, function (getItems) {
 					// Update completed
 					getItems[index].completed = completed;
 
-					// Set STORE
-					return store.set(STORE, getItems).then(function (setItems) {
-						self.publish("todos/change", setItems);
+					// Set KEY
+					return store.set(KEY, getItems, function (setItems) {
+						me.publish("todos/change", setItems);
 					});
 				});
 			});
 		},
 
 		"dom:.destroy/click" : function onDestroyClick($event) {
-			var self = this;
+			var me = this;
+			var store = me[STORE];
 			var $li = $($event.currentTarget).closest("li");
 			var index = $li.data("index");
 
 			// Update UI
 			$li.remove();
 
-			// Wait for and update store LOCK
-			store[LOCK] = when(store[LOCK], function () {
-				// Get STORE
-				return store.get(STORE).then(function (getItems) {
+			// Wait for store ready
+			store.ready(function () {
+				// Get KEY
+				return store.get(KEY, function (getItems) {
 					// Delete item
 					getItems[index] = null;
 
-					// Set STORE
-					return store.set(STORE, getItems).then(function (setItems) {
-						self.publish("todos/change", setItems);
+					// Set KEY
+					return store.set(KEY, getItems, function (setItems) {
+						me.publish("todos/change", setItems);
 					});
 				});
 			});
 		},
 
 		"dom:.view/dblclick" : function onViewDblClick($event) {
+			var me = this;
+			var store = me[STORE];
 			var $li = $($event.currentTarget).closest("li");
 			var index = $li.data("index");
 			var $input = $li.find("input");
@@ -158,14 +168,14 @@ define( [ "troopjs-browser/component/widget", "troopjs-browser/store/local", "wh
 			// Disable
 			$input.prop("disabled", true);
 
-			// Wait for store LOCK
-			when(store[LOCK], function () {
-				// Get STORE
-				store.get(STORE).then(function (items) {
+			// Wait for store ready
+			store.ready(function () {
+				// Get KEY
+				store.get(KEY, function (items) {
 					// Update input value, enable and select
 					$input
 						.val(items[index].title)
-						.removeProp("disabled")
+						.prop("disabled", false)
 						.select();
 				}, function () {
 					$li.removeClass("editing");
@@ -181,7 +191,8 @@ define( [ "troopjs-browser/component/widget", "troopjs-browser/store/local", "wh
 		},
 
 		"dom:.edit/focusout" : function onEditFocusOut($event) {
-			var self = this;
+			var me = this;
+			var store = me[STORE];
 			var $target = $($event.currentTarget);
 			var title = $target.val().trim();
 			var $li = $target.closest("li");
@@ -197,28 +208,27 @@ define( [ "troopjs-browser/component/widget", "troopjs-browser/store/local", "wh
 				// Disable
 				$target.prop("disabled", true);
 
-				// Wait for and update store LOCK
-				store[LOCK] = when(store[LOCK], function () {
-					// Get STORE
-					return store.get(STORE)
-						.then(function (getItems) {
+				// Wait for store ready
+				store.ready(function () {
+					// Get KEY
+					return store.get(KEY, function (getItems) {
 							// Update text
 							getItems[index].title = title;
 
-							// Set STORE
-							return store.set(STORE, getItems).then(function (setItems) {
+							// Set KEY
+							return store.set(KEY, getItems, function (setItems) {
 								// Update UI
 								$li
 									.removeClass("editing")
 									.find("label")
 									.text(title);
 
-								self.publish("todos/change", setItems);
+								me.publish("todos/change", setItems);
 							});
 						})
 						.ensure(function () {
 							// Enable
-							$target.removeProp("disabled");
+							$target.prop("disabled", false);
 						});
 				});
 			}
