@@ -348,7 +348,7 @@ Now we've configure our application to use RequireJS and set up the application 
 
 ### Adding some widgets
 
-Lets go back and look at `index.html`. We want to try to break out functionality into small (somewhat self-contained) widgets, and the natural place to start is adding and displaying todo items.
+Lets go back and look at [`index.html`](index.html). We want to try to break out functionality into small (somewhat self-contained) widgets, and the natural place to start is adding and displaying todo items.
 
 >	There are three main classes of modules in TroopJS
 >
@@ -372,11 +372,13 @@ Let's do this by adding _weave_ instructions in the HTML using `data-weave` attr
 >	* Instantiate the widget and attach the jQuery wrapped DOM element to the created instance
 >	* Wire the instance (basically reflect on the instance and scan for well-known method signatures), more on this later
 
-#### Create widget [`widget/create.js`]
+If you look at the modified [`index.html`](index.html) you can locate all the widgets simply by searching for the `data-weave` attribute on any element.
+
+#### [Create widget](js/widget/create.js)
 
 The first widget to deal with is the create widget
 
-> Widgets are named after where they are located (relative to `baseUrl`) in the source tree. A general rule is to simply add `.js` to the widget name to locate the file, so `widget/create` can be found in `src/js/widget/create.js`
+> Widgets are named after where they are located (relative to `baseUrl`) in the source tree. A general rule is to simply add `.js` to the widget name to locate the file, so `widget/create` can be found in `js/widget/create.js`
 
 ```javascript
 define([ "troopjs-browser/component/widget" ], function CreateModule(Widget) {
@@ -477,7 +479,7 @@ Let's go through this widget
 	*	Store the trimmed value of the element as `value`
 	*	Check if the `keyCode` of the event was enter - if so `publish` `value` on `todos/add` and once all handlers are completed, reset `$element`.
 
-#### Count widget [`widget/count.js`]
+#### [Count widget](js/widget/count.js)
 
 Next we'll take a look at the count widget. This widget shows a counter that informs the user of how many active items are in the list.
 
@@ -527,7 +529,7 @@ Let's look at what new things we can find.
 
 	Update the `$element` HTML with a pluralized (if needed) text indicating what the current `count` is.
 
-#### Clear widget [`widget/clear.js`]
+#### [Clear widget](js/widget/clear.js)
 
 The clear widget is quite similar to the count widget, but the opposite. Instead of counting the number of active items in the list, it counts the number of completed items in the list.
 
@@ -577,7 +579,7 @@ What looks different here?
 
 	Register a click handler that will publish `todos/clear` on the pubsub every time it is invoked.
 
-#### Mark widget [`widget/mark.js`]
+#### [Mark widget](js/widget/mark.js)
 
 The mark widget can do two things
 
@@ -692,7 +694,7 @@ And then the second item - batch interaction:
 
 	Register a change handler that will publish `todos/mark` on the pubsub with the current `checked` status of the checkbox as an argument.
 
-#### Filters widget [`widget/filters.js`]
+#### [Filters widget](js/widget/filters.js)
 
 The filters widget reflects the current filter status and allows the user to apply filters to the list.
 
@@ -742,7 +744,7 @@ Let's take a closer look
 
 	Registers a handler for the `todos/filter` topic (that we publish above). Sets the default filter (if none is provided) to `/` then finds all child elements matching the css selector `a[href^='#']` (an anchor element where the `href` attribute starts with `#`) then either add or remove the `selected` css class (depending on if the filter matches).
 
-#### Display widget [`widget/display.js`]
+#### [Display widget](js/widget/display.js)
 
 The display widget shows or hides its contents depending on the status of the list
 
@@ -764,7 +766,7 @@ define([ "troopjs-browser/component/widget", "jquery" ], function DisplayModule(
 
 Quite simply it registers a handler for `todos/change` that will either `show` or `hide` depending on the `count` of the filtered array returned from `$.grep`.
 
-#### List widget [`widget/list.js`]
+#### [List widget](js/widget/list.js)
 
 The list widget is where all the magic happens. It is by far the largest widget and it contains all the logic that deals with the list.
 
