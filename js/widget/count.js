@@ -1,5 +1,5 @@
 define([ "troopjs-browser/component/widget", "jquery" ], function CountModule(Widget, $) {
-	'use strict';
+	"use strict";
 
 	function filter(item) {
 		return item !== null && !item.completed;

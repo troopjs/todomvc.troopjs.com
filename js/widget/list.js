@@ -1,5 +1,5 @@
 define([ "troopjs-browser/component/widget", "troopjs-data/store/component", "troopjs-browser/store/adapter/local", "jquery", "template!./item.html" ], function ListModule(Widget, Store, Adapter, $, template) {
-	'use strict';
+	"use strict";
 
 	var ARRAY_SLICE = Array.prototype.slice;
 	var ENTER_KEY = 13;

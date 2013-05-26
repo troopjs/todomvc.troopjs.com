@@ -1,5 +1,5 @@
 define([ "troopjs-browser/component/widget" ], function CreateModule(Widget) {
-	'use strict';
+	"use strict";
 
 	var ENTER_KEY = 13;
 

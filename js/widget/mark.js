@@ -1,5 +1,5 @@
 define([ "troopjs-browser/component/widget" ], function MarkModule(Widget) {
-	'use strict';
+	"use strict";
 
 	return Widget.extend({
 		"hub:memory/todos/change" : function onChange(items) {
