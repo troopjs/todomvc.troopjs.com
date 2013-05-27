@@ -156,7 +156,7 @@ define([ "troopjs-browser/component/widget", "troopjs-data/store/component", "tr
 			});
 		},
 
-		"dom:.view/dblclick" : function onViewDblClick($event) {
+		"dom:.view label/dblclick" : function onViewDblClick($event) {
 			var me = this;
 			var store = me[STORE];
 			var $li = $($event.currentTarget).closest("li");
