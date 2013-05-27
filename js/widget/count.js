@@ -1,3 +1,4 @@
+/*global define:false */
 define([ "troopjs-browser/component/widget", "jquery" ], function CountModule(Widget, $) {
 	"use strict";
 
