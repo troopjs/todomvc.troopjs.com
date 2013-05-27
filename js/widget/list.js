@@ -4,6 +4,7 @@ define([ "troopjs-browser/component/widget", "troopjs-data/store/component", "tr
 
 	var ARRAY_SLICE = Array.prototype.slice;
 	var ENTER_KEY = 13;
+	var ESC_KEY = 27;
 	var FILTER_ACTIVE = "filter-active";
 	var FILTER_COMPLETED = "filter-completed";
 	var KEY = "todos-troopjs";
@@ -185,8 +186,21 @@ define([ "troopjs-browser/component/widget", "troopjs-data/store/component", "tr
 		},
 
 		"dom:.edit/keyup" : function onEditKeyUp($event) {
-			if ($event.originalEvent.keyCode === ENTER_KEY) {
-				$($event.currentTarget).focusout();
+			var $li = $($event.currentTarget).closest("li");
+
+			switch ($event.keyCode) {
+				case ENTER_KEY :
+					$li
+						.find("input")
+						.focusout();
+					break;
+
+				case ESC_KEY :
+					$li
+						.find("input")
+						.val($li.find("label").text())
+						.focusout();
+					break;
 			}
 		},
 
