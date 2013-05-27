@@ -1,7 +1,7 @@
 {
 	"troopjs": {
 		"name": "TroopJS",
-		"description": "TroopJS attempts to package popular front-end technologies and bind them with minimal effort for the developer. It includes jQuery for DOM manipulation, When.js for promises, RequireJS for modularity and Has.js for feature detection. On top, it includes Pub/Sub support, (optional) templating, weaving (widgets to DOM) and auto-wiring.",
+		"description": "The simple js framework that does as little as possible, then stays out of the way.",
 		"homepage": "troopjs.com",
 		"link_groups": [{
 			"heading": "Official Resources",
@@ -9,9 +9,8 @@
 				"name": "TODOs Application (latest)",
 				"url": "https://github.com/troopjs/troopjs-todos"
 			}, {
-				"name": "TroopJS Name on GitHub",
+				"name": "TroopJS on GitHub",
 				"url": "https://github.com/troopjs"
 			}]
 		}]
-	}
-}
+	},}
