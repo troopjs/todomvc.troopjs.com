@@ -185,8 +185,7 @@ define([ "troopjs-browser/component/widget", "troopjs-data/store/component", "tr
 		},
 
 		"dom:.edit/keyup" : function onEditKeyUp($event) {
-			switch($event.originalEvent.keyCode) {
-			case ENTER_KEY:
+			if ($event.originalEvent.keyCode === ENTER_KEY) {
 				$($event.currentTarget).focusout();
 			}
 		},
