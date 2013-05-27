@@ -10,7 +10,7 @@ define([ "troopjs-browser/component/widget", "jquery" ], function ClearModule(Wi
 		"hub:memory/todos/change" : function onChange(items) {
 			var count = $.grep(items, filter).length;
 
-			this.$element.text("Clear completed (" + count + ")")[count > 0 ? "show" : "hide"]();
+			this.$element.text("Clear completed (" + count + ")").toggle(count > 0);
 		},
 
 		"dom/click" : function onClear() {
