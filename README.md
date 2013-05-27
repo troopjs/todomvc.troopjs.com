@@ -90,7 +90,7 @@ So now we can start with our todo application. The first thing we should do is t
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-		<title>Template • TodoMVC</title>
+		<title>TroopJS • TodoMVC</title>
 		<link rel="stylesheet" href="bower_components/todomvc-common/base.css">
 		<!-- CSS overrides - remove if you don't need it -->
 		<link rel="stylesheet" href="css/app.css">
@@ -392,22 +392,20 @@ define([ "troopjs-browser/component/widget" ], function CreateModule(Widget) {
 			var $element = me.$element;
 			var value;
 
-			switch ($event.keyCode) {
-				case ENTER_KEY:
-					// Get $element value
-					value = $element.val().trim();
+			if ($event.keyCode === ENTER_KEY) {
+				// Get $element value
+				value = $element.val().trim();
 
-					// Check that the value is not empty
-					if (value !== "") {
-						// Publish todos/add
-						me.publish("todos/add", value)
-							// When all handlers are done
-							.then(function () {
-								// Reset val
-								$element.val("");
-							});
-					}
-					break;
+				// Check that the value is not empty
+				if (value !== "") {
+					// Publish todos/add
+					me.publish("todos/add", value)
+						// When all handlers are done
+						.then(function () {
+							// Reset val
+							$element.val("");
+						});
+				}
 			}
 		}
 	});
@@ -454,9 +452,8 @@ Let's go through this widget
 	var me = this;
 	var $element = me.$element;
 	var value;
-	
-	switch ($event.keyCode) {
-		case ENTER_KEY:
+
+		if ($event.keyCode === ENTER_KEY) {
 			// Get $element value
 			value = $element.val().trim();
 
@@ -470,14 +467,15 @@ Let's go through this widget
 						$element.val("");
 					});
 			}
-			break;
-	}
+		}
 	```
 
 	*	Save `this` as `me` so we can use it inside of closures
 	*	Save `me.$element` (woven element) as `$element`
-	*	Store the trimmed value of the element as `value`
-	*	Check if the `keyCode` of the event was enter - if so `publish` `value` on `todos/add` and once all handlers are completed, reset `$element`.
+	*	Check if the `keyCode` of the event was enter
+		* Store the trimmed value of the element as `value`
+		* `publish` `value` on `todos/add`
+		* Once all handlers are completed, reset `$element`.
 
 #### [Count widget](js/widget/count.js)
 
@@ -545,7 +543,7 @@ define([ "troopjs-browser/component/widget", "jquery" ], function ClearModule(Wi
 		"hub:memory/todos/change" : function onChange(items) {
 			var count = $.grep(items, filter).length;
 
-			this.$element.text("Clear completed (" + count + ")")[count > 0 ? "show" : "hide"]();
+			this.$element.text("Clear completed (" + count + ")").toggle(count > 0);
 		},
 
 		"dom/click" : function onClear() {
@@ -566,10 +564,10 @@ What looks different here?
 	Almost the same filter as before, but this time for completed items.
 
 *	```javascript
-	this.$element.text("Clear completed (" + count + ")")[count > 0 ? "show" : "hide"]();
+	this.$element.text("Clear completed (" + count + ")").toggle(count > 0);
 	```
 
-	Update the `$element` HTML with a pluralized (if needed) text indicating what the current `count` is and if the count is not greater than `0` then `hide`.
+	Update the `$element` HTML with a pluralized (if needed) text indicating what the current `count` is `toggle`.
 
 *	```javascript
 	"dom/click" : function onClear() {
@@ -758,13 +756,13 @@ define([ "troopjs-browser/component/widget", "jquery" ], function DisplayModule(
 
 	return Widget.extend({
 		"hub:memory/todos/change": function onChange(items) {
-			this.$element[$.grep(items, filter).length > 0 ? "show" : "hide"]();
+			this.$element.toggle($.grep(items, filter).length > 0);
 		}
 	});
 });
 ```
 
-Quite simply it registers a handler for `todos/change` that will either `show` or `hide` depending on the `count` of the filtered array returned from `$.grep`.
+Quite simply it registers a handler for `todos/change` that will `toggle` depending on the `count` of the filtered array returned from `$.grep`.
 
 #### [List widget](js/widget/list.js)
 
