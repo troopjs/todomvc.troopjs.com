@@ -1,5 +1,5 @@
 /*global define:false */
-define([ "troopjs-browser/component/widget" ], function MarkModule(Widget) {
+define([ "troopjs-browser/component/widget", "jquery" ], function MarkModule(Widget, $) {
 	"use strict";
 
 	return Widget.extend({
