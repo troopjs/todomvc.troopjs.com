@@ -1,3 +1,4 @@
+/*global define:false */
 define([ "troopjs-browser/component/widget" ], function CreateModule(Widget) {
 	"use strict";
 
