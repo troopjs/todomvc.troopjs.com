@@ -174,11 +174,11 @@ define([ "troopjs-browser/component/widget", "troopjs-data/store/component", "tr
 			store.ready(function () {
 				// Get KEY
 				store.get(KEY, function (items) {
-					// Update input value, enable and select
+					// Update input value, enable and focus
 					$input
 						.val(items[index].title)
 						.prop("disabled", false)
-						.select();
+						.focus();
 				}, function () {
 					$li.removeClass("editing");
 				});
