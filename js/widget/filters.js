@@ -8,12 +8,10 @@ define([ "troopjs-browser/component/widget", "jquery" ], function FiltersModule(
 		},
 
 		"hub:memory/todos/filter" : function onFilter(filter) {
-			filter = filter || "/";
-
 			// Update UI
 			$("a[href^='#']")
 				.removeClass("selected")
-				.filter("[href='#" + filter + "']")
+				.filter("[href='#" + (filter || "/") + "']")
 				.addClass("selected");
 		}
 	});
