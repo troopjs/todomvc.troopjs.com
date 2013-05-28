@@ -482,8 +482,8 @@ Let's go through this widget
 Next we'll take a look at the count widget. This widget shows a counter that informs the user of how many active items are in the list.
 
 ```javascript
-define([ "troopjs-browser/component/widget", "jquery" ], function CountModule(Widget, $) {
-	use "strict";
+define([ "troopjs-browser/component/widget", "poly/array" ], function CountModule(Widget) {
+	"use strict";
 
 	function filter(item) {
 		return item !== null && !item.completed;
@@ -491,7 +491,7 @@ define([ "troopjs-browser/component/widget", "jquery" ], function CountModule(Wi
 
 	return Widget.extend({
 		"hub:memory/todos/change" : function onChange(items) {
-			var count = $.grep(items, filter).length;
+			var count = items.filter(filter).length;
 
 			this.$element.html("<strong>" + count + "</strong> " + (count === 1 ? "item" : "items") + " left");
 		}
@@ -516,7 +516,7 @@ Let's look at what new things we can find.
 	Again with the well-known signatures. This signature tells TroopJS that we want to add a subscription to the `todos/change` topic, _and_ that if a previous value was published on this topic _before_ we added our subscription, we'd like to get a callback with that value (this is what `:memory` adds to the mix).
 
 *	```javascript
-	var count = $.grep(items, filter).length;
+	var count = items.filter(filter).length;
 	```
 
 	This filters the list to only contain active items. After that we count the number of items in the array and store as `count`.
@@ -532,8 +532,8 @@ Let's look at what new things we can find.
 The clear widget is quite similar to the count widget, but the opposite. Instead of counting the number of active items in the list, it counts the number of completed items in the list.
 
 ```javascript
-define([ "troopjs-browser/component/widget", "jquery" ], function ClearModule(Widget, $) {
-	use "strict";
+define([ "troopjs-browser/component/widget", "poly/array" ], function ClearModule(Widget) {
+	"use strict";
 
 	function filter(item) {
 		return item !== null && item.completed;
@@ -541,7 +541,7 @@ define([ "troopjs-browser/component/widget", "jquery" ], function ClearModule(Wi
 
 	return Widget.extend({
 		"hub:memory/todos/change" : function onChange(items) {
-			var count = $.grep(items, filter).length;
+			var count = items.filter(filter).length;
 
 			this.$element.text("Clear completed (" + count + ")").toggle(count > 0);
 		},
@@ -588,8 +588,8 @@ The mark widget can do two things
   * __Indedeterminate__ if _some_ items are completed
 
 ```javascript
-define([ "troopjs-browser/component/widget" ], function MarkModule(Widget) {
-	use "strict";
+define([ "troopjs-browser/component/widget", "jquery", "poly/array" ], function MarkModule(Widget, $) {
+	"use strict";
 
 	return Widget.extend({
 		"hub:memory/todos/change" : function onChange(items) {
@@ -597,7 +597,7 @@ define([ "troopjs-browser/component/widget" ], function MarkModule(Widget) {
 			var completed = 0;
 			var $element = this.$element;
 
-			$.each(items, function iterator(i, item) {
+			items.forEach(function (item) {
 				if (item === null) {
 					return;
 				}
@@ -631,7 +631,6 @@ define([ "troopjs-browser/component/widget" ], function MarkModule(Widget) {
 		}
 	});
 });
-
 ```
 
 Let's start with the first item, showing an aggregate status
@@ -647,7 +646,7 @@ Let's start with the first item, showing an aggregate status
 	var completed = 0;
 	var $element = this.$element;
 
-	$.each(items, function iterator(i, item) {
+	items.forEach(function (item) {
 		if (item === null) {
 			return;
 		}
@@ -698,7 +697,7 @@ The filters widget reflects the current filter status and allows the user to app
 
 ```javascript
 define([ "troopjs-browser/component/widget", "jquery" ], function FiltersModule(Widget, $) {
-	use "strict";
+	"use strict";
 
 	return Widget.extend({
 		"hub:memory/route" : function onRoute(uri) {
@@ -706,12 +705,10 @@ define([ "troopjs-browser/component/widget", "jquery" ], function FiltersModule(
 		},
 
 		"hub:memory/todos/filter" : function onFilter(filter) {
-			filter = filter || "/";
-
 			// Update UI
 			$("a[href^='#']")
 				.removeClass("selected")
-				.filter("[href='#" + filter + "']")
+				.filter("[href='#" + (filter || "/") + "']")
 				.addClass("selected");
 		}
 	});
@@ -730,12 +727,10 @@ Let's take a closer look
 
 *	```javascript
 	"hub:memory/todos/filter" : function onFilter(filter) {
-		filter = filter || "/";
-
 		// Update UI
 		$("a[href^='#']")
 			.removeClass("selected")
-			.filter("[href='#" + filter + "']")
+			.filter("[href='#" + (filter || "/") + "']")
 			.addClass("selected");
 	}
 	```
@@ -747,8 +742,8 @@ Let's take a closer look
 The display widget shows or hides its contents depending on the status of the list
 
 ```javascript
-define([ "troopjs-browser/component/widget", "jquery" ], function DisplayModule(Widget, $) {
-	use "strict";
+define([ "troopjs-browser/component/widget", "poly/array" ], function DisplayModule(Widget) {
+	"use strict";
 
 	function filter(item) {
 		return item !== null;
@@ -756,13 +751,13 @@ define([ "troopjs-browser/component/widget", "jquery" ], function DisplayModule(
 
 	return Widget.extend({
 		"hub:memory/todos/change": function onChange(items) {
-			this.$element.toggle($.grep(items, filter).length > 0);
+			this.$element.toggle(items.some(filter));
 		}
 	});
 });
 ```
 
-Quite simply it registers a handler for `todos/change` that will `toggle` depending on the `count` of the filtered array returned from `$.grep`.
+Quite simply it registers a handler for `todos/change` that will `toggle` depending on the result of `items.some`.
 
 #### [List widget](js/widget/list.js)
 
