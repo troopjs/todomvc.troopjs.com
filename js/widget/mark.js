@@ -1,5 +1,5 @@
 /*global define:false */
-define([ "troopjs-browser/component/widget", "jquery" ], function MarkModule(Widget, $) {
+define([ "troopjs-browser/component/widget", "jquery", "poly/array" ], function MarkModule(Widget, $) {
 	"use strict";
 
 	return Widget.extend({
@@ -8,7 +8,7 @@ define([ "troopjs-browser/component/widget", "jquery" ], function MarkModule(Wid
 			var completed = 0;
 			var $element = this.$element;
 
-			$.each(items, function iterator(i, item) {
+			items.forEach(function iterator(item) {
 				if (item === null) {
 					return;
 				}

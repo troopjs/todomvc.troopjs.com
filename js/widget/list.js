@@ -1,5 +1,5 @@
 /*global define:false */
-define([ "troopjs-browser/component/widget", "troopjs-data/store/component", "troopjs-browser/store/adapter/local", "jquery", "template!./item.html" ], function ListModule(Widget, Store, Adapter, $, template) {
+define([ "troopjs-browser/component/widget", "troopjs-data/store/component", "troopjs-browser/store/adapter/local", "jquery", "template!./item.html", "poly/array" ], function ListModule(Widget, Store, Adapter, $, template) {
 	"use strict";
 
 	var ARRAY_SLICE = Array.prototype.slice;
@@ -26,9 +26,9 @@ define([ "troopjs-browser/component/widget", "troopjs-data/store/component", "tr
 				// Get KEY
 				return store.get(KEY, function (getItems) {
 					// Set KEY
-					return store.set(KEY, getItems === null ? [] : $.grep(getItems, filter), function (setItems) {
+					return store.set(KEY, getItems && getItems.filter(filter) || [], function (setItems) {
 						// Iterate each item
-						$.each(setItems, function itemIterator(i, item) {
+						setItems.forEach(function itemIterator(item, i) {
 							// Append to me
 							me.append(template, {
 								"i": i,
@@ -226,24 +226,24 @@ define([ "troopjs-browser/component/widget", "troopjs-data/store/component", "tr
 				store.ready(function () {
 					// Get KEY
 					return store.get(KEY, function (getItems) {
-							// Update text
-							getItems[index].title = title;
+						// Update text
+						getItems[index].title = title;
 
-							// Set KEY
-							return store.set(KEY, getItems, function (setItems) {
-								// Update UI
-								$li
-									.removeClass("editing")
-									.find("label")
-									.text(title);
+						// Set KEY
+						return store.set(KEY, getItems, function (setItems) {
+							// Update UI
+							$li
+								.removeClass("editing")
+								.find("label")
+								.text(title);
 
-								me.publish("todos/change", setItems);
-							});
-						})
-						.ensure(function () {
-							// Enable
-							$target.prop("disabled", false);
+							me.publish("todos/change", setItems);
 						});
+					})
+					.ensure(function () {
+						// Enable
+						$target.prop("disabled", false);
+					});
 				});
 			}
 		}

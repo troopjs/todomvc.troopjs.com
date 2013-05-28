@@ -1,5 +1,5 @@
 /*global define:false */
-define([ "troopjs-browser/component/widget", "jquery" ], function DisplayModule(Widget, $) {
+define([ "troopjs-browser/component/widget", "poly/array" ], function DisplayModule(Widget) {
 	"use strict";
 
 	function filter(item) {
@@ -8,7 +8,7 @@ define([ "troopjs-browser/component/widget", "jquery" ], function DisplayModule(
 
 	return Widget.extend({
 		"hub:memory/todos/change": function onChange(items) {
-			this.$element.toggle($.grep(items, filter).length > 0);
+			this.$element.toggle(items.some(filter));
 		}
 	});
 });
