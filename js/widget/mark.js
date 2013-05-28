@@ -8,7 +8,7 @@ define([ "troopjs-browser/component/widget", "jquery", "poly/array" ], function 
 			var completed = 0;
 			var $element = this.$element;
 
-			items.forEach(function iterator(item) {
+			items.forEach(function (item) {
 				if (item === null) {
 					return;
 				}
