@@ -189,18 +189,18 @@ define([ "troopjs-browser/component/widget", "troopjs-data/store/component", "tr
 			var $li = $($event.currentTarget).closest("li");
 
 			switch ($event.keyCode) {
-				case ENTER_KEY :
-					$li
-						.find("input")
-						.focusout();
-					break;
+			case ENTER_KEY :
+				$li
+					.find("input")
+					.focusout();
+				break;
 
-				case ESC_KEY :
-					$li
-						.find("input")
-						.val($li.find("label").text())
-						.focusout();
-					break;
+			case ESC_KEY :
+				$li
+					.find("input")
+					.val($li.find("label").text())
+					.focusout();
+				break;
 			}
 		},
 
