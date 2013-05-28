@@ -28,7 +28,7 @@ define([ "troopjs-browser/component/widget", "troopjs-data/store/component", "tr
 					// Set KEY
 					return store.set(KEY, getItems && getItems.filter(filter) || [], function (setItems) {
 						// Iterate each item
-						setItems.forEach(function itemIterator(item, i) {
+						setItems.forEach(function (item, i) {
 							// Append to me
 							me.append(template, {
 								"i": i,
