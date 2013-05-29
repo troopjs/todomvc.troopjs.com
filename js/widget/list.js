@@ -209,7 +209,7 @@ define([ "troopjs-browser/component/widget", "troopjs-data/store/component", "tr
 			var store = me[STORE];
 			var $target = $($event.currentTarget);
 			var title = $target.val().trim();
-			var $li = $target.closest("li");
+			var $li = $target.closest("li.editing");
 			var index = $li.data("index");
 
 			if (title === "") {
