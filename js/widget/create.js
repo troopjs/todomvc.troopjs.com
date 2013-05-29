@@ -11,16 +11,11 @@ define([ "troopjs-browser/component/widget" ], function CreateModule(Widget) {
 			var value;
 
 			if ($event.keyCode === ENTER_KEY) {
-				// Get $element value
 				value = $element.val().trim();
 
-				// Check that the value is not empty
 				if (value !== "") {
-					// Publish todos/add
 					me.publish("todos/add", value)
-						// When all handlers are done
 						.then(function () {
-							// Reset val
 							$element.val("");
 						});
 				}

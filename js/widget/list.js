@@ -21,22 +21,16 @@ define([ "troopjs-browser/component/widget", "troopjs-data/store/component", "tr
 			var me = this;
 			var store = me[STORE];
 
-			// Wait for store ready
 			return store.ready(function () {
-				// Get KEY
 				return store.get(KEY, function (getItems) {
-					// Set KEY
 					return store.set(KEY, getItems && getItems.filter(filter) || [], function (setItems) {
-						// Iterate each item
 						setItems.forEach(function (item, i) {
-							// Append to me
 							me.append(template, {
 								"i": i,
 								"item": item
 							});
 						});
 
-						// Publish
 						me.publish("todos/change", setItems);
 					});
 				});
@@ -47,32 +41,25 @@ define([ "troopjs-browser/component/widget", "troopjs-data/store/component", "tr
 			var me = this;
 			var store = me[STORE];
 
-			// Wait for store ready
 			return store.ready(function () {
-				// Get KEY
 				return store.get(KEY, function (getItems) {
-					// Get the next index
 					var i = getItems.length;
 
-					// Create new item, store in getItems
 					var item = getItems[i] = {
 						"completed": false,
 						"title": title
 					};
 
-					// Append new item to me
 					me.append(template, {
 						"i": i,
 						"item": item
 					});
 
-					// Set KEY
 					return store.set(KEY, getItems, function (setItems) {
 						me.publish("todos/change", setItems);
 					});
 				});
 			})
-			// Yield with original arguments
 			.yield(ARRAY_SLICE.call(arguments));
 		},
 
@@ -113,19 +100,14 @@ define([ "troopjs-browser/component/widget", "troopjs-data/store/component", "tr
 			var $li = $target.closest("li");
 			var index = $li.data("index");
 
-			// Update UI
 			$li
 				.toggleClass("completed", completed)
 				.toggleClass("active", !completed);
 
-			// Wait for store ready
 			store.ready(function () {
-				// Get KEY
 				return store.get(KEY, function (getItems) {
-					// Update completed
 					getItems[index].completed = completed;
 
-					// Set KEY
 					return store.set(KEY, getItems, function (setItems) {
 						me.publish("todos/change", setItems);
 					});
@@ -139,17 +121,12 @@ define([ "troopjs-browser/component/widget", "troopjs-data/store/component", "tr
 			var $li = $($event.currentTarget).closest("li");
 			var index = $li.data("index");
 
-			// Update UI
 			$li.remove();
 
-			// Wait for store ready
 			store.ready(function () {
-				// Get KEY
 				return store.get(KEY, function (getItems) {
-					// Delete item
 					getItems[index] = null;
 
-					// Set KEY
 					return store.set(KEY, getItems, function (setItems) {
 						me.publish("todos/change", setItems);
 					});
@@ -164,17 +141,12 @@ define([ "troopjs-browser/component/widget", "troopjs-data/store/component", "tr
 			var index = $li.data("index");
 			var $input = $li.find("input");
 
-			// Update UI
 			$li.addClass("editing");
 
-			// Disable
 			$input.prop("disabled", true);
 
-			// Wait for store ready
 			store.ready(function () {
-				// Get KEY
 				store.get(KEY, function (items) {
-					// Update input value, enable and focus
 					$input
 						.val(items[index].title)
 						.prop("disabled", false)
@@ -219,19 +191,13 @@ define([ "troopjs-browser/component/widget", "troopjs-data/store/component", "tr
 					.click();
 			}
 			else {
-				// Disable
 				$target.prop("disabled", true);
 
-				// Wait for store ready
 				store.ready(function () {
-					// Get KEY
 					return store.get(KEY, function (getItems) {
-						// Update text
 						getItems[index].title = title;
 
-						// Set KEY
 						return store.set(KEY, getItems, function (setItems) {
-							// Update UI
 							$li
 								.removeClass("editing")
 								.find("label")
@@ -241,7 +207,6 @@ define([ "troopjs-browser/component/widget", "troopjs-data/store/component", "tr
 						});
 					})
 					.ensure(function () {
-						// Enable
 						$target.prop("disabled", false);
 					});
 				});
