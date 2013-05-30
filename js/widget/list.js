@@ -1,4 +1,4 @@
-/*global define:false */
+/*global browser:true, define:false */
 define([ "troopjs-browser/component/widget", "troopjs-data/store/component", "troopjs-browser/store/adapter/local", "jquery", "template!./item.html", "poly/array" ], function ListModule(Widget, Store, Adapter, $, template) {
 	"use strict";
 
