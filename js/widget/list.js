@@ -98,7 +98,6 @@ define([ "troopjs-browser/component/widget", "troopjs-data/store/component", "tr
 			var $target = $($event.currentTarget);
 			var completed = $target.prop("checked");
 			var $li = $target.closest("li");
-			var index = $li.data("index");
 
 			$li
 				.toggleClass("completed", completed)
@@ -106,6 +105,8 @@ define([ "troopjs-browser/component/widget", "troopjs-data/store/component", "tr
 
 			store.ready(function () {
 				return store.get(KEY, function (getItems) {
+					var index = $li.data("index");
+
 					getItems[index].completed = completed;
 
 					return store.set(KEY, getItems, function (setItems) {
@@ -119,12 +120,13 @@ define([ "troopjs-browser/component/widget", "troopjs-data/store/component", "tr
 			var me = this;
 			var store = me[STORE];
 			var $li = $($event.currentTarget).closest("li");
-			var index = $li.data("index");
 
 			$li.remove();
 
 			store.ready(function () {
 				return store.get(KEY, function (getItems) {
+					var index = $li.data("index");
+
 					getItems[index] = null;
 
 					return store.set(KEY, getItems, function (setItems) {
@@ -138,22 +140,23 @@ define([ "troopjs-browser/component/widget", "troopjs-data/store/component", "tr
 			var me = this;
 			var store = me[STORE];
 			var $li = $($event.currentTarget).closest("li");
-			var index = $li.data("index");
 			var $input = $li.find("input");
 
 			$li.addClass("editing");
-
 			$input.prop("disabled", true);
 
 			store.ready(function () {
-				store.get(KEY, function (items) {
+				return store.get(KEY, function (items) {
+					var index = $li.data("index");
+
 					$input
 						.val(items[index].title)
 						.prop("disabled", false)
 						.focus();
-				}, function () {
-					$li.removeClass("editing");
 				});
+			}, function () {
+				$input.prop("disabled", false);
+				$li.addClass("editing");
 			});
 		},
 
@@ -181,11 +184,10 @@ define([ "troopjs-browser/component/widget", "troopjs-data/store/component", "tr
 			var store = me[STORE];
 			var $target = $($event.currentTarget);
 			var title = $target.val().trim();
-			var $li = $target.closest("li.editing");
-			var index = $li.data("index");
 
 			if (title === "") {
-				$li
+				$target
+					.closest("li.editing")
 					.removeClass("editing")
 					.find(".destroy")
 					.click();
@@ -195,6 +197,9 @@ define([ "troopjs-browser/component/widget", "troopjs-data/store/component", "tr
 
 				store.ready(function () {
 					return store.get(KEY, function (getItems) {
+						var $li = $target.closest("li");
+						var index = $li.data("index");
+
 						getItems[index].title = title;
 
 						return store.set(KEY, getItems, function (setItems) {
