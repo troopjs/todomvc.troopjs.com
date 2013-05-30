@@ -71,7 +71,8 @@ So before we start we'll create a skeleton structure and add the external librar
 After this is done the directory structure will look something like this (folders marked with `*` are git sub-modules)
 
 ```
-├── bower_components       (*)
+├── bower_components
+│   └── todomvc-common     (*)
 ├── css
 ├── js
 │   ├── lib
@@ -393,16 +394,11 @@ define([ "troopjs-browser/component/widget" ], function CreateModule(Widget) {
 			var value;
 
 			if ($event.keyCode === ENTER_KEY) {
-				// Get $element value
 				value = $element.val().trim();
 
-				// Check that the value is not empty
 				if (value !== "") {
-					// Publish todos/add
 					me.publish("todos/add", value)
-						// When all handlers are done
 						.then(function () {
-							// Reset val
 							$element.val("");
 						});
 				}
@@ -453,21 +449,16 @@ Let's go through this widget
 	var $element = me.$element;
 	var value;
 
-		if ($event.keyCode === ENTER_KEY) {
-			// Get $element value
-			value = $element.val().trim();
+	if ($event.keyCode === ENTER_KEY) {
+		value = $element.val().trim();
 
-			// Check that the value is not empty
-			if (value !== "") {
-				// Publish todos/add
-				me.publish("todos/add", value)
-					// When all handlers are done
-					.then(function () {
-						// Reset val
-						$element.val("");
-					});
-			}
+		if (value !== "") {
+			me.publish("todos/add", value)
+				.then(function () {
+					$element.val("");
+				});
 		}
+	}
 	```
 
 	*	Save `this` as `me` so we can use it inside of closures
@@ -705,7 +696,6 @@ define([ "troopjs-browser/component/widget", "jquery" ], function FiltersModule(
 		},
 
 		"hub:memory/todos/filter" : function onFilter(filter) {
-			// Update UI
 			$("a[href^='#']")
 				.removeClass("selected")
 				.filter("[href='#" + (filter || "/") + "']")
@@ -727,7 +717,6 @@ Let's take a closer look
 
 *	```javascript
 	"hub:memory/todos/filter" : function onFilter(filter) {
-		// Update UI
 		$("a[href^='#']")
 			.removeClass("selected")
 			.filter("[href='#" + (filter || "/") + "']")

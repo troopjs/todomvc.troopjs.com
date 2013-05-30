@@ -1,4 +1,4 @@
-/*global define:false */
+/*global browser:true, define:false */
 define([ "troopjs-browser/component/widget", "jquery" ], function FiltersModule(Widget, $) {
 	"use strict";
 
@@ -8,7 +8,6 @@ define([ "troopjs-browser/component/widget", "jquery" ], function FiltersModule(
 		},
 
 		"hub:memory/todos/filter" : function onFilter(filter) {
-			// Update UI
 			$("a[href^='#']")
 				.removeClass("selected")
 				.filter("[href='#" + (filter || "/") + "']")

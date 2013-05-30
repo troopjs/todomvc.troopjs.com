@@ -1,4 +1,4 @@
-/*global define:false */
+/*global browser:true, define:false */
 define([ "troopjs-browser/component/widget", "jquery", "poly/array" ], function MarkModule(Widget, $) {
 	"use strict";
 
