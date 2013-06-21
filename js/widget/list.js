@@ -21,9 +21,9 @@ define([ "troopjs-browser/component/widget", "troopjs-data/store/component", "tr
 			var me = this;
 			var store = me[STORE];
 
-			return store.ready(function () {
+			return store.lock(KEY, function () {
 				return store.get(KEY, function (getItems) {
-					return store.set(KEY, getItems && getItems.filter(filter) || [], function (setItems) {
+					return store.put(KEY, getItems && getItems.filter(filter) || [], function (setItems) {
 						setItems.forEach(function (item, i) {
 							me.append(template, {
 								"i": i,
@@ -41,7 +41,7 @@ define([ "troopjs-browser/component/widget", "troopjs-data/store/component", "tr
 			var me = this;
 			var store = me[STORE];
 
-			return store.ready(function () {
+			return store.lock(KEY, function () {
 				return store.get(KEY, function (getItems) {
 					var i = getItems.length;
 
@@ -55,7 +55,7 @@ define([ "troopjs-browser/component/widget", "troopjs-data/store/component", "tr
 						"item": item
 					});
 
-					return store.set(KEY, getItems, function (setItems) {
+					return store.put(KEY, getItems, function (setItems) {
 						me.publish("todos/change", setItems);
 					});
 				});
@@ -103,13 +103,13 @@ define([ "troopjs-browser/component/widget", "troopjs-data/store/component", "tr
 				.toggleClass("completed", completed)
 				.toggleClass("active", !completed);
 
-			store.ready(function () {
+			store.lock(KEY, function () {
 				return store.get(KEY, function (getItems) {
 					var index = $li.data("index");
 
 					getItems[index].completed = completed;
 
-					return store.set(KEY, getItems, function (setItems) {
+					return store.put(KEY, getItems, function (setItems) {
 						me.publish("todos/change", setItems);
 					});
 				});
@@ -123,13 +123,13 @@ define([ "troopjs-browser/component/widget", "troopjs-data/store/component", "tr
 
 			$li.remove();
 
-			store.ready(function () {
+			store.lock(KEY, function () {
 				return store.get(KEY, function (getItems) {
 					var index = $li.data("index");
 
 					getItems[index] = null;
 
-					return store.set(KEY, getItems, function (setItems) {
+					return store.put(KEY, getItems, function (setItems) {
 						me.publish("todos/change", setItems);
 					});
 				});
@@ -145,7 +145,7 @@ define([ "troopjs-browser/component/widget", "troopjs-data/store/component", "tr
 			$li.addClass("editing");
 			$input.prop("disabled", true);
 
-			store.ready(function () {
+			store.lock(KEY, function () {
 				return store.get(KEY, function (items) {
 					var index = $li.data("index");
 
@@ -195,14 +195,14 @@ define([ "troopjs-browser/component/widget", "troopjs-data/store/component", "tr
 			else {
 				$target.prop("disabled", true);
 
-				store.ready(function () {
+				store.lock(KEY, function () {
 					return store.get(KEY, function (getItems) {
 						var $li = $target.closest("li");
 						var index = $li.data("index");
 
 						getItems[index].title = title;
 
-						return store.set(KEY, getItems, function (setItems) {
+						return store.put(KEY, getItems, function (setItems) {
 							$li
 								.removeClass("editing")
 								.find("label")
