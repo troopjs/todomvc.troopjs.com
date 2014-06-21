@@ -1,7 +1,11 @@
-#IDE
+# IDEA
 .idea
+
+# Eclipse
 .project
 .settings
 .externalToolBuilders
-#Build
-dist
+
+# Packages
+node_modules
+bower_components
