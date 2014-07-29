@@ -35,7 +35,7 @@ Before we look at any code we'll take you through the (recommended) directory st
 
 ```
 .
-├── dist
+├── (dist)
 ├── bower_components
 ├── index.html
 ├── bower.json
@@ -46,18 +46,20 @@ Before we look at any code we'll take you through the (recommended) directory st
 └── test
 ```
 
-Have all **non-source** including TroopJS modules and other dependencies shall be installed by bower shall live in the
-`bower_components` directory.
+As you can see all non-source modules and other dependencies installed by bower will live in the `bower_components` directory.
 
-Each application component shall have a directory structure reflecting exactly it's module name,
-starting from the application root directory, no intermediate folder is created, this guarantees that the application
- package, either the source or built version, can be consumed by the same **AMD configuration** by other package.
+Each application component should be placed in a directory structure reflecting it's module name,
+starting from the application root directory, no intermediate folder (like src/js) needs to be created.
+This guarantees that TroopJS application/component package whether in source or built format, can be consumed by other packages
+without having to relocate the AMD package directory.
 
-E.g . a component under module name `troopjs-todos/widget/list` shall resides in file `widget/list` but neither
- `widget/list`, nor `list/widget.js`
+E.g . a TroopJS component lives in module `troopjs-todos/widget/list` shall have a directory structure of:
+```
+└── widget
+    └── list.js
+```
 
-
-In the `test` you'll find test, and the `dist` folder we'll get the build output (note that the `dist` folder should be created by a build tool and ignored from source control).
+In the `test` you'll find test, and the `dist` folder is where we produce the build output (note that the `dist` folder should be created by a build tool and ignored from source control).
 
 It's also recommended that there's a `index.html` (the application landing-page).
 
@@ -144,7 +146,7 @@ So now we can start with our todo application. The first thing we should do is t
 
 > TroopJS uses [RequireJS](http://requirejs.org/) for its dependency management. The recommended way to bootstrap a RequireJS application is described [here](http://requirejs.org/docs/start.html#add), but we're using an alternative way to configure RequireJS described [here](http://requirejs.org/docs/api.html#config) whereby we define the config as the global variable `require` __before__ `require.js` is loaded.
 
-Let's add the bootstrap code including module configuration and application start, inside file `app.js`.
+Let's add the bootstrap code including module configuration and application start inside the file `app.js`.
 
 ```javascript
 "use strict";
@@ -153,19 +155,19 @@ require.config({
 	"baseUrl": "bower_components",
 	"packages": [
 		{
-			name: 'jquery',
+			name: "'jquery'",
 			main: 'jquery.js'
 		},
 		{
-			name: 'poly',
+			name: "'poly'",
 			main: 'poly.js'
 		},
 		{
-			name: 'requirejs',
+			name: "'requirejs'",
 			main: 'require.js'
 		},
 		{
-			name: 'when',
+			name: "'when'",
 			main: 'when.js'
 		},
 		{
@@ -182,13 +184,13 @@ require.config({
 		}
 	},
 
-	"deps": [ "require", "jquery", "when/monitor/console", "troopjs-dom/loom/plugin" ],
+	"deps" : [ "require", "jquery" ],
 
-	"callback": function Boot(contextRequire, jQuery) {
+	"callback" : function Boot (contextRequire, jQuery) {
 		contextRequire([ "troopjs-dom/application/widget", "troopjs-dom/hash/widget", "when/monitor/console" ],
-			function Strap(Application, RouteWidget) {
+			function Strap(Application, HashWidget) {
 				jQuery(function($) {
-					Application($("html"), "bootstrap", RouteWidget($(window))).start();
+					Application($("html"), "bootstrap", HashWidget($(window))).start();
 				});
 			});
 	}
@@ -226,24 +228,24 @@ Lets review
 *	```javascript
 	"packages": [
 		{
-			name: 'jquery',
-			main: 'jquery.js'
+			name: "jquery",
+			main: "jquery.js"
 		},
 		{
-			name: 'poly',
-			main: 'poly.js'
+			name: "poly",
+			main: "poly.js"
 		},
 		{
-			name: 'requirejs',
-			main: 'require.js'
+			name: "requirejs",
+			main: "require.js"
 		},
 		{
-			name: 'when',
-			main: 'when.js'
+			name: "when",
+			main: "when.js"
 		},
 		{
-			name: 'troopjs-todos',
-			location: '../'
+			name: "troopjs-todos",
+			location: "../"
 		}
 	],
 	```
@@ -260,10 +262,10 @@ Lets review
 	> There's further information available in the RequireJS documentation about [Loading Modules from Packages](http://requirejs.org/docs/api.html#packages).
 
 *	```javascript
-	"deps": [ "require", "jquery", "when/monitor/console"],
+	"deps": [ "require", "jquery"],
 	```
 
-	Depend on `require` and `jquery` and `when/monitor/console` which reports any promise rejections in our application.
+	Load `require` and `jquery` as the very first dependencies
 
 	> __deps__: An array of dependencies to load. This is useful when require is defined as a config object before require.js is loaded, and you want to specify dependencies to load as soon as require() is defined.
 	
@@ -277,24 +279,23 @@ Lets review
 
 *	```javascript
 	contextRequire([ "troopjs-dom/application/widget", "troopjs-dom/hash/widget", "troopjs-dom/loom/plugin"],
-		function Strap(Application, RouteWidget) {
+		function Strap(Application, HashWidget) {
 	```
 
-	Load the application widget, as well as any other components to be instantiated, we're loading here:
+	Load the application widget together with any other components to be instantiated. Here we're loading:
 
-	 - the hash widget for monitoring hash changes that publishes `route/change`
+	 - the hash widget for monitoring hash changes on our custom DOM event `hashchange` that publishes to `route/change`
 	 - the loom plugin for jquery that addes `$.weave` and `$.unweave` and `$.woven`
 
 	once that is completed call the `Strap` function.
 
 *	```javascript
 	jQuery(function($) {
-		Application($("html"), "bootstrap", RouteWidget($(window))).start();
+		Application($("html"), "bootstrap", HashWidget($(window))).start();
 	});
 	```
-	Upon `DOMContentLoaded`, create and attach the `bootstrap` application to `$("html")` and add a `RouteWidget`
-	attached to `$(window)` as a child. Then **start** the root application along with all components that are to be
-	started in front.
+	Upon `DOMContentLoaded`, create and attach the `bootstrap` application to `$("html")` and add a `HashWidget`
+	attached to `$(window)` as a child. Then **start** the root application along with all child components.
 
 Now we've configure our application to use RequireJS and set up the application entry point.
 
