@@ -1,5 +1,5 @@
 /*global browser:true, define:false */
-define([ "troopjs-browser/component/widget", "poly/array" ], function DisplayModule(Widget) {
+define([ "troopjs-dom/component/widget", "poly/array" ], function DisplayModule(Widget) {
 	"use strict";
 
 	function filter(item) {

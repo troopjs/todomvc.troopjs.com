@@ -1,5 +1,5 @@
 /*global browser:true, define:false */
-define([ "troopjs-browser/component/widget" ], function CreateModule(Widget) {
+define([ "troopjs-dom/component/widget" ], function CreateModule(Widget) {
 	"use strict";
 
 	var ENTER_KEY = 13;
@@ -14,8 +14,9 @@ define([ "troopjs-browser/component/widget" ], function CreateModule(Widget) {
 				value = $element.val().trim();
 
 				if (value !== "") {
+					// publish for adding an todo entry.
 					me.publish("todos/add", value)
-						.then(function () {
+						.then(function() {
 							$element.val("");
 						});
 				}

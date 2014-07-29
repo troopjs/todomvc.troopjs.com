@@ -1,14 +1,14 @@
 /*global browser:true, define:false */
-define([ "troopjs-browser/component/widget", "jquery", "poly/array" ], function MarkModule(Widget, $) {
+define([ "troopjs-dom/component/widget", "jquery", "poly/array" ], function MarkModule(Widget, $) {
 	"use strict";
 
 	return Widget.extend({
-		"hub:memory/todos/change" : function onChange(items) {
+		"hub:memory/todos/change": function onChange(items) {
 			var total = 0;
 			var completed = 0;
 			var $element = this.$element;
 
-			items.forEach(function (item) {
+			items.forEach(function(item) {
 				if (item === null) {
 					return;
 				}
@@ -37,7 +37,7 @@ define([ "troopjs-browser/component/widget", "jquery", "poly/array" ], function 
 			}
 		},
 
-		"dom/change" : function onMark($event) {
+		"dom/change": function onMark($event) {
 			this.publish("todos/mark", $($event.target).prop("checked"));
 		}
 	});

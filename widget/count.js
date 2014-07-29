@@ -1,5 +1,5 @@
 /*global browser:true, define:false */
-define([ "troopjs-browser/component/widget", "poly/array" ], function CountModule(Widget) {
+define([ "troopjs-dom/component/widget", "poly/array" ], function CountModule(Widget) {
 	"use strict";
 
 	function filter(item) {
@@ -7,9 +7,8 @@ define([ "troopjs-browser/component/widget", "poly/array" ], function CountModul
 	}
 
 	return Widget.extend({
-		"hub:memory/todos/change" : function onChange(items) {
+		"hub:memory/todos/change": function onChange(items) {
 			var count = items.filter(filter).length;
-
 			this.$element.html("<strong>" + count + "</strong> " + (count === 1 ? "item" : "items") + " left");
 		}
 	});
