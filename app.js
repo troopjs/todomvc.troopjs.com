@@ -33,7 +33,7 @@ require.config({
 		}
 	},
 
-	"deps" : ["require", "jquery", "when/monitor/console"],
+	"deps" : ["require", "jquery"],
 
 	"callback" : function Boot(contextRequire, jQuery) {
 		contextRequire([
