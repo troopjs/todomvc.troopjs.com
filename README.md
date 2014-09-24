@@ -9,9 +9,9 @@ This project serves two purposes:
 * Provide the community a well known demo application that features the style and features of TroopJS.
 * Provide a step-by-step tutorial on how to write a simple TroopJS application.
 
-## TodoMVC deviations from the specifications
+## Deviations from the TodoMVC official specification
 
-For one reason or another there are parts of the application that deviates from the [original specifications](https://github.com/tastejs/todomvc/wiki/App-Specification). We've tried to stay as true as possible, but hey - nobody's perfect. The known deviations are:
+This demo application deviates from the [original specification](https://github.com/tastejs/todomvc/wiki/App-Specification).
 
 *	> Use double-quotes in HTML and single-quotes in JS and CSS.
 
@@ -19,49 +19,68 @@ For one reason or another there are parts of the application that deviates from 
 
 	> We think it's best for the project if the code you write looks like the code the last developer wrote.
 
-	We believe that's a great idea, but we want our project to look like any other _TroopJS_ project, so we've stuck with our code style for this application.
+	We believe that's a great idea, and we want our project to look like any other _TroopJS_ project, so we've kept our code style for this application.
 
-*	> This checkbox toggles all the todos to the same state as itself. Make sure to clear the checked state after the the "Clear completed" button is clicked. The "Mark all as complete" checkbox should also be updated when single todo items are checked/unchecked. Eg. When all the todos are checked it should also get checked.
+*	> This checkbox toggles all the todos to the same state as itself. Make sure to clear the checked state after the "Clear completed" button is clicked. The "Mark all as complete" checkbox should also be updated when single todo items are checked/unchecked. Eg. When all the todos are checked it should also get checked.
 
 	Since the specification does not define what this checkbox should do when only _some_ of the tasks are marked as completed, we've added an indeterminate state that covers this usecase.
 
+## Installation
+
+```bash
+	# clone this repo:
+	git clone https://github.com/troopjs/troopjs-todos.git`
+	cd troopjs-todos
+
+	# install dependencies:
+	bower install
+```
+
+Run the demo by serving `index.html` from an HTTP server.
+
 ## Tutorial
 
-This part of the document gives you a step-by-step tutorial on how the todo application was written.
+This part of the document provides a quick step-by-step tutorial on how to build a Todo application with TroopJS. **Consult the source code for more thorough explanations**.
 
-### Directory structure
+### Conventions
 
-Before we look at any code we'll take you through the (recommended) directory structure for a TroopJS application.
+#### TroopJS building blocks
+
+If you are not familiar with TroopJS, one important concept to know is a "Widget". Widgets provide the logic behind UI interactions. Widgets are responsible, among other things, for:
+
+0. Initializing UI elements.
+0. Defining behavior for UI elements.
+0. Creating new elements.
+0. Communicating with other widgets.
+
+Widgets extend simple DOM constructs with user-defined behavior.
+
+#### Directory structure
+
+Before we look at any code we'll take you through the recommended directory structure for a TroopJS application.
 
 ```
 .
-├── (dist)
-├── bower_components
-├── index.html
+├── (dist/)
+├── (bower_components/)
+├── css/
+├── widget/
+│	├── widget1.js
+│	└── widget2.js
+├── service/
+│	├── service1.js
+│	└── service2.js
+├── test/
 ├── bower.json
 ├── app.js
-├── css
-├── widget
-├── service
-└── test
+└── index.html
 ```
 
-As you can see all non-source modules and other dependencies installed by bower will live in the `bower_components` directory.
+0. `css/` - Application stylesheets.
+0. `widget` - Your app's custom widgets.
+0. `service` - Your app's custom services.
 
-Each application component should be placed in a directory structure reflecting it's module name,
-starting from the application root directory, no intermediate folder (like src/js) needs to be created.
-This guarantees that TroopJS application/component package whether in source or built format, can be consumed by other packages
-without having to relocate the AMD package directory.
-
-E.g . a TroopJS component lives in module `troopjs-todos/widget/list` shall have a directory structure of:
-```
-└── widget
-    └── list.js
-```
-
-In the `test` you'll find test, and the `dist` folder is where we produce the build output (note that the `dist` folder should be created by a build tool and ignored from source control).
-
-It's also recommended that there's a `index.html` (the application landing-page).
+`dist/` and `bower_components/` are directories generated automatically by bower and your build tool, respectively.
 
 ### Bootstrap
 

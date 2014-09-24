@@ -1,12 +1,3 @@
-# IDEA
-.idea
-
-# Eclipse
-.project
-.settings
-.externalToolBuilders
-
-# Packages
 node_modules
 dist
 bower_components

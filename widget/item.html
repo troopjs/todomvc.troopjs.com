@@ -1,20 +1,12 @@
 <%
-var i = data.i;
-var item = data.item;
-var completed = item.completed;
-
-function htmlEscape(str) {
-	return String(str)
-	.replace(/&/g, '&amp;')
-	.replace(/"/g, '&quot;')
-	.replace(/'/g, '&#39;')
-	.replace(/</g, '&lt;')
-	.replace(/>/g, '&gt;');
-}%>
-<li class="<%= (completed ? 'completed' : 'active') %>" data-index="<%= i %>">
+var id = data.id;
+var title = data.title;
+var completed = data.completed;
+%>
+<li class="task" data-weave="troopjs-todos/widget/task(<%= id %>, <%= title %>, <%= completed %>)">
 	<div class="view">
-		<input class="toggle" type="checkbox" <%= (completed ? 'checked' : '') %>>
-		<label><%= htmlEscape(item.title) %></label>
+		<input class="toggle" type="checkbox">
+		<label class="title"></label>
 		<button class="destroy"></button>
 	</div>
 	<input class="edit">

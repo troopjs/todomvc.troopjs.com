@@ -1,39 +1,40 @@
 {
-	"name": "todomvc-troopjs",
-	"version": "3.0.0",
-	"description": "Todo MVC powered by TroopJS",
-	"main": "index.html",
-	"homepage": "http://todomvc.com/labs/dependency-examples/troopjs_require",
-	"authors": [
-		{
-			"name": "Mikael Karon",
-			"web": "https://github.com/mikaelkaron"
-		},
-		{
-			"name": "Garry Yao",
-			"web": "https://github.com/garryyao"
-		}
-	],
-	"keywords": [
-		"troopjs",
-		"todomvc"
-	],
-	"license": "MIT",
-	"ignore": [
-		"**/.*",
-		"node_modules",
-		"bower_components",
-		"test",
-		"tests"
-	],
-	"dependencies": {
-		"jquery": "",
-		"poly": "",
-		"mu-template": "",
-		"when": "",
-		"requirejs": "",
-		"requirejs-text": "",
-		"troopjs-opt": "",
-		"troopjs-contrib-browser": ""
-	}
+  "name": "todomvc-troopjs",
+  "version": "3.0.0",
+  "description": "Todo MVC powered by TroopJS",
+  "main": "index.html",
+  "homepage": "http://todomvc.com/labs/dependency-examples/troopjs_require",
+  "authors": [
+    {
+      "name": "Mikael Karon",
+      "web": "https://github.com/mikaelkaron"
+    },
+    {
+      "name": "Garry Yao",
+      "web": "https://github.com/garryyao"
+    }
+  ],
+  "keywords": [
+    "troopjs",
+    "todomvc"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "",
+    "poly": "",
+    "mu-template": "",
+    "when": "",
+    "requirejs": "",
+    "requirejs-text": "",
+    "troopjs-opt": "",
+    "troopjs-contrib-browser": "",
+    "todomvc-common": "~0.1.9"
+  }
 }
