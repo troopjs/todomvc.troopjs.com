@@ -12,12 +12,15 @@ define([ "troopjs-dom/component/widget", "jquery" ],
 		"use strict";
 
 		return Widget.extend({
+
+			// respond to changes in the active filter
 			"hub:memory/todos/filter": function onFilter(state) {
-				console.log('onFilter',arguments);
-				$("a[href^='#']")
-					.removeClass("selected")
-					.filter("[class='" + state + "']")
-					.addClass("selected");
+				this.$element.find(".filter").removeClass("selected");
+				this.$element.find("." + state).addClass("selected");
 			}
+
 		});
-	});
+
+	}
+
+);

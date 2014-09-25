@@ -11,10 +11,22 @@ define([ "troopjs-dom/component/widget", "troopjs-opt/route/gadget" ],
 		"use strict";
 
 		return Widget.extend(Route, {
-			"route/change/:state?": function onState(uri, matches) {
-				console.log("onState", arguments);
-				this.publish("todos/filter", matches.state || "all");
-			}
+
+			/**
+			 * Detect route changes and publish a coresponding filter message.
+			 */
+			"route/change/:state?": function onState(match) {
+				this.publish("todos/filter", match.state);
+			},
+
+			/**
+			 * Detect when the route is reset to the root route and publish a
+			 * coresponding filter message.
+			 */
+			"route/change": function onState(match) {
+				if (match.input === "") this.publish("todos/filter", "all");
+			},
+
 		});
 
 	});

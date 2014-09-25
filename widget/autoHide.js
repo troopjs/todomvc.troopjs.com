@@ -13,10 +13,15 @@ define([ "troopjs-dom/component/widget", "poly/array" ],
 		"use strict";
 
 		return Widget.extend({
+
+			// update the UI when the number of tasks changes
 			"hub:memory/todos/change": function onChange(items) {
 				// if the number of items is not zero, show the list
 				this.$element.toggle(items.length > 0);
 			}
+
 		});
 
-});
+	}
+
+);

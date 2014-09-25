@@ -19,25 +19,25 @@ define([ "troopjs-dom/component/widget" ],
 		var ENTER_KEY = 13;
 
 		return Widget.extend({
+
+			// register a callback for when the user finishes typing
 			"dom/keyup": function onKeyUp($event) {
-				var me = this;
-				var $element = me.$element;
-				var value;
-
+				var $el = this.$element;
 				if ($event.keyCode === ENTER_KEY) {
-					value = $element.val().trim();
-
+					var value = $el.val().trim();
 					if (value !== "") {
 						// publish an 'add' event to the hub
-						me.publish("todos/add", value)
+						this.publish("todos/add", value)
 							.then(function() {
 								// when the entry is added, reset the text box
-								$element.val("");
+								$el.val("");
 							});
 					}
-
 				}
 			}
+
 		});
 
-});
+	}
+
+);

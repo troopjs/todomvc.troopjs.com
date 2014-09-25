@@ -2,20 +2,21 @@
 define([
 		"troopjs-dom/component/widget",
 		"jquery",
-		"template!./item.html",
+		"template!./task.html",
+		"when",
 		"poly/array"
 	],
 
 	/**
 	 * The 'taskList' widget is reponsible for rendering and managing the
-	 * interactions with the tasks list of the UI.
+	 * interactions with the task list of the UI.
 	 */
-	function ListModule(Widget, $, template) {
+	function ListModule(Widget, $, template, when) {
 		"use strict";
 
 		var FILTER_ACTIVE = "filter-active";
 		var FILTER_COMPLETED = "filter-completed";
-		var TASKS_STORE = window.localStorage["todos-troopjs"];
+		var TASKS_STORE = window.localStorage[ "todos-troopjs" ];
 
 		var tasks = TASKS_STORE ? JSON.parse(TASKS_STORE) : [];
 		var nextId = tasks.length ? tasks[tasks.length - 1].id + 1 : 0;
@@ -30,13 +31,14 @@ define([
 			 */
 			"sig/start": function start() {
 				var me = this;
-				tasks.forEach(function(item) {
-					me.append(template, item);
+				
+				return when.map(tasks, function (item) {
+					return me.append(template, item);
+				}).then(function () {
+					// publish an initial 'change' message to update other UI
+					// elements
+					return me.publish("todos/change", tasks);
 				});
-
-				// publish an initial 'change' message to update other UI
-				// elements
-				me.publish("todos/change", tasks);
 			},
 
 			/**
@@ -50,12 +52,18 @@ define([
 					"title": title
 				};
 
-				this.append(template, item);
+				this.append(template, item).then(function(){
+					return this.publish("todos/change", tasks);
+				});
 
 				// after the item is added, publish a 'change' message.
-				this.publish("todos/change", tasks);
+				
 			},
 
+			/**
+			 * Subscribe to 'remove' messages and respond by removing the task
+			 * from the list.
+			 */
 			"hub/todos/remove": function onRemove(id) {
 				tasks = tasks.filter(function(task){
 					return task.id !== id;
@@ -63,13 +71,31 @@ define([
 				this.publish("todos/change", tasks);
 			},
 
-			"hub/todos/completeToggle": function onCompleteToggle(id) {
+			/**
+			 * Update the tasks whenever a task completion is changed.
+			 */
+			"hub/todos/complete": function onComplete(id, completed) {
 				tasks.forEach(function(task){
-					if (task.id === id) task.completed = !task.completed;
+					if (task.id === id) {
+						task.completed = completed;
+					}
 				});
 				this.publish("todos/change", tasks);
 			},
 
+			/**
+			 * trigger a complete message for each task
+			 */
+			"hub/todos/completeAll": function onCompleteAll(complete) {
+				var me = this;
+				tasks.forEach(function(task){
+					me.publish("todos/complete", task.id, complete);
+				});
+			},
+
+			/**
+			 * Update the tasks whenever a task title is changed.
+			 */
 			"hub/todos/titleChange": function onTitleChange(id, title) {
 				tasks.forEach(function(task){
 					if (task.id === id) task.title = title;
@@ -77,6 +103,9 @@ define([
 				this.publish("todos/change", tasks);
 			},
 
+			/**
+			 * trigger a remove message for each completed task
+			 */
 			"hub/todos/clearCompleted": function onClearCompleted() {
 				var me = this;
 				tasks.filter(function(task){
@@ -86,25 +115,28 @@ define([
 				});
 			},
 
-			// "hub:memory/todos/filter": function onFilter(filter) {
-			// 	var $element = this.$element;
-			// 	switch (filter) {
-			// 		case "completed":
-			// 			$element
-			// 				.removeClass(FILTER_ACTIVE)
-			// 				.addClass(FILTER_COMPLETED);
-			// 			break;
-
-			// 		case "active":
-			// 			$element
-			// 				.removeClass(FILTER_COMPLETED)
-			// 				.addClass(FILTER_ACTIVE);
-			// 			break;
-
-			// 		default:
-			// 			$element.removeClass([FILTER_ACTIVE, FILTER_COMPLETED].join(" "));
-			// 	}
-			// },
+			/**
+			 * respond to task filtering by applying appropriate css
+			 * classes on the list element.
+			 */
+			"hub:memory/todos/filter": function onFilter(filter) {
+				switch (filter) {
+					case "completed":
+						this.$element
+							.removeClass(FILTER_ACTIVE)
+							.addClass(FILTER_COMPLETED);
+						break;
+					case "active":
+						this.$element
+							.removeClass(FILTER_COMPLETED)
+							.addClass(FILTER_ACTIVE);
+						break;
+					default:
+						this.$element
+							.removeClass(FILTER_ACTIVE)
+							.removeClass(FILTER_COMPLETED);
+				}
+			},
 
 		});
 

@@ -17,7 +17,9 @@ define([ "troopjs-dom/component/widget", "poly/array" ],
 
 			// Subscribe to changes in the todo tasks:
 			"hub:memory/todos/change": function onChange(items) {
-				var count = items.filter(filter).length;
+				var count = items.filter(function(item){
+					return !item.completed;
+				}).length;
 				this.$element.html(
 					"<strong>" + count + "</strong> "
 					+ (count === 1 ? "item" : "items") + " left"
@@ -26,11 +28,6 @@ define([ "troopjs-dom/component/widget", "poly/array" ],
 
 		});
 
-		/*
-		 * Filter out completed items.
-		 */
-		function filter(item) {
-			return !item.completed;
-		}
+	}
 
-});
+);

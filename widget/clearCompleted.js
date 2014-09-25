@@ -22,24 +22,21 @@ define([ "troopjs-dom/component/widget", "poly/array" ],
 
 			// Subscribe to changes in the todo tasks:
 			"hub:memory/todos/change": function onChange(items) {
-				var count = items.filter(filter).length;
+				var count = items.filter(function(item){
+					return item.completed;
+				}).length;
 				this.$element
 					.text("Clear completed (" + count + ")")
 					.toggle(count > 0);
 			},
 
 			// Register callback for button click:
-			"dom/click": function onClear() {
+			"dom/click": function onClick() {
 				this.publish("todos/clearCompleted");
 			}
 
 		});
 
-		/*
-		 * Filter out uncompleted items.
-		 */
-		function filter(item) {
-			return item.completed;
-		}
+	}
 
-});
+);
