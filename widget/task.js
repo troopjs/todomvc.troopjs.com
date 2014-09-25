@@ -10,6 +10,28 @@ define([ "troopjs-dom/component/widget", "poly/array" ],
 		var ENTER_KEY = 13;
 		var ESC_KEY = 27;
 
+		/**
+		 * Whenever the user finishes editing the title of the task
+		 * this function is called in order to:
+		 *  1. Update the UI.
+		 *  2. Publish the change to the hub.
+		 */
+		function finishEdit() {
+			var $el = this.$element;
+			var $input = $el.find(".edit");
+			var title = $input.val().trim();
+			this.editing = false;
+			$el.removeClass("editing");
+			$input.prop("disabled", true);
+			if (title === "") {
+				this.publish("todos/remove", this.id);
+			} else if (title !== this.title) {
+				this.title = title;
+				$el.find(".title").text(title);
+				this.publish("todos/titleChange", this.id, this.title);
+			}
+		}
+
 		return Widget.extend(
 
 			// initialize the widget's internal state
@@ -18,28 +40,6 @@ define([ "troopjs-dom/component/widget", "poly/array" ],
 				this.title = title;
 				this.completed = completed;
 				this.editing = false;
-
-				/**
-				 * Whenever the user finishes editing the title of the task
-				 * this function is called in order to:
-				 *  1. Update the UI.
-				 *  2. Publish the change to the hub.
-				 */
-				this.finishEdit = function () {
-					var $el = this.$element;
-					var $input = $el.find(".edit");
-					var title = $input.val().trim();
-					this.editing = false;
-					$el.removeClass("editing");
-					$input.prop("disabled", true);
-					if (title === "") {
-						this.publish("todos/remove", this.id);
-					} else if (title !== this.title) {
-						this.title = title;
-						$el.find(".title").text(title);
-						this.publish("todos/titleChange", this.id, this.title);
-					}
-				}
 			},
 
 			{
@@ -102,7 +102,7 @@ define([ "troopjs-dom/component/widget", "poly/array" ],
 
 					switch ($event.keyCode) {
 						case ENTER_KEY :
-							this.finishEdit();
+							finishEdit.call(this);
 							break;
 						case ESC_KEY :
 							$el.removeClass("editing");
@@ -114,7 +114,7 @@ define([ "troopjs-dom/component/widget", "poly/array" ],
 
 				// exit edit mode when the textbox looses focus
 				"dom:.edit/focusout": function onFocusOut(){
-					if (this.editing) this.finishEdit();
+					if (this.editing) finishEdit.call(this);
 				}
 
 			}

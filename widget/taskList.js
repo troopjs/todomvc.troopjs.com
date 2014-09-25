@@ -52,12 +52,11 @@ define([
 					"title": title
 				};
 
-				this.append(template, item).then(function(){
+				return this.append(template, item).then(function(){
+					// after the item is added, publish a 'change' message.
 					return this.publish("todos/change", tasks);
 				});
 
-				// after the item is added, publish a 'change' message.
-				
 			},
 
 			/**
